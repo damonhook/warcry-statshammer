@@ -12,6 +12,7 @@ import { getRoute, EPages } from 'types/routes';
 import BottomNavigation from 'components/BottomNavigation';
 import AppBar from 'components/AppBar';
 import About from 'containers/About';
+import Footer from 'components/Footer';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -35,6 +36,7 @@ const App = () => {
               <Route exact path={getRoute(EPages.HOME)} component={Home} />
               <Route exact path={getRoute(EPages.ABOUT)} component={About} />
             </Switch>
+            <Footer />
             <BottomNavigation />
           </div>
         </DndProvider>
