@@ -1,0 +1,22 @@
+GET  http://localhost:5000/status
+
+###
+
+POST http://localhost:5000/compare
+Content-Type: application/json
+
+{
+  "fighters": [
+    {
+      "name": "Luminate",
+      "profile": {
+        "attacks": 5,
+        "strength": 4,
+        "damage": {
+          "hit": 2,
+          "crit": 5
+        }
+      }
+    }
+  ]
+}
