@@ -2,7 +2,7 @@ GET  http://localhost:5000/status
 
 ###
 
-POST http://localhost:5000/compare
+POST http://localhost:5000/api/compare
 Content-Type: application/json
 
 {

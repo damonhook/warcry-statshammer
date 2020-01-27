@@ -18,6 +18,9 @@ interface IStyleProps {
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
+  appBar: {
+    background: theme.palette.primary.dark,
+  },
   offset: ({ height }: IStyleProps) => ({
     marginTop: height,
   }),
@@ -52,7 +55,7 @@ const AppBar: React.FC = () => {
   return (
     <div>
       <Slide appear={false} direction="down" in={!trigger}>
-        <Bar>
+        <Bar className={classes.appBar}>
           <div ref={ref}>
             <Toolbar variant="dense" className={classes.toolbar}>
               <Typography variant="h5" component="h1" className={classes.title}>

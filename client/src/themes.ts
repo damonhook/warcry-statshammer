@@ -1,13 +1,17 @@
 import { createMuiTheme } from '@material-ui/core/styles';
-import { grey, red, teal, green, amber, orange, deepOrange } from '@material-ui/core/colors';
+import { grey, red, teal, green, amber, orange, deepOrange, cyan, brown } from '@material-ui/core/colors';
 import { IConfigStore } from 'types/store';
 
 const lightTheme = createMuiTheme({
   name: 'Light Theme',
   palette: {
     type: 'light',
-    primary: deepOrange,
-    secondary: red,
+    primary: {
+      main: red[500],
+    },
+    secondary: {
+      main: brown.A400,
+    },
     background: {
       nested: '#fff',
       paper: '#fff',
@@ -46,8 +50,12 @@ const darkTheme = createMuiTheme({
   name: 'Dark Theme',
   palette: {
     type: 'dark',
-    primary: deepOrange,
-    secondary: red,
+    primary: {
+      main: red[500],
+    },
+    secondary: {
+      main: brown.A400,
+    },
     background: {
       nested: grey[800],
       paper: '#333',

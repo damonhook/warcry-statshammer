@@ -5,11 +5,12 @@ import logger from 'redux-logger';
 
 import { configureStore as createStore, combineReducers, Middleware } from '@reduxjs/toolkit';
 
-import { config, fighters } from './slices';
+import { config, fighters, stats } from './slices';
 
 export const appReducer = combineReducers({
   config: config.reducer,
   fighters: fighters.reducer,
+  stats: stats.reducer,
 });
 
 const middleware: Middleware[] = [thunk];

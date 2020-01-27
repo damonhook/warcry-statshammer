@@ -23,7 +23,7 @@ function appServer(production = false) {
     res.send({ status: 'ok' });
   });
 
-  app.post('/compare', (req, res) => {
+  app.post('/api/compare', (req, res) => {
     addHeaders(res, production);
     const controller = new StatsController();
     res.send(controller.compareFighters(req.body));
