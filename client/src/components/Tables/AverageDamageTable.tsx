@@ -3,6 +3,7 @@ import { Table, TableHead, Paper, TableCell, TableBody, TableRow, Typography } f
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import { IAverageDamageData } from 'types/mappedStats';
+import { useIsMobile } from 'hooks';
 
 const useStyles = makeStyles((theme: Theme) => ({
   averageDamageTable: {
@@ -34,13 +35,19 @@ interface IAverageDamageTableProps {
 }
 const AverageDamageTable = ({ data, fighterNames, className }: IAverageDamageTableProps) => {
   const classes = useStyles();
+  const mobile = useIsMobile();
+
+  const getSize = () => {
+    return mobile ? 'small' : 'medium';
+  };
+
   return (
     <div className={classes.averageDamageTable}>
       <Typography variant="h6" className={classes.title}>
         Average Damage Per Toughness
       </Typography>
       <Paper className={classes.table}>
-        <Table>
+        <Table size={getSize()}>
           <TableHead>
             <TableCell className={clsx(classes.sticky, classes.header)}></TableCell>
             {data.map(({ toughness }) => (

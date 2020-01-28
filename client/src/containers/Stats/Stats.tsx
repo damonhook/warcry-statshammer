@@ -6,6 +6,7 @@ import { fetchCompare } from 'api';
 import { IStore } from 'types/store';
 import isEqual from 'lodash/isEqual';
 import AverageDamage from './AverageDamage';
+import Probability from './Probability';
 import { Button } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { getRoute, EPages } from 'types/routes';
@@ -42,7 +43,12 @@ const Stats = () => {
           </Button>
         }
       />
-      {!stats.pending && stats.results && <AverageDamage stats={stats} fighterNames={fighterNames} />}
+      {!stats.pending && stats.results && (
+        <>
+          <AverageDamage stats={stats} fighterNames={fighterNames} />
+          <Probability stats={stats} fighterNames={fighterNames} />
+        </>
+      )}
     </div>
   );
 };

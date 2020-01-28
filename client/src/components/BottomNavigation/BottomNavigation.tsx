@@ -4,6 +4,7 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 import { Home as HomeIcon, Info as InfoIcon, BarChart as StatsIcon } from '@material-ui/icons';
 import { useHistory } from 'react-router-dom';
 import { getRoute, EPages } from 'types/routes';
+import { useRouteFind } from 'hooks';
 
 interface IStyleProps {
   height: number;
@@ -28,32 +29,27 @@ const BottomNavigation = () => {
   const ref = useRef<HTMLDivElement>(null);
   const classes = useStyles({ height });
 
+  const routes = [getRoute(EPages.HOME), getRoute(EPages.STATS), getRoute(EPages.ABOUT)];
+  const [index] = useRouteFind(routes);
+
+  const handleChange = (event: any, newValue: number) => {
+    history.push(routes[newValue]);
+  };
+
   useEffect(() => {
     if (ref && ref.current) {
       setHeight(ref.current.clientHeight);
     }
   }, [ref]);
 
-  const handleHomeClicked = () => {
-    history.push(getRoute(EPages.HOME));
-  };
-
-  const handleStatsClicked = () => {
-    history.push(getRoute(EPages.STATS));
-  };
-
-  const handleAboutClicked = () => {
-    history.push(getRoute(EPages.ABOUT));
-  };
-
   return (
     <>
       <div className={classes.offset} />
       <div ref={ref} className={classes.nav}>
-        <Nav showLabels>
-          <NavItem label="Home" icon={<HomeIcon />} onClick={handleHomeClicked} />
-          <NavItem label="Stats" icon={<StatsIcon />} onClick={handleStatsClicked} />
-          <NavItem label="About" icon={<InfoIcon />} onClick={handleAboutClicked} />
+        <Nav showLabels value={index} onChange={handleChange}>
+          <NavItem label="Home" icon={<HomeIcon />} />
+          <NavItem label="Stats" icon={<StatsIcon />} />
+          <NavItem label="About" icon={<InfoIcon />} />
         </Nav>
       </div>
     </>

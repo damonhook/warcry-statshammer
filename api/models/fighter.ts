@@ -41,6 +41,7 @@ class Fighter implements IFighter {
       max: getMax(Object.keys(counts).map(Number)),
       mean: getMean(permutations),
     };
+    buckets.push({ damage: metrics.max + 1, count: 0, probability: 0 });
     return {
       buckets,
       metrics,

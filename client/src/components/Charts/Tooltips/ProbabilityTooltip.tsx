@@ -11,20 +11,23 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-interface IAverageDamageTooltipProps extends ITooltipProps {}
+interface IProbabilityTooltipProps extends ITooltipProps {
+  type: 'discrete' | 'cumulative';
+}
 
 /**
  * A tooltip to display when you hover over a value in a graph
  */
-const AverageDamageTooltip = ({ active = false, payload = [], label = '' }: IAverageDamageTooltipProps) => {
+const ProbabilityTooltip = ({ active = false, payload = [], label = '', type }: IProbabilityTooltipProps) => {
   const classes = useStyles();
+  console.log(payload);
 
   if (active) {
     return (
       <Paper className={classes.tooltip}>
-        <Typography variant="h6">{`Toughness: T${label}`}</Typography>
+        <Typography variant="h6">{`Damage: ${type === 'cumulative' ? '<= ' : ''}${label}`}</Typography>
         {(payload ?? []).map(({ color, name, value }) => (
-          <Typography style={{ color }} key={name}>{`${name}: ${value}`}</Typography>
+          <Typography style={{ color }} key={name}>{`${name}: ${value}%`}</Typography>
         ))}
       </Paper>
     );
@@ -32,4 +35,4 @@ const AverageDamageTooltip = ({ active = false, payload = [], label = '' }: IAve
   return null;
 };
 
-export default AverageDamageTooltip;
+export default ProbabilityTooltip;

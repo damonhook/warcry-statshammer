@@ -5,6 +5,7 @@ import { ExpandLess, ExpandMore } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme: Theme) => ({
   header: {
+    cursor: 'pointer',
     padding: theme.spacing(1.5, 2),
     display: 'flex',
     justifyContent: 'space-between',

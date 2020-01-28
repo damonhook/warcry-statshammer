@@ -9,7 +9,7 @@ import { IAverageDamageData } from 'types/mappedStats';
 
 const useStyles = makeStyles((theme: Theme) => ({
   averageDamageContainer: {
-    margin: theme.spacing(0, 2),
+    margin: theme.spacing(0, 2, 2),
   },
 }));
 
@@ -30,10 +30,10 @@ const AverageDamage = ({ stats, fighterNames }: IAverageDamageProps) => {
   return (
     <CollapsibleCard title="Average Damage" className={classes.averageDamageContainer}>
       <Grid container spacing={2}>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} md={6}>
           <AverageDamageChart data={averageDamageData} series={fighterNames} />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} md={6}>
           <AverageDamageTable data={averageDamageData} fighterNames={fighterNames} />
         </Grid>
       </Grid>

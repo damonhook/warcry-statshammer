@@ -20,6 +20,15 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: 'flex',
     flexDirection: 'column',
     minHeight: '100vh',
+    justifyContent: 'center',
+  },
+  content: {
+    display: 'flex',
+    flexDirection: 'column',
+    margin: '0 auto',
+    flex: 1,
+    width: '100%',
+    maxWidth: 1600,
   },
 }));
 
@@ -33,12 +42,14 @@ const App = () => {
           <CssBaseline />
           <div className={classes.root}>
             <AppBar />
-            <Switch>
-              <Route exact path={getRoute(EPages.HOME)} component={Home} />
-              <Route exact path={getRoute(EPages.STATS)} component={Stats} />
-              <Route exact path={getRoute(EPages.ABOUT)} component={About} />
-              <Redirect to={getRoute(EPages.HOME)} />
-            </Switch>
+            <div className={classes.content}>
+              <Switch>
+                <Route exact path={getRoute(EPages.HOME)} component={Home} />
+                <Route exact path={getRoute(EPages.STATS)} component={Stats} />
+                <Route exact path={getRoute(EPages.ABOUT)} component={About} />
+                <Redirect to={getRoute(EPages.HOME)} />
+              </Switch>
+            </div>
             <Footer />
             <BottomNavigation />
           </div>
