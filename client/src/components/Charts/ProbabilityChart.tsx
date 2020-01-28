@@ -9,7 +9,7 @@ import { useIsMobile } from 'hooks';
 const useStyles = makeStyles((theme: Theme) => ({
   chartContainer: {
     width: '100%',
-    height: 300,
+    height: 250,
   },
   title: {
     textAlign: 'center',
