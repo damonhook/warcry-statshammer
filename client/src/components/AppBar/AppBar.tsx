@@ -4,6 +4,8 @@ import { BrightnessMedium as BrightnessMediumIcon } from '@material-ui/icons';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux';
 import { config as configStore } from 'store/slices';
+import { getRoute, EPages } from 'types/routes';
+import Link from 'components/Link';
 
 interface IStyleProps {
   height: number;
@@ -24,6 +26,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   title: {
     padding: theme.spacing(2, 0),
+  },
+  action: {
+    color: theme.palette.getContrastText(theme.palette.primary.dark),
   },
 }));
 
@@ -50,11 +55,13 @@ const AppBar = () => {
         <Bar className={classes.appBar}>
           <div ref={ref}>
             <Toolbar variant="dense" className={classes.toolbar}>
-              <Typography variant="h5" component="h1" className={classes.title}>
-                Warcry Statshammer
-              </Typography>
+              <Link to={getRoute(EPages.HOME)}>
+                <Typography variant="h5" component="h1" className={classes.title}>
+                  Warcry Statshammer
+                </Typography>
+              </Link>
               <span>
-                <IconButton onClick={handleDarkModeToggle}>
+                <IconButton onClick={handleDarkModeToggle} className={classes.action}>
                   <BrightnessMediumIcon />
                 </IconButton>
               </span>

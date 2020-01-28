@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux';
 import Profile from './Profile';
 import DraggableItem from 'components/DraggableItem';
 import DividerButton from 'components/DividerButton';
+import appConfig from 'appConfig';
 
 const useStyles = makeStyles((theme: Theme) => ({
   fighter: {
@@ -52,6 +53,8 @@ const Fighter = ({ fighter, index }: IFighterProps) => {
     dispatch(fightersStore.actions.editFighterName({ index, name: event.target.value }));
   };
 
+  const isAddProfileDisabled = fighter.profiles.length >= appConfig.limits.profiles;
+
   return (
     <DraggableItem
       itemCollection="fighters"
@@ -90,7 +93,13 @@ const Fighter = ({ fighter, index }: IFighterProps) => {
               />
             ))}
           </div>
-          <DividerButton onClick={handleAddProfile} variant="contained" color="secondary" startIcon={<Add />}>
+          <DividerButton
+            onClick={handleAddProfile}
+            variant="contained"
+            color="secondary"
+            startIcon={<Add />}
+            disabled={isAddProfileDisabled}
+          >
             Add Profile
           </DividerButton>
         </CardContent>

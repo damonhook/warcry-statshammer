@@ -11,6 +11,7 @@ import { Button } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { getRoute, EPages } from 'types/routes';
 import { ArrowBack } from '@material-ui/icons';
+import Loader from './Loader';
 
 const useStyles = makeStyles(() => ({
   stats: {
@@ -43,7 +44,9 @@ const Stats = () => {
           </Button>
         }
       />
-      {!stats.pending && stats.results && (
+      {stats.pending ? (
+        <Loader />
+      ) : (
         <>
           <AverageDamage stats={stats} fighterNames={fighterNames} />
           <Probability stats={stats} fighterNames={fighterNames} />

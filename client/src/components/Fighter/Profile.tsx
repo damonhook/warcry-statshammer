@@ -109,7 +109,7 @@ const Profile = ({ fighterIndex, profileIndex, profile, deleteEnabled = true }: 
       <div ref={handleRef}>
         <DragHandle cursor="move" />
       </div>
-      <Switch checked={profile.active} onChange={handleSetActive} />
+      <Switch checked={profile.active} onChange={handleSetActive} disabled={!deleteEnabled} />
       <div className={classes.item}>
         <TextField
           className={clsx(classes.field, classes.range)}

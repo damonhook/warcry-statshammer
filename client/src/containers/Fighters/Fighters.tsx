@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { IStore } from 'types/store';
 import { fighters as fightersStore } from 'store/slices';
 import Fighter from 'components/Fighter';
+import appConfig from 'appConfig';
 
 const useStyles = makeStyles((theme: Theme) => ({
   fighters: {
@@ -22,13 +23,21 @@ const Fighters = () => {
     dispatch(fightersStore.actions.addFighter());
   };
 
+  const isAddFighterDisabled = fighters.length >= appConfig.limits.fighters;
+
   return (
     <div className={classes.fighters}>
       {fighters.map((fighter, index) => (
         <Fighter fighter={fighter} index={index} key={fighter.uuid ?? index} />
       ))}
-      <Button variant="contained" color="primary" fullWidth onClick={handleAddFighter}>
-        <Add />
+      <Button
+        variant="contained"
+        color="primary"
+        fullWidth
+        onClick={handleAddFighter}
+        disabled={isAddFighterDisabled}
+        startIcon={<Add />}
+      >
         Add a Fighter
       </Button>
     </div>

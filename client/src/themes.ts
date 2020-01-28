@@ -1,5 +1,5 @@
 import { createMuiTheme } from '@material-ui/core/styles';
-import { grey, red, teal, green, amber, brown } from '@material-ui/core/colors';
+import { grey, red, teal, green, amber } from '@material-ui/core/colors';
 import { IConfigStore } from 'types/store';
 
 const lightTheme = createMuiTheme({
@@ -10,7 +10,7 @@ const lightTheme = createMuiTheme({
       main: red[500],
     },
     secondary: {
-      main: brown.A400,
+      main: amber[700],
     },
     background: {
       nested: '#fff',
