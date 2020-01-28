@@ -1,10 +1,12 @@
 export enum EPages {
   HOME = 'Home',
+  STATS = 'Stats',
   ABOUT = 'About',
 }
 
 export const Routes: ReadonlyMap<EPages, string> = new Map([
   [EPages.HOME, '/'],
+  [EPages.STATS, '/stats'],
   [EPages.ABOUT, '/about'],
 ]);
 

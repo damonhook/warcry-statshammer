@@ -9,7 +9,7 @@ import Fighter from 'components/Fighter';
 
 const useStyles = makeStyles((theme: Theme) => ({
   fighters: {
-    padding: theme.spacing(2),
+    padding: theme.spacing(0, 2, 2),
   },
 }));
 
@@ -21,12 +21,11 @@ const Fighters = () => {
   const handleAddFighter = () => {
     dispatch(fightersStore.actions.addFighter());
   };
-  console.log(fighters);
 
   return (
     <div className={classes.fighters}>
       {fighters.map((fighter, index) => (
-        <Fighter fighter={fighter} index={index} />
+        <Fighter fighter={fighter} index={index} key={fighter.uuid ?? index} />
       ))}
       <Button variant="contained" color="primary" fullWidth onClick={handleAddFighter}>
         <Add />

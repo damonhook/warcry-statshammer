@@ -3,7 +3,7 @@ import { ISocialButtonProps } from './props';
 import SocialItem from './SocialItem';
 import { LocalOffer as ReleasesIcon } from '@material-ui/icons';
 
-const Releases: React.FC<ISocialButtonProps> = ({ className }) => {
+const Releases = ({ className }: ISocialButtonProps) => {
   return (
     <SocialItem
       className={className}

@@ -17,7 +17,7 @@ interface IDividerButtonProps extends ButtonProps {
   className?: string;
 }
 
-const DividerButton: React.FC<IDividerButtonProps> = ({ className, children, ...other }) => {
+const DividerButton = ({ className, children, ...other }: IDividerButtonProps) => {
   const classes = useStyles();
   return (
     <div className={clsx(classes.dividerButton, className)}>

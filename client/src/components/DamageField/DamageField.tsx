@@ -17,13 +17,13 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-interface IDamageField {
+interface IDamageFieldProps {
   damage: IDamage;
   setDamage: (newDamage: IDamage) => void;
   className?: string;
 }
 
-const DamageField: React.FC<IDamageField> = ({ damage, setDamage, className }) => {
+const DamageField = ({ damage, setDamage, className }: IDamageFieldProps) => {
   const classes = useStyles();
 
   const handleHitChanged = (event: any) => {

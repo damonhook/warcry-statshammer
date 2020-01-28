@@ -3,7 +3,7 @@ import { ISocialButtonProps } from './props';
 import SocialItem from './SocialItem';
 import { Reddit as RedditIcon } from '@material-ui/icons';
 
-const Reddit: React.FC<ISocialButtonProps> = ({ className }) => {
+const Reddit = ({ className }: ISocialButtonProps) => {
   return (
     <SocialItem
       className={className}

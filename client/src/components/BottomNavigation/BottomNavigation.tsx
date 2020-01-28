@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { BottomNavigation as Nav, BottomNavigationAction as NavItem } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
-import { Home as HomeIcon, Info as InfoIcon } from '@material-ui/icons';
+import { Home as HomeIcon, Info as InfoIcon, BarChart as StatsIcon } from '@material-ui/icons';
 import { useHistory } from 'react-router-dom';
 import { getRoute, EPages } from 'types/routes';
 
@@ -16,9 +16,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     right: 0,
     zIndex: theme.zIndex.appBar,
     boxShadow: theme.palette.type === 'dark' ? theme.shadows[20] : theme.shadows[10],
-    // [theme.breakpoints.up('md')]: {
-    //   display: 'none',
-    // },
   },
   offset: ({ height }: IStyleProps) => ({
     marginTop: height,
@@ -33,13 +30,16 @@ const BottomNavigation = () => {
 
   useEffect(() => {
     if (ref && ref.current) {
-      console.log(ref.current.clientHeight);
       setHeight(ref.current.clientHeight);
     }
   }, [ref]);
 
   const handleHomeClicked = () => {
     history.push(getRoute(EPages.HOME));
+  };
+
+  const handleStatsClicked = () => {
+    history.push(getRoute(EPages.STATS));
   };
 
   const handleAboutClicked = () => {
@@ -52,6 +52,7 @@ const BottomNavigation = () => {
       <div ref={ref} className={classes.nav}>
         <Nav showLabels>
           <NavItem label="Home" icon={<HomeIcon />} onClick={handleHomeClicked} />
+          <NavItem label="Stats" icon={<StatsIcon />} onClick={handleStatsClicked} />
           <NavItem label="About" icon={<InfoIcon />} onClick={handleAboutClicked} />
         </Nav>
       </div>

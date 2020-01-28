@@ -12,6 +12,7 @@ import { getRoute, EPages } from 'types/routes';
 import BottomNavigation from 'components/BottomNavigation';
 import AppBar from 'components/AppBar';
 import About from 'containers/About';
+import Stats from 'containers/Stats';
 import Footer from 'components/Footer';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -34,7 +35,9 @@ const App = () => {
             <AppBar />
             <Switch>
               <Route exact path={getRoute(EPages.HOME)} component={Home} />
+              <Route exact path={getRoute(EPages.STATS)} component={Stats} />
               <Route exact path={getRoute(EPages.ABOUT)} component={About} />
+              <Redirect to={getRoute(EPages.HOME)} />
             </Switch>
             <Footer />
             <BottomNavigation />

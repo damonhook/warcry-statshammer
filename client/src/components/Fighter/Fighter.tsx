@@ -31,7 +31,7 @@ interface IFighterProps {
   index: number;
 }
 
-const Fighter: React.FC<IFighterProps> = ({ fighter, index }) => {
+const Fighter = ({ fighter, index }: IFighterProps) => {
   const dispatch = useDispatch();
   const classes = useStyles();
   const handleRef = useRef<HTMLDivElement>(null);
@@ -81,7 +81,13 @@ const Fighter: React.FC<IFighterProps> = ({ fighter, index }) => {
           </div>
           <div>
             {fighter.profiles.map((profile, profileIndex) => (
-              <Profile fighterIndex={index} profileIndex={profileIndex} profile={profile} />
+              <Profile
+                fighterIndex={index}
+                profileIndex={profileIndex}
+                profile={profile}
+                deleteEnabled={fighter.profiles.length > 1}
+                key={profile.uuid ?? profileIndex}
+              />
             ))}
           </div>
           <DividerButton onClick={handleAddProfile} variant="contained" color="secondary" startIcon={<Add />}>

@@ -44,9 +44,10 @@ interface IProfileProps {
   fighterIndex: number;
   profileIndex: number;
   profile: IProfile;
+  deleteEnabled?: boolean;
 }
 
-const Profile: React.FC<IProfileProps> = ({ fighterIndex, profileIndex, profile }) => {
+const Profile = ({ fighterIndex, profileIndex, profile, deleteEnabled = true }: IProfileProps) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const handleRef = useRef<HTMLDivElement>(null);
@@ -140,7 +141,7 @@ const Profile: React.FC<IProfileProps> = ({ fighterIndex, profileIndex, profile 
           setDamage={handleEditDamage}
         />
       </div>
-      <IconButton onClick={handleDeleteProfile}>
+      <IconButton onClick={handleDeleteProfile} disabled={!deleteEnabled}>
         <Delete />
       </IconButton>
     </DraggableItem>

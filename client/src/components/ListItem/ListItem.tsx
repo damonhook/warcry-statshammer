@@ -11,9 +11,10 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 interface IListItemProps {
   className?: string;
+  children?: React.ReactNode;
 }
 
-const ListItem: React.FC<IListItemProps> = ({ children, className }) => {
+const ListItem = ({ children, className }: IListItemProps) => {
   const classes = useStyles();
 
   return <Card className={clsx(classes.listItem, className)}>{children}</Card>;

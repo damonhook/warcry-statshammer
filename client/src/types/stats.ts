@@ -7,7 +7,7 @@ export type TMetric = { [name: string]: number };
 export type TMetrics = { [metric: string]: TMetric };
 
 export type TResult = {
-  toughness: string | number;
+  toughness: number;
   discrete: TProbabilityResult[];
   cumulative: TProbabilityResult[];
   metrics: TMetrics;

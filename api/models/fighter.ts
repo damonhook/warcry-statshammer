@@ -1,5 +1,6 @@
 import { IProfile, ITarget, IFighter, TMatrix, TVector, IFighterProbability } from '../types';
 import { D6 } from './dice';
+import { getMax, getMean } from '../utils/statsUtils';
 
 const generatePermutations = <T>(vector: T[], n = 1): T[][] => {
   if (n === 0) return [[]];
@@ -15,7 +16,7 @@ class Fighter implements IFighter {
 
   constructor(name: string, profile: IProfile) {
     this.name = name;
-    this.profile = profile;
+    this.profile = this.parseProfile(profile);
   }
 
   getProbabilities(target: ITarget): IFighterProbability {
@@ -37,7 +38,8 @@ class Fighter implements IFighter {
         probability: (counts[damage] * 100) / numPermutations,
       }));
     const metrics = {
-      max: Math.max(...Object.keys(counts).map(Number)),
+      max: getMax(Object.keys(counts).map(Number)),
+      mean: getMean(permutations),
     };
     return {
       buckets,
@@ -73,6 +75,17 @@ class Fighter implements IFighter {
     if (strength > toughness) return 3;
     if (strength === toughness) return 4;
     return 5;
+  }
+
+  private parseProfile(profile: IProfile): IProfile {
+    return {
+      attacks: Number(profile.attacks),
+      strength: Number(profile.strength),
+      damage: {
+        hit: Number(profile.damage.hit),
+        crit: Number(profile.damage.crit),
+      },
+    };
   }
 }
 

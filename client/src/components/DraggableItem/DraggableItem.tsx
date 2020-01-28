@@ -27,9 +27,10 @@ interface IDraggableItemProps {
   onMove: (dragIndex: number, hoverIndex: number) => void;
   handleRef: React.RefObject<HTMLDivElement>;
   className?: string;
+  children?: React.ReactNode;
 }
 
-const DraggableItem: React.FC<IDraggableItemProps> = ({
+const DraggableItem = ({
   itemCollection,
   index,
   id,
@@ -37,7 +38,7 @@ const DraggableItem: React.FC<IDraggableItemProps> = ({
   handleRef,
   className,
   children,
-}) => {
+}: IDraggableItemProps) => {
   const handleMove = (dragIndex: number, hoverIndex: number) => {
     onMove(dragIndex, hoverIndex);
   };
@@ -71,7 +72,7 @@ const DraggableItem: React.FC<IDraggableItemProps> = ({
       hovered: monitor.isOver(),
     }),
   });
-  const [{ isDragging }, dragHandle, dragContainer] = useDrag({
+  const [, dragHandle, dragContainer] = useDrag({
     item: { type: itemCollection, id, index },
     collect: (monitor: any) => ({
       isDragging: monitor.isDragging(),

@@ -19,7 +19,7 @@ const addFighter = (state: TFightersStore) => {
   state.push({
     name: '',
     uuid: nanoid(),
-    profiles: [DEFAULT_PROFILE],
+    profiles: [{ ...DEFAULT_PROFILE, uuid: nanoid() }],
   });
 };
 
@@ -43,6 +43,7 @@ const addProfile = (state: TFightersStore, action: { payload: { index: number } 
   const { index } = action.payload;
   state[index].profiles.push({
     ...DEFAULT_PROFILE,
+    uuid: nanoid(),
     active: !state[index].profiles.length,
   });
 };

@@ -1,13 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import {
-  AppBar as Bar,
-  Toolbar,
-  Typography,
-  useScrollTrigger,
-  Slide,
-  IconButton,
-  Icon,
-} from '@material-ui/core';
+import { AppBar as Bar, Toolbar, Typography, useScrollTrigger, Slide, IconButton } from '@material-ui/core';
 import { BrightnessMedium as BrightnessMediumIcon } from '@material-ui/icons';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux';
@@ -35,7 +27,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-const AppBar: React.FC = () => {
+const AppBar = () => {
   const [height, setHeight] = useState(0);
   const dispatch = useDispatch();
   const ref = useRef<HTMLDivElement>(null);

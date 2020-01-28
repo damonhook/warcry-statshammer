@@ -1,5 +1,5 @@
 import fetch from 'cross-fetch';
-import { fighters as fightersStore, stats as statsStore, fighters } from 'store/slices';
+import { stats as statsStore } from 'store/slices';
 import { ThunkDispatch } from 'redux-thunk';
 import { Action } from 'redux';
 import { IStore } from 'types/store';

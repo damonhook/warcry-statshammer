@@ -24,11 +24,11 @@ export class StatsController {
   }
 
   private buildResult(data: t.TMappedResult): t.ICompareFightersResult {
-    const figherNames = Object.keys(data.results);
+    const fighterNames = Object.keys(data.results);
     const mappedProbabilities = this.getMappedProbabilities(data);
     const metrics = this.getMappedMetrics(data);
     const discrete = this.buildDiscreteProbabilities(mappedProbabilities);
-    const cumulative = this.buildCumulativeProbabilities(mappedProbabilities, figherNames, metrics);
+    const cumulative = this.buildCumulativeProbabilities(mappedProbabilities, fighterNames, metrics);
     return { toughness: data.toughness, discrete, cumulative, metrics };
   }
 
@@ -43,13 +43,14 @@ export class StatsController {
   }
 
   private getMappedMetrics(data: t.TMappedResult): t.TMetrics {
-    return Object.keys(data.results).reduce<t.TMetrics>(
-      (acc, name) => {
-        acc.max[name] = data.results[name].metrics.max;
-        return acc;
-      },
-      { max: {} },
-    );
+    const metrics = ['max', 'mean'];
+    const initial = metrics.reduce<t.TMetrics>((acc, m) => ({ ...acc, [m]: {} }), {});
+    return Object.keys(data.results).reduce<t.TMetrics>((acc, name) => {
+      metrics.forEach(metric => {
+        acc[metric][name] = data.results[name].metrics[metric];
+      });
+      return acc;
+    }, initial);
   }
 
   private buildDiscreteProbabilities(probabilities: t.TMappedProbabilities): t.TProbabilityResult[] {
