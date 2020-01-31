@@ -39,6 +39,12 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   md: {
     marginTop: -theme.spacing(2),
+    '& a': {
+      color: theme.palette.primary.main,
+      '&:visited': {
+        color: theme.palette.primary.dark,
+      },
+    },
   },
   divider: {
     marginTop: theme.spacing(3),

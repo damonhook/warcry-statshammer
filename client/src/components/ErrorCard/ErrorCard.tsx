@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     '&:focus, &:active': {
       background: theme.palette.error.light,
     },
+    cursor: 'pointer',
   },
   errorHeader: {},
   errorIcon: {
