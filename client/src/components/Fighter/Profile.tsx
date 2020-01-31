@@ -94,7 +94,7 @@ const Profile = ({
 
   return (
     <div className={classes.profile}>
-      <div {...dragHandleProps}>
+      <div {...dragHandleProps} tabIndex={-1}>
         <DragHandle cursor="move" />
       </div>
       <Switch checked={profile.active} onChange={handleSetActive} disabled={!deleteEnabled} tabIndex={1} />

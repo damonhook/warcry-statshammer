@@ -55,6 +55,7 @@
         "eslint-plugin-react-hooks": "^2.3.0",
         "eslint-plugin-simple-import-sort": "^5.0.1",
         "express": "^4.17.1",
+        "jest": "^25.1.0",
         "prettier": "^1.19.1",
         "typescript": "^3.7.5"
     }
