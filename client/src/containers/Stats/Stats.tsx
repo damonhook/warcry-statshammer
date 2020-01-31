@@ -27,10 +27,15 @@ const Stats = () => {
   const dispatch = useDispatch();
   const stats = useSelector((state: IStore) => state.stats, isEqual);
   const fighterNames = useSelector((state: IStore) => [...new Set(state.fighters.map(f => f.name))], isEqual);
+  const numFighters = useSelector((state: IStore) => state.fighters.length);
 
   useEffect(() => {
     dispatch(fetchCompare());
   }, [dispatch]);
+
+  if (numFighters <= 0) {
+    history.replace(getRoute(EPages.HOME));
+  }
 
   const handleBack = () => {
     history.push(getRoute(EPages.HOME));

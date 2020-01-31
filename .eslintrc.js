@@ -31,7 +31,9 @@ module.exports = {
     'simple-import-sort/sort': ['warn'],
     "sort-imports": ["off"],
     "import/order": ["off"],
-    "jsx-a11y/no-static-element-interactions": ["off"]
+    "jsx-a11y/no-static-element-interactions": ["off"],
+    "jsx-a11y/no-noninteractive-tabindex": ["off"],
+    "jsx-a11y/tabindex-no-positive": ["off"]
   },
   overrides: [
     {

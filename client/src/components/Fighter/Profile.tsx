@@ -109,7 +109,7 @@ const Profile = ({ fighterIndex, profileIndex, profile, deleteEnabled = true }: 
       <div ref={handleRef}>
         <DragHandle cursor="move" />
       </div>
-      <Switch checked={profile.active} onChange={handleSetActive} disabled={!deleteEnabled} />
+      <Switch checked={profile.active} onChange={handleSetActive} disabled={!deleteEnabled} tabIndex={1} />
       <div className={classes.item}>
         <TextField
           className={clsx(classes.field, classes.range)}
@@ -143,7 +143,7 @@ const Profile = ({ fighterIndex, profileIndex, profile, deleteEnabled = true }: 
           setDamage={handleEditDamage}
         />
       </div>
-      <IconButton onClick={handleDeleteProfile} disabled={!deleteEnabled}>
+      <IconButton onClick={handleDeleteProfile} disabled={!deleteEnabled} tabIndex={1}>
         <Delete />
       </IconButton>
     </DraggableItem>

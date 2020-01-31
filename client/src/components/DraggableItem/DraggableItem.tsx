@@ -44,7 +44,7 @@ const DraggableItem = ({
   };
 
   const ref = useRef<HTMLDivElement>(null);
-  const [{ hovered }, drop] = useDrop({
+  const [, drop] = useDrop({
     accept: itemCollection,
     hover(item: IDragItem, monitor: DropTargetMonitor) {
       if (!ref.current) return;
@@ -74,13 +74,13 @@ const DraggableItem = ({
       hovered: monitor.isOver(),
     }),
   });
-  const [, dragHandle, dragContainer] = useDrag({
+  const [{ isDragging }, dragHandle, dragContainer] = useDrag({
     item: { type: itemCollection, id, index },
     collect: (monitor: any) => ({
       isDragging: monitor.isDragging(),
     }),
   });
-  const classes = useStyles({ isDragging: hovered });
+  const classes = useStyles({ isDragging });
 
   drop(dragContainer(ref));
   dragHandle(handleRef);

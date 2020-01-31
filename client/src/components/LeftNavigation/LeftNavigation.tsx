@@ -3,8 +3,10 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 import { BarChart as StatsIcon, Home as HomeIcon, Info as InfoIcon } from '@material-ui/icons';
 import { useRouteFind } from 'hooks';
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { EPages, getRoute } from 'types/routes';
+import { IStore } from 'types/store';
 
 const useStyles = makeStyles((theme: Theme) => ({
   leftNavigation: {
@@ -25,6 +27,8 @@ const LeftNavigation = () => {
 
   const routes = [getRoute(EPages.HOME), getRoute(EPages.STATS), getRoute(EPages.ABOUT)];
   const [routeIndex] = useRouteFind(routes);
+
+  const numFighters = useSelector((state: IStore) => state.fighters.length);
 
   useEffect(() => {
     setIndex(routeIndex);
@@ -49,7 +53,7 @@ const LeftNavigation = () => {
         indicatorColor="primary"
       >
         <Tab label="Home" icon={<HomeIcon />} />
-        <Tab label="Stats" icon={<StatsIcon />} />
+        <Tab label="Stats" icon={<StatsIcon />} disabled={numFighters <= 0} />
         <Tab label="About" icon={<InfoIcon />} />
       </Tabs>
     </div>

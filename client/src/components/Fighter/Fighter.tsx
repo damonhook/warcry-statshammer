@@ -79,7 +79,7 @@ const Fighter = ({ fighter, index }: IFighterProps) => {
               value={fighter.name}
               onChange={handleEditName}
             />
-            <IconButton onClick={handleDeleteProfile}>
+            <IconButton onClick={handleDeleteProfile} tabIndex={1}>
               <Delete />
             </IconButton>
           </div>
