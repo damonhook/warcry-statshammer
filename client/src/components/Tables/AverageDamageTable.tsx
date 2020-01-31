@@ -1,9 +1,9 @@
-import React from 'react';
-import { Table, TableHead, Paper, TableCell, TableBody, TableRow, Typography } from '@material-ui/core';
+import { Paper, Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import clsx from 'clsx';
-import { IAverageDamageData } from 'types/mappedStats';
 import { useIsMobile } from 'hooks';
+import React from 'react';
+import { IAverageDamageData } from 'types/mappedStats';
 
 const useStyles = makeStyles((theme: Theme) => ({
   averageDamageTable: {
@@ -42,14 +42,14 @@ const AverageDamageTable = ({ data, fighterNames, className }: IAverageDamageTab
   };
 
   return (
-    <div className={classes.averageDamageTable}>
+    <div className={clsx(classes.averageDamageTable, className)}>
       <Typography variant="h6" className={classes.title}>
         Average Damage Per Toughness
       </Typography>
       <Paper className={classes.table}>
         <Table size={getSize()}>
           <TableHead>
-            <TableCell className={clsx(classes.sticky, classes.header)}></TableCell>
+            <TableCell className={clsx(classes.sticky, classes.header)} />
             {data.map(({ toughness }) => (
               <TableCell className={classes.header}>{`T${toughness}`}</TableCell>
             ))}

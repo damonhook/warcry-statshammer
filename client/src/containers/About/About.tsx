@@ -1,13 +1,13 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import { EPages, getRoute } from 'types/routes';
-import { useReadFromFile } from 'hooks';
-import ReactMarkdown from 'react-markdown';
-import { Paper, Theme, Typography, Divider, CircularProgress, IconButton } from '@material-ui/core';
+import { CircularProgress, Divider, IconButton, Paper, Theme, Typography } from '@material-ui/core';
 import { grey } from '@material-ui/core/colors';
-import { useHistory } from 'react-router-dom';
-import { Github, Reddit, Releases } from 'components/SocialButtons';
+import { makeStyles } from '@material-ui/core/styles';
 import Logo from 'components/Logo';
+import { Github, Reddit, Releases } from 'components/SocialButtons';
+import { useReadFromFile } from 'hooks';
+import React from 'react';
+import ReactMarkdown from 'react-markdown';
+import { useHistory } from 'react-router-dom';
+import { EPages, getRoute } from 'types/routes';
 
 const useStyles = makeStyles((theme: Theme) => ({
   about: {

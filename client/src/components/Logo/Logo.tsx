@@ -1,9 +1,9 @@
-import React from 'react';
-import { makeStyles, Theme } from '@material-ui/core/styles';
 import { Icon } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import React from 'react';
 
 type IStyleProps = { fontSize: number };
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(() => ({
   logo: (props: IStyleProps) => ({
     fontSize: `${props.fontSize}rem`,
   }),

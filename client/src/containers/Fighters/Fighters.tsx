@@ -1,12 +1,12 @@
-import React from 'react';
 import { Button } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { Add } from '@material-ui/icons';
-import { useSelector, useDispatch } from 'react-redux';
-import { IStore } from 'types/store';
-import { fighters as fightersStore } from 'store/slices';
-import Fighter from 'components/Fighter';
 import appConfig from 'appConfig';
+import Fighter from 'components/Fighter';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fighters as fightersStore } from 'store/slices';
+import { IStore } from 'types/store';
 
 const useStyles = makeStyles((theme: Theme) => ({
   fighters: {

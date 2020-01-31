@@ -1,7 +1,8 @@
+import { Reddit as RedditIcon } from '@material-ui/icons';
 import React from 'react';
+
 import { ISocialButtonProps } from './props';
 import SocialItem from './SocialItem';
-import { Reddit as RedditIcon } from '@material-ui/icons';
 
 const Reddit = ({ className }: ISocialButtonProps) => {
   return (

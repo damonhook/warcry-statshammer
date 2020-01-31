@@ -1,11 +1,11 @@
-import React, { useRef, useEffect, useState } from 'react';
-import { AppBar as Bar, Toolbar, Typography, useScrollTrigger, Slide, IconButton } from '@material-ui/core';
-import { BrightnessMedium as BrightnessMediumIcon } from '@material-ui/icons';
+import { AppBar as Bar, IconButton, Slide, Toolbar, Typography, useScrollTrigger } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
+import { BrightnessMedium as BrightnessMediumIcon } from '@material-ui/icons';
+import Link from 'components/Link';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { config as configStore } from 'store/slices';
-import { getRoute, EPages } from 'types/routes';
-import Link from 'components/Link';
+import { EPages, getRoute } from 'types/routes';
 
 interface IStyleProps {
   height: number;

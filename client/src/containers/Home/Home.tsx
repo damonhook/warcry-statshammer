@@ -1,10 +1,10 @@
-import React from 'react';
-import Fighters from 'containers/Fighters';
-import { makeStyles, Button } from '@material-ui/core';
-import Header from 'components/Header';
+import { Button, makeStyles } from '@material-ui/core';
 import { ArrowForward } from '@material-ui/icons';
+import Header from 'components/Header';
+import Fighters from 'containers/Fighters';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { getRoute, EPages } from 'types/routes';
+import { EPages, getRoute } from 'types/routes';
 
 const useStyles = makeStyles(() => ({
   home: {

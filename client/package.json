@@ -1,5 +1,5 @@
 {
-  "name": "warcry-statshammer",
+  "name": "warcry-statshammer-client",
   "version": "0.1.0",
   "private": true,
   "proxy": "http://localhost:5000",
@@ -19,6 +19,7 @@
     "clsx": "^1.0.4",
     "core-js": "^3.6.4",
     "cross-fetch": "^3.0.4",
+    "dnd-core": "^10.0.2",
     "format-unicorn": "^1.1.1",
     "lodash": "^4.17.15",
     "nanoid": "^2.1.10",
@@ -48,9 +49,6 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
   },
   "browserslist": {
     "production": [

@@ -1,17 +1,18 @@
+import { Button } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import { ArrowBack } from '@material-ui/icons';
+import { fetchCompare } from 'api';
+import Header from 'components/Header';
+import isEqual from 'lodash/isEqual';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { makeStyles } from '@material-ui/core/styles';
-import Header from 'components/Header';
-import { fetchCompare } from 'api';
-import { IStore } from 'types/store';
-import isEqual from 'lodash/isEqual';
-import AverageDamage from './AverageDamage';
-import Probability from './Probability';
-import { Button } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
-import { getRoute, EPages } from 'types/routes';
-import { ArrowBack } from '@material-ui/icons';
+import { EPages, getRoute } from 'types/routes';
+import { IStore } from 'types/store';
+
+import AverageDamage from './AverageDamage';
 import Loader from './Loader';
+import Probability from './Probability';
 
 const useStyles = makeStyles(() => ({
   stats: {

@@ -1,11 +1,11 @@
-import React, { useMemo } from 'react';
+import { Grid } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { AverageDamageChart } from 'components/Charts';
-import { AverageDamageTable } from 'components/Tables';
-import { IStatsStore } from 'types/store';
-import { Grid } from '@material-ui/core';
 import CollapsibleCard from 'components/CollapsibleCard';
+import { AverageDamageTable } from 'components/Tables';
+import React, { useMemo } from 'react';
 import { IAverageDamageData } from 'types/mappedStats';
+import { IStatsStore } from 'types/store';
 
 const useStyles = makeStyles((theme: Theme) => ({
   averageDamageContainer: {
@@ -24,8 +24,6 @@ const AverageDamage = ({ stats, fighterNames }: IAverageDamageProps) => {
     if (stats.pending || !stats.results) return [];
     return stats.results.map(({ toughness, metrics }) => ({ toughness, ...metrics.mean }));
   }, [stats.pending, stats.results]);
-
-  console.log(fighterNames, averageDamageData);
 
   return (
     <CollapsibleCard title="Average Damage" className={classes.averageDamageContainer}>

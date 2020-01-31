@@ -1,4 +1,4 @@
-export const appConfig = {
+const appConfig = {
   limits: {
     fighters: 8,
     profiles: 5,

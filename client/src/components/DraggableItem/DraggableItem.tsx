@@ -1,14 +1,14 @@
-import React, { useRef } from 'react';
-import { makeStyles, Theme } from '@material-ui/core/styles';
-import { useDrag, useDrop, DropTargetMonitor } from 'react-dnd';
-import { XYCoord } from 'dnd-core';
+import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
+import { XYCoord } from 'dnd-core';
+import React, { useRef } from 'react';
+import { DropTargetMonitor, useDrag, useDrop } from 'react-dnd';
 
 interface IStyleProps {
   isDragging: boolean;
 }
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(() => ({
   card: ({ isDragging }: IStyleProps) => ({
     opacity: isDragging ? 0.5 : 1,
   }),
@@ -55,6 +55,7 @@ const DraggableItem = ({
         return;
       }
 
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const hoverBoundingRect = ref.current!.getBoundingClientRect();
       const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
       const clientOffset = monitor.getClientOffset();
@@ -66,6 +67,7 @@ const DraggableItem = ({
         return;
       }
       handleMove(dragIndex, hoverIndex);
+      // eslint-disable-next-line no-param-reassign
       item.index = hoverIndex;
     },
     collect: (monitor: any) => ({

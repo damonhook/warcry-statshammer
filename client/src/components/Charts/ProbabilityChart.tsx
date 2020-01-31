@@ -1,10 +1,11 @@
-import React from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { makeStyles, useTheme, Theme } from '@material-ui/core/styles';
-import { IProbabilityData } from 'types/mappedStats';
 import { Typography } from '@material-ui/core';
-import { ProbabilityTooltip } from './Tooltips';
+import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import { useIsMobile } from 'hooks';
+import React from 'react';
+import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import { IProbabilityData } from 'types/mappedStats';
+
+import { ProbabilityTooltip } from './Tooltips';
 
 const useStyles = makeStyles((theme: Theme) => ({
   chartContainer: {

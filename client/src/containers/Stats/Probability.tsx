@@ -1,10 +1,10 @@
-import React, { useMemo } from 'react';
+import { Grid } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { ProbabilityChart } from 'components/Charts';
-import { IStatsStore } from 'types/store';
-import { Grid } from '@material-ui/core';
 import CollapsibleCard from 'components/CollapsibleCard';
+import React, { useMemo } from 'react';
 import { IProbabilitiesData } from 'types/mappedStats';
+import { IStatsStore } from 'types/store';
 
 const useStyles = makeStyles((theme: Theme) => ({
   probabilityContainer: {
@@ -23,8 +23,6 @@ const Probability = ({ stats, fighterNames }: IProbabilityProps) => {
     if (stats.pending || !stats.results) return [];
     return stats.results.map(({ toughness, discrete, cumulative }) => ({ toughness, discrete, cumulative }));
   }, [stats.pending, stats.results]);
-
-  console.log(fighterNames, probabilityData);
 
   return (
     <>

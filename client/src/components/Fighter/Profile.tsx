@@ -1,13 +1,13 @@
-import React, { useRef } from 'react';
-import { TextField, Switch, IconButton } from '@material-ui/core';
+import { IconButton, Switch, TextField } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
-import { IProfile, IDamage } from 'types/fighter';
 import { Delete, DragHandle } from '@material-ui/icons';
-import { fighters as fightersStore } from 'store/slices';
-import { useDispatch } from 'react-redux';
-import DraggableItem from 'components/DraggableItem';
-import DamageField from 'components/DamageField';
 import clsx from 'clsx';
+import DamageField from 'components/DamageField';
+import DraggableItem from 'components/DraggableItem';
+import React, { useRef } from 'react';
+import { useDispatch } from 'react-redux';
+import { fighters as fightersStore } from 'store/slices';
+import { IDamage, IProfile } from 'types/fighter';
 
 const useStyles = makeStyles((theme: Theme) => ({
   profile: {

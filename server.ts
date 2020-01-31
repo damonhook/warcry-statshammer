@@ -3,6 +3,7 @@ import cluster from 'cluster';
 import express, { Response } from 'express';
 import os from 'os';
 import path from 'path';
+
 import { StatsController } from './api/controllers';
 
 function addHeaders(res: Response, production = false) {

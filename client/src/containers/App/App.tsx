@@ -1,21 +1,22 @@
-import React from 'react';
-import { ThemeProvider, makeStyles, Theme } from '@material-ui/core/styles';
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import getTheme from 'themes';
+import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
+import AppBar from 'components/AppBar';
+import BottomNavigation from 'components/BottomNavigation';
+import Footer from 'components/Footer';
+import LeftNavigation from 'components/LeftNavigation';
+import About from 'containers/About';
 import Home from 'containers/Home';
+import Stats from 'containers/Stats';
+import React from 'react';
 import { DndProvider } from 'react-dnd';
 import Backend from 'react-dnd-html5-backend';
 import { useSelector } from 'react-redux';
+import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
+import getTheme from 'themes';
+import { EPages, getRoute } from 'types/routes';
 import { IStore } from 'types/store';
-import { getRoute, EPages } from 'types/routes';
-import BottomNavigation from 'components/BottomNavigation';
-import AppBar from 'components/AppBar';
-import About from 'containers/About';
-import Stats from 'containers/Stats';
-import Footer from 'components/Footer';
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
@@ -30,6 +31,12 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: '100%',
     maxWidth: 1600,
   },
+  inner: {
+    display: 'flex',
+    flexDirection: 'row',
+    flex: 1,
+    width: '100%',
+  },
 }));
 
 const App = () => {
@@ -42,13 +49,16 @@ const App = () => {
           <CssBaseline />
           <div className={classes.root}>
             <AppBar />
-            <div className={classes.content}>
-              <Switch>
-                <Route exact path={getRoute(EPages.HOME)} component={Home} />
-                <Route exact path={getRoute(EPages.STATS)} component={Stats} />
-                <Route exact path={getRoute(EPages.ABOUT)} component={About} />
-                <Redirect to={getRoute(EPages.HOME)} />
-              </Switch>
+            <div className={classes.inner}>
+              <LeftNavigation />
+              <div className={classes.content}>
+                <Switch>
+                  <Route exact path={getRoute(EPages.HOME)} component={Home} />
+                  <Route exact path={getRoute(EPages.STATS)} component={Stats} />
+                  <Route exact path={getRoute(EPages.ABOUT)} component={About} />
+                  <Redirect to={getRoute(EPages.HOME)} />
+                </Switch>
+              </div>
             </div>
             <Footer />
             <BottomNavigation />

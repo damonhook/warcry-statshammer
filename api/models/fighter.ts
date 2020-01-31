@@ -1,6 +1,6 @@
-import { IProfile, ITarget, IFighter, TMatrix, TVector, IFighterProbability } from '../types';
-import { D6 } from './dice';
+import { IFighter, IFighterProbability, IProfile, ITarget, TMatrix, TVector } from '../types';
 import { getMax, getMean } from '../utils/statsUtils';
+import { D6 } from './dice';
 
 const generatePermutations = <T>(vector: T[], n = 1): T[][] => {
   if (n === 0) return [[]];

@@ -1,7 +1,7 @@
-import nanoid from 'nanoid';
 import { createSlice } from '@reduxjs/toolkit';
+import nanoid from 'nanoid';
+import { IFighter, IProfile } from 'types/fighter';
 import { TFightersStore } from 'types/store';
-import { IProfile, IFighter } from 'types/fighter';
 
 const INITIAL_STATE: TFightersStore = [];
 const DEFAULT_PROFILE: IProfile = {

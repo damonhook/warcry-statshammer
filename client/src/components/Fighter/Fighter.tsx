@@ -1,14 +1,15 @@
-import React, { useRef } from 'react';
-import { IFighter } from 'types/fighter';
-import { TextField, IconButton, CardContent, Card } from '@material-ui/core';
+import { Card, CardContent, IconButton, TextField } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
-import { DragHandle, Delete, Add } from '@material-ui/icons';
-import { fighters as fightersStore } from 'store/slices';
-import { useDispatch } from 'react-redux';
-import Profile from './Profile';
-import DraggableItem from 'components/DraggableItem';
-import DividerButton from 'components/DividerButton';
+import { Add, Delete, DragHandle } from '@material-ui/icons';
 import appConfig from 'appConfig';
+import DividerButton from 'components/DividerButton';
+import DraggableItem from 'components/DraggableItem';
+import React, { useRef } from 'react';
+import { useDispatch } from 'react-redux';
+import { fighters as fightersStore } from 'store/slices';
+import { IFighter } from 'types/fighter';
+
+import Profile from './Profile';
 
 const useStyles = makeStyles((theme: Theme) => ({
   fighter: {
