@@ -8,8 +8,6 @@ import About from 'containers/About';
 import Home from 'containers/Home';
 import Stats from 'containers/Stats';
 import React from 'react';
-import { DndProvider } from 'react-dnd';
-import Backend from 'react-dnd-html5-backend';
 import { useSelector } from 'react-redux';
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 import getTheme from 'themes';
@@ -46,25 +44,23 @@ const App = () => {
   return (
     <Router>
       <ThemeProvider theme={getTheme(config)}>
-        <DndProvider backend={Backend}>
-          <CssBaseline />
-          <div className={classes.root}>
-            <AppBar />
-            <div className={classes.inner}>
-              <LeftNavigation />
-              <div className={classes.content}>
-                <Switch>
-                  <Route exact path={getRoute(EPages.HOME)} component={Home} />
-                  <Route exact path={getRoute(EPages.STATS)} component={Stats} />
-                  <Route exact path={getRoute(EPages.ABOUT)} component={About} />
-                  <Redirect to={getRoute(EPages.HOME)} />
-                </Switch>
-              </div>
+        <CssBaseline />
+        <div className={classes.root}>
+          <AppBar />
+          <div className={classes.inner}>
+            <LeftNavigation />
+            <div className={classes.content}>
+              <Switch>
+                <Route exact path={getRoute(EPages.HOME)} component={Home} />
+                <Route exact path={getRoute(EPages.STATS)} component={Stats} />
+                <Route exact path={getRoute(EPages.ABOUT)} component={About} />
+                <Redirect to={getRoute(EPages.HOME)} />
+              </Switch>
             </div>
-            <Footer />
-            <BottomNavigation />
           </div>
-        </DndProvider>
+          <Footer />
+          <BottomNavigation />
+        </div>
       </ThemeProvider>
     </Router>
   );

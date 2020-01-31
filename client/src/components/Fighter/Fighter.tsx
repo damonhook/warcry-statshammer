@@ -3,18 +3,22 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 import { Add, Delete, DragHandle } from '@material-ui/icons';
 import appConfig from 'appConfig';
 import DividerButton from 'components/DividerButton';
-import DraggableItem from 'components/DraggableItem';
-import React, { useRef } from 'react';
+import React from 'react';
+import {
+  DragDropContext,
+  DraggableProvidedDragHandleProps,
+  Droppable,
+  DroppableProvided,
+  DropResult,
+} from 'react-beautiful-dnd';
 import { useDispatch } from 'react-redux';
 import { fighters as fightersStore } from 'store/slices';
 import { IFighter } from 'types/fighter';
 
-import Profile from './Profile';
+import DraggableProfile from './DraggableProfile';
 
 const useStyles = makeStyles((theme: Theme) => ({
-  fighter: {
-    marginBottom: theme.spacing(2),
-  },
+  fighter: {},
   handle: {
     cursor: 'move',
   },
@@ -26,21 +30,19 @@ const useStyles = makeStyles((theme: Theme) => ({
     alignItems: 'center',
     marginBottom: theme.spacing(1),
   },
+  profile: {
+    margin: theme.spacing(0, 0, 1, 1),
+  },
 }));
 
 interface IFighterProps {
   fighter: IFighter;
   index: number;
+  dragHandleProps?: DraggableProvidedDragHandleProps | null;
 }
-
-const Fighter = ({ fighter, index }: IFighterProps) => {
+const Fighter = ({ fighter, index, dragHandleProps }: IFighterProps) => {
   const dispatch = useDispatch();
   const classes = useStyles();
-  const handleRef = useRef<HTMLDivElement>(null);
-
-  const handleMove = (dragIndex: number, hoverIndex: number) => {
-    dispatch(fightersStore.actions.moveFighter({ index: dragIndex, newIndex: hoverIndex }));
-  };
 
   const handleAddProfile = () => {
     dispatch(fightersStore.actions.addProfile({ index }));
@@ -50,25 +52,30 @@ const Fighter = ({ fighter, index }: IFighterProps) => {
     dispatch(fightersStore.actions.deleteFighter({ index }));
   };
 
-  const handleEditName = event => {
+  const handleEditName = (event: any) => {
     dispatch(fightersStore.actions.editFighterName({ index, name: event.target.value }));
+  };
+
+  const handleMoveProfile = (result: DropResult) => {
+    const { source, destination } = result;
+    if (!destination) return;
+    dispatch(
+      fightersStore.actions.moveProfile({
+        index,
+        profileIndex: source.index,
+        newProfileIndex: destination.index,
+      }),
+    );
   };
 
   const isAddProfileDisabled = fighter.profiles.length >= appConfig.limits.profiles;
 
   return (
-    <DraggableItem
-      itemCollection="fighters"
-      index={index}
-      id={fighter.uuid ?? index}
-      onMove={handleMove}
-      handleRef={handleRef}
-      className={classes.fighter}
-    >
+    <div className={classes.fighter}>
       <Card>
         <CardContent>
           <div className={classes.header}>
-            <div ref={handleRef}>
+            <div {...dragHandleProps}>
               <DragHandle className={classes.handle} fontSize="large" />
             </div>
             <TextField
@@ -83,17 +90,26 @@ const Fighter = ({ fighter, index }: IFighterProps) => {
               <Delete />
             </IconButton>
           </div>
-          <div>
-            {fighter.profiles.map((profile, profileIndex) => (
-              <Profile
-                fighterIndex={index}
-                profileIndex={profileIndex}
-                profile={profile}
-                deleteEnabled={fighter.profiles.length > 1}
-                key={profile.uuid ?? profileIndex}
-              />
-            ))}
-          </div>
+          <DragDropContext onDragEnd={handleMoveProfile}>
+            <Droppable droppableId={`profiles-${index}`}>
+              {(provided: DroppableProvided) => (
+                <div ref={provided.innerRef} {...provided.droppableProps}>
+                  {fighter.profiles.map((profile, profileIndex) => (
+                    <DraggableProfile
+                      fighterIndex={index}
+                      profileIndex={profileIndex}
+                      profile={profile}
+                      key={profile.uuid}
+                      deleteEnabled={fighter.profiles.length > 1}
+                      draggableId={profile.uuid ?? String(profileIndex)}
+                      className={classes.profile}
+                    />
+                  ))}
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+          </DragDropContext>
           <DividerButton
             onClick={handleAddProfile}
             variant="contained"
@@ -105,7 +121,7 @@ const Fighter = ({ fighter, index }: IFighterProps) => {
           </DividerButton>
         </CardContent>
       </Card>
-    </DraggableItem>
+    </div>
   );
 };
 
