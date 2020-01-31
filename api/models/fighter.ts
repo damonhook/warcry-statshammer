@@ -35,7 +35,7 @@ class Fighter implements IFighter {
       .map(damage => ({
         damage,
         count: counts[damage],
-        probability: (counts[damage] * 100) / numPermutations,
+        probability: Number(((counts[damage] * 100) / numPermutations).toFixed(2)),
       }));
     const metrics = {
       max: getMax(Object.keys(counts).map(Number)),
