@@ -1,5 +1,7 @@
 ![https://img.shields.io/github/v/release/damonhook/warcry-statshammer.svg](https://img.shields.io/github/v/release/damonhook/warcry-statshammer.svg)
 
+## **NOTE**: NOT YET RELEASED
+
 <div align="center">
     <a href="https://warcry-statshammer.herokuapp.com/" target="_blank">
         <img width="128" src="docs/logo256.png">
@@ -12,6 +14,18 @@ A tool for calculating and comparing damage outputs for Warhammer Warcry Fighter
 (also referred to as Mathhammer).
 
 The production deploy of the tool is located at: https://warcry-statshammer.herokuapp.com/
+
+<div align="center">
+    <a href="https://warcry-statshammer.herokuapp.com/" target="_blank">
+        <img width="100%" src="docs/compareHome.png">
+    </a>
+</div>
+
+<div align="center">
+    <a href="https://warcry-statshammer.herokuapp.com/" target="_blank">
+        <img width="100%" src="docs/compareStats.png">
+    </a>
+</div>
 
 ## Features
 
@@ -32,6 +46,11 @@ The production deploy of the tool is located at: https://warcry-statshammer.hero
 - Export PDF
 - Save / Load Fighters
 - Choose from a preset list of fighters
+
+## Related Projects
+
+- [AoS Statshammer](https://github.com/damonhook/aos-statshammer)
+  - Provides similar functionality to this, but for Warhammer Age of Sigmar
 
 ## Installation
 
