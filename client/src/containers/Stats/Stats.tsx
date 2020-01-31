@@ -2,6 +2,7 @@ import { Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { ArrowBack } from '@material-ui/icons';
 import { fetchCompare } from 'api';
+import ErrorCard from 'components/ErrorCard';
 import Header from 'components/Header';
 import isEqual from 'lodash/isEqual';
 import React, { useEffect } from 'react';
@@ -35,6 +36,13 @@ const Stats = () => {
     history.push(getRoute(EPages.HOME));
   };
 
+  let placeholder: JSX.Element | null = null;
+  if (stats.pending) {
+    placeholder = <Loader />;
+  } else if (stats.error) {
+    placeholder = <ErrorCard />;
+  }
+
   return (
     <div className={classes.stats}>
       <Header
@@ -45,9 +53,7 @@ const Stats = () => {
           </Button>
         }
       />
-      {stats.pending ? (
-        <Loader />
-      ) : (
+      {placeholder || (
         <>
           <AverageDamage stats={stats} fighterNames={fighterNames} />
           <Probability stats={stats} fighterNames={fighterNames} />

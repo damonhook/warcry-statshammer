@@ -1,5 +1,5 @@
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
+import { makeStyles, Theme, ThemeProvider } from '@material-ui/core/styles';
 import AppBar from 'components/AppBar';
 import BottomNavigation from 'components/BottomNavigation';
 import Footer from 'components/Footer';
@@ -16,7 +16,7 @@ import getTheme from 'themes';
 import { EPages, getRoute } from 'types/routes';
 import { IStore } from 'types/store';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme: Theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
@@ -27,6 +27,7 @@ const useStyles = makeStyles(() => ({
     display: 'flex',
     flexDirection: 'column',
     margin: '0 auto',
+    padding: theme.spacing(0, 2),
     flex: 1,
     width: '100%',
     maxWidth: 1600,
