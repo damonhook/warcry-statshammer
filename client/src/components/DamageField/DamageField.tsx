@@ -1,8 +1,8 @@
-import React from 'react';
 import { TextField, Typography } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
-import { IDamage } from 'types/fighter';
 import clsx from 'clsx';
+import React from 'react';
+import { IDamage } from 'types/fighter';
 
 const useStyles = makeStyles((theme: Theme) => ({
   damageField: {
@@ -43,6 +43,7 @@ const DamageField = ({ damage, setDamage, className }: IDamageFieldProps) => {
         onChange={handleHitChanged}
         className={classes.field}
         size="small"
+        type="number"
       />
       <Typography className={classes.separator} variant="h4">
         /
@@ -54,6 +55,7 @@ const DamageField = ({ damage, setDamage, className }: IDamageFieldProps) => {
         onChange={handleCritChanged}
         className={classes.field}
         size="small"
+        type="number"
       />
     </div>
   );

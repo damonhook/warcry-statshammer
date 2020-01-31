@@ -1,9 +1,9 @@
-import React from 'react';
-import { Button, Divider, ButtonProps } from '@material-ui/core';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import { Button, ButtonProps, Divider } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
+import React from 'react';
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(() => ({
   dividerButton: {
     display: 'flex',
     alignItems: 'center',

@@ -1,7 +1,7 @@
-import React from 'react';
 import { Card } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import clsx from 'clsx';
+import React from 'react';
 
 const useStyles = makeStyles((theme: Theme) => ({
   listItem: {

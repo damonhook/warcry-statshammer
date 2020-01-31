@@ -1,17 +1,16 @@
-import React, { useRef } from 'react';
-import { TextField, Switch, IconButton } from '@material-ui/core';
+import { IconButton, Switch, TextField } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
-import { IProfile, IDamage } from 'types/fighter';
 import { Delete, DragHandle } from '@material-ui/icons';
-import { fighters as fightersStore } from 'store/slices';
-import { useDispatch } from 'react-redux';
-import DraggableItem from 'components/DraggableItem';
-import DamageField from 'components/DamageField';
 import clsx from 'clsx';
+import DamageField from 'components/DamageField';
+import React from 'react';
+import { DraggableProvidedDragHandleProps } from 'react-beautiful-dnd';
+import { useDispatch } from 'react-redux';
+import { fighters as fightersStore } from 'store/slices';
+import { IDamage, IProfile } from 'types/fighter';
 
 const useStyles = makeStyles((theme: Theme) => ({
   profile: {
-    margin: theme.spacing(0, 0, 1, 1),
     display: 'flex',
     alignItems: 'center',
   },
@@ -45,25 +44,21 @@ interface IProfileProps {
   profileIndex: number;
   profile: IProfile;
   deleteEnabled?: boolean;
+  dragHandleProps?: DraggableProvidedDragHandleProps | null;
 }
 
-const Profile = ({ fighterIndex, profileIndex, profile, deleteEnabled = true }: IProfileProps) => {
+const Profile = ({
+  fighterIndex,
+  profileIndex,
+  profile,
+  dragHandleProps,
+  deleteEnabled = true,
+}: IProfileProps) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const handleRef = useRef<HTMLDivElement>(null);
 
   const handleDeleteProfile = () => {
     dispatch(fightersStore.actions.deleteProfile({ index: fighterIndex, profileIndex }));
-  };
-
-  const handleMoveProfile = (dragIndex: number, hoverIndex: number) => {
-    dispatch(
-      fightersStore.actions.moveProfile({
-        index: fighterIndex,
-        profileIndex: dragIndex,
-        newProfileIndex: hoverIndex,
-      }),
-    );
   };
 
   const handleEditProfile = (name: string, value: any) => {
@@ -98,18 +93,11 @@ const Profile = ({ fighterIndex, profileIndex, profile, deleteEnabled = true }: 
   };
 
   return (
-    <DraggableItem
-      itemCollection={`profiles-${fighterIndex}`}
-      index={profileIndex}
-      id={fighterIndex ?? profileIndex}
-      onMove={handleMoveProfile}
-      handleRef={handleRef}
-      className={classes.profile}
-    >
-      <div ref={handleRef}>
+    <div className={classes.profile}>
+      <div {...dragHandleProps}>
         <DragHandle cursor="move" />
       </div>
-      <Switch checked={profile.active} onChange={handleSetActive} />
+      <Switch checked={profile.active} onChange={handleSetActive} disabled={!deleteEnabled} tabIndex={1} />
       <div className={classes.item}>
         <TextField
           className={clsx(classes.field, classes.range)}
@@ -121,6 +109,7 @@ const Profile = ({ fighterIndex, profileIndex, profile, deleteEnabled = true }: 
         />
         <TextField
           className={classes.field}
+          type="number"
           label="Attacks"
           variant="filled"
           value={profile.attacks}
@@ -129,6 +118,7 @@ const Profile = ({ fighterIndex, profileIndex, profile, deleteEnabled = true }: 
         />
         <TextField
           className={classes.field}
+          type="number"
           label="Strength"
           variant="filled"
           value={profile.strength}
@@ -141,10 +131,10 @@ const Profile = ({ fighterIndex, profileIndex, profile, deleteEnabled = true }: 
           setDamage={handleEditDamage}
         />
       </div>
-      <IconButton onClick={handleDeleteProfile} disabled={!deleteEnabled}>
+      <IconButton onClick={handleDeleteProfile} disabled={!deleteEnabled} tabIndex={1}>
         <Delete />
       </IconButton>
-    </DraggableItem>
+    </div>
   );
 };
 

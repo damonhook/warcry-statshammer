@@ -1,7 +1,8 @@
+import { LocalOffer as ReleasesIcon } from '@material-ui/icons';
 import React from 'react';
+
 import { ISocialButtonProps } from './props';
 import SocialItem from './SocialItem';
-import { LocalOffer as ReleasesIcon } from '@material-ui/icons';
 
 const Releases = ({ className }: ISocialButtonProps) => {
   return (

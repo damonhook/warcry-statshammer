@@ -1,13 +1,13 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import { EPages, getRoute } from 'types/routes';
-import { useReadFromFile } from 'hooks';
-import ReactMarkdown from 'react-markdown';
-import { Paper, Theme, Typography, Divider, CircularProgress, IconButton } from '@material-ui/core';
-import { Assessment as Logo } from '@material-ui/icons';
+import { CircularProgress, Divider, IconButton, Paper, Theme, Typography } from '@material-ui/core';
 import { grey } from '@material-ui/core/colors';
-import { useHistory } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
+import Logo from 'components/Logo';
 import { Github, Reddit, Releases } from 'components/SocialButtons';
+import { useReadFromFile } from 'hooks';
+import React from 'react';
+import ReactMarkdown from 'react-markdown';
+import { useHistory } from 'react-router-dom';
+import { EPages, getRoute } from 'types/routes';
 
 const useStyles = makeStyles((theme: Theme) => ({
   about: {
@@ -34,14 +34,17 @@ const useStyles = makeStyles((theme: Theme) => ({
   loader: {
     margin: theme.spacing(4),
   },
-  logo: {
+  logoButton: {
     margin: '0 auto',
-  },
-  logoIcon: {
-    fontSize: '7rem',
   },
   md: {
     marginTop: -theme.spacing(2),
+    '& a': {
+      color: theme.palette.primary.main,
+      '&:visited': {
+        color: theme.palette.primary.dark,
+      },
+    },
   },
   divider: {
     marginTop: theme.spacing(3),
@@ -73,8 +76,8 @@ const About = () => {
     <div className={classes.about}>
       <div className={classes.wrapper}>
         <Paper className={classes.paper}>
-          <IconButton onClick={handleLogoClick} className={classes.logo}>
-            <Logo color="primary" className={classes.logoIcon} />
+          <IconButton onClick={handleLogoClick} className={classes.logoButton}>
+            <Logo fontSize={7} />
           </IconButton>
           {!content && (
             <div className={classes.loader}>

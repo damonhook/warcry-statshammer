@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { Card, CardContent, Typography, Collapse } from '@material-ui/core';
+import { Card, CardContent, Collapse, Typography } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { ExpandLess, ExpandMore } from '@material-ui/icons';
+import React, { useState } from 'react';
 
 const useStyles = makeStyles((theme: Theme) => ({
   header: {

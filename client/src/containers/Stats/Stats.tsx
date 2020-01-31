@@ -1,16 +1,19 @@
+import { Button } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import { ArrowBack } from '@material-ui/icons';
+import { fetchCompare } from 'api';
+import ErrorCard from 'components/ErrorCard';
+import Header from 'components/Header';
+import isEqual from 'lodash/isEqual';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { makeStyles } from '@material-ui/core/styles';
-import Header from 'components/Header';
-import { fetchCompare } from 'api';
-import { IStore } from 'types/store';
-import isEqual from 'lodash/isEqual';
-import AverageDamage from './AverageDamage';
-import Probability from './Probability';
-import { Button } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
-import { getRoute, EPages } from 'types/routes';
-import { ArrowBack } from '@material-ui/icons';
+import { EPages, getRoute } from 'types/routes';
+import { IStore } from 'types/store';
+
+import AverageDamage from './AverageDamage';
+import Loader from './Loader';
+import Probability from './Probability';
 
 const useStyles = makeStyles(() => ({
   stats: {
@@ -24,14 +27,26 @@ const Stats = () => {
   const dispatch = useDispatch();
   const stats = useSelector((state: IStore) => state.stats, isEqual);
   const fighterNames = useSelector((state: IStore) => [...new Set(state.fighters.map(f => f.name))], isEqual);
+  const numFighters = useSelector((state: IStore) => state.fighters.length);
 
   useEffect(() => {
     dispatch(fetchCompare());
   }, [dispatch]);
 
+  if (numFighters <= 0) {
+    history.replace(getRoute(EPages.HOME));
+  }
+
   const handleBack = () => {
     history.push(getRoute(EPages.HOME));
   };
+
+  let placeholder: JSX.Element | null = null;
+  if (stats.pending) {
+    placeholder = <Loader />;
+  } else if (stats.error) {
+    placeholder = <ErrorCard />;
+  }
 
   return (
     <div className={classes.stats}>
@@ -43,7 +58,7 @@ const Stats = () => {
           </Button>
         }
       />
-      {!stats.pending && stats.results && (
+      {placeholder || (
         <>
           <AverageDamage stats={stats} fighterNames={fighterNames} />
           <Probability stats={stats} fighterNames={fighterNames} />

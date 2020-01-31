@@ -1,8 +1,9 @@
-import React, { useCallback } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { makeStyles, useTheme, Theme } from '@material-ui/core/styles';
-import { IAverageDamageData } from 'types/mappedStats';
 import { Typography } from '@material-ui/core';
+import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
+import React, { useCallback } from 'react';
+import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import { IAverageDamageData } from 'types/mappedStats';
+
 import { AverageDamageTooltip } from './Tooltips';
 
 const useStyles = makeStyles((theme: Theme) => ({

@@ -1,7 +1,7 @@
-import nanoid from 'nanoid';
 import { createSlice } from '@reduxjs/toolkit';
+import nanoid from 'nanoid';
+import { IFighter, IProfile } from 'types/fighter';
 import { TFightersStore } from 'types/store';
-import { IProfile } from 'types/fighter';
 
 const INITIAL_STATE: TFightersStore = [];
 const DEFAULT_PROFILE: IProfile = {
@@ -39,13 +39,21 @@ const moveFighter = (state: TFightersStore, action: { payload: { index: number; 
   state.splice(sanitizedNewIndex, 0, ...state.splice(index, 1));
 };
 
+const ensureAtLeastOneActiveProfile = (fighter: IFighter): IFighter => {
+  const hasActive = fighter.profiles.some(({ active }) => active);
+  if (!hasActive) fighter.profiles[0].active = true;
+  return fighter;
+};
+
 const addProfile = (state: TFightersStore, action: { payload: { index: number } }) => {
   const { index } = action.payload;
-  state[index].profiles.push({
+  const fighter = state[index];
+  fighter.profiles.push({
     ...DEFAULT_PROFILE,
     uuid: nanoid(),
-    active: !state[index].profiles.length,
+    active: false,
   });
+  ensureAtLeastOneActiveProfile(fighter);
 };
 
 const setActiveProfile = (
@@ -53,10 +61,12 @@ const setActiveProfile = (
   action: { payload: { index: number; profileIndex: number } },
 ) => {
   const { index, profileIndex } = action.payload;
-  state[index].profiles = state[index].profiles.map((profile, i) => ({
+  const fighter = state[index];
+  fighter.profiles = fighter.profiles.map((profile, i) => ({
     ...profile,
     active: i === profileIndex,
   }));
+  ensureAtLeastOneActiveProfile(fighter);
 };
 
 const editProfile = (
@@ -64,7 +74,9 @@ const editProfile = (
   action: { payload: { index: number; profileIndex: number; name: string; value: any } },
 ) => {
   const { index, profileIndex, name, value } = action.payload;
-  state[index].profiles[profileIndex][name] = value;
+  const fighter = state[index];
+  fighter.profiles[profileIndex][name] = value;
+  ensureAtLeastOneActiveProfile(fighter);
 };
 
 const moveProfile = (
@@ -75,6 +87,7 @@ const moveProfile = (
   const fighter = state[index];
   const sanitizedNewIndex = Math.min(Math.max(newProfileIndex, 0), fighter.profiles.length - 1);
   fighter.profiles.splice(sanitizedNewIndex, 0, ...fighter.profiles.splice(profileIndex, 1));
+  ensureAtLeastOneActiveProfile(fighter);
 };
 
 const deleteProfile = (
@@ -82,7 +95,9 @@ const deleteProfile = (
   action: { payload: { index: number; profileIndex: number } },
 ) => {
   const { index, profileIndex } = action.payload;
-  state[index].profiles = state[index].profiles.filter((_, i) => i !== profileIndex);
+  const fighter = state[index];
+  fighter.profiles = fighter.profiles.filter((_, i) => i !== profileIndex);
+  ensureAtLeastOneActiveProfile(fighter);
 };
 
 export const fighters = createSlice({

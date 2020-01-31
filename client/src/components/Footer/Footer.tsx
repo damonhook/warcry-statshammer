@@ -1,9 +1,9 @@
-import React from 'react';
+import { Paper, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { Typography, Paper } from '@material-ui/core';
 import clsx from 'clsx';
 import { Github, Reddit, Releases } from 'components/SocialButtons';
 import { useIsMobile } from 'hooks';
+import React from 'react';
 
 const useStyles = makeStyles(theme => ({
   footer: {

@@ -1,9 +1,8 @@
-import { persistStore, persistReducer } from 'redux-persist';
+import { combineReducers, configureStore as createStore, Middleware } from '@reduxjs/toolkit';
+import logger from 'redux-logger';
+import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
 import thunk from 'redux-thunk';
-import logger from 'redux-logger';
-
-import { configureStore as createStore, combineReducers, Middleware } from '@reduxjs/toolkit';
 
 import { config, fighters, stats } from './slices';
 

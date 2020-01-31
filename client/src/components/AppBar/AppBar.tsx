@@ -1,9 +1,11 @@
-import React, { useRef, useEffect, useState } from 'react';
-import { AppBar as Bar, Toolbar, Typography, useScrollTrigger, Slide, IconButton } from '@material-ui/core';
-import { BrightnessMedium as BrightnessMediumIcon } from '@material-ui/icons';
+import { AppBar as Bar, IconButton, Slide, Toolbar, Typography, useScrollTrigger } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
+import { BrightnessMedium as BrightnessMediumIcon } from '@material-ui/icons';
+import Link from 'components/Link';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { config as configStore } from 'store/slices';
+import { EPages, getRoute } from 'types/routes';
 
 interface IStyleProps {
   height: number;
@@ -24,6 +26,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   title: {
     padding: theme.spacing(2, 0),
+  },
+  action: {
+    color: theme.palette.getContrastText(theme.palette.primary.dark),
   },
 }));
 
@@ -50,11 +55,13 @@ const AppBar = () => {
         <Bar className={classes.appBar}>
           <div ref={ref}>
             <Toolbar variant="dense" className={classes.toolbar}>
-              <Typography variant="h5" component="h1" className={classes.title}>
-                Warcry Statshammer
-              </Typography>
+              <Link to={getRoute(EPages.HOME)}>
+                <Typography variant="h5" component="h1" className={classes.title}>
+                  Warcry Statshammer
+                </Typography>
+              </Link>
               <span>
-                <IconButton onClick={handleDarkModeToggle}>
+                <IconButton onClick={handleDarkModeToggle} className={classes.action}>
                   <BrightnessMediumIcon />
                 </IconButton>
               </span>

@@ -1,10 +1,12 @@
-import React, { useState, useRef, useEffect } from 'react';
 import { BottomNavigation as Nav, BottomNavigationAction as NavItem } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
-import { Home as HomeIcon, Info as InfoIcon, BarChart as StatsIcon } from '@material-ui/icons';
+import { BarChart as StatsIcon, Home as HomeIcon, Info as InfoIcon } from '@material-ui/icons';
+import { useBreakpointChanged, useRouteFind } from 'hooks';
+import React, { useEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { getRoute, EPages } from 'types/routes';
-import { useRouteFind } from 'hooks';
+import { EPages, getRoute } from 'types/routes';
+import { IStore } from 'types/store';
 
 interface IStyleProps {
   height: number;
@@ -17,10 +19,18 @@ const useStyles = makeStyles((theme: Theme) => ({
     right: 0,
     zIndex: theme.zIndex.appBar,
     boxShadow: theme.palette.type === 'dark' ? theme.shadows[20] : theme.shadows[10],
+    [theme.breakpoints.up('md')]: {
+      display: 'none',
+    },
   },
   offset: ({ height }: IStyleProps) => ({
     marginTop: height,
   }),
+  item: {
+    '&:disabled': {
+      color: theme.palette.action.disabledBackground,
+    },
+  },
 }));
 
 const BottomNavigation = () => {
@@ -32,24 +42,29 @@ const BottomNavigation = () => {
   const routes = [getRoute(EPages.HOME), getRoute(EPages.STATS), getRoute(EPages.ABOUT)];
   const [index] = useRouteFind(routes);
 
+  const breakpoints = useBreakpointChanged();
+  const numFighters = useSelector((state: IStore) => state.fighters.length);
+
   const handleChange = (event: any, newValue: number) => {
     history.push(routes[newValue]);
   };
 
   useEffect(() => {
-    if (ref && ref.current) {
-      setHeight(ref.current.clientHeight);
-    }
-  }, [ref]);
+    setTimeout(() => {
+      if (ref && ref.current) {
+        setHeight(ref.current.clientHeight);
+      }
+    }, 150);
+  }, [ref, breakpoints]);
 
   return (
     <>
       <div className={classes.offset} />
       <div ref={ref} className={classes.nav}>
         <Nav showLabels value={index} onChange={handleChange}>
-          <NavItem label="Home" icon={<HomeIcon />} />
-          <NavItem label="Stats" icon={<StatsIcon />} />
-          <NavItem label="About" icon={<InfoIcon />} />
+          <NavItem className={classes.item} label="Home" icon={<HomeIcon />} />
+          <NavItem className={classes.item} label="Stats" icon={<StatsIcon />} disabled={numFighters <= 0} />
+          <NavItem className={classes.item} label="About" icon={<InfoIcon />} />
         </Nav>
       </div>
     </>
