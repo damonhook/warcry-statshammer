@@ -43,6 +43,7 @@ const DamageField = ({ damage, setDamage, className }: IDamageFieldProps) => {
         onChange={handleHitChanged}
         className={classes.field}
         size="small"
+        type="number"
       />
       <Typography className={classes.separator} variant="h4">
         /
@@ -54,6 +55,7 @@ const DamageField = ({ damage, setDamage, className }: IDamageFieldProps) => {
         onChange={handleCritChanged}
         className={classes.field}
         size="small"
+        type="number"
       />
     </div>
   );

@@ -4,10 +4,10 @@ import { EPages, getRoute } from 'types/routes';
 import { useReadFromFile } from 'hooks';
 import ReactMarkdown from 'react-markdown';
 import { Paper, Theme, Typography, Divider, CircularProgress, IconButton } from '@material-ui/core';
-import { Assessment as Logo } from '@material-ui/icons';
 import { grey } from '@material-ui/core/colors';
 import { useHistory } from 'react-router-dom';
 import { Github, Reddit, Releases } from 'components/SocialButtons';
+import Logo from 'components/Logo';
 
 const useStyles = makeStyles((theme: Theme) => ({
   about: {
@@ -34,11 +34,8 @@ const useStyles = makeStyles((theme: Theme) => ({
   loader: {
     margin: theme.spacing(4),
   },
-  logo: {
+  logoButton: {
     margin: '0 auto',
-  },
-  logoIcon: {
-    fontSize: '7rem',
   },
   md: {
     marginTop: -theme.spacing(2),
@@ -73,8 +70,8 @@ const About = () => {
     <div className={classes.about}>
       <div className={classes.wrapper}>
         <Paper className={classes.paper}>
-          <IconButton onClick={handleLogoClick} className={classes.logo}>
-            <Logo color="primary" className={classes.logoIcon} />
+          <IconButton onClick={handleLogoClick} className={classes.logoButton}>
+            <Logo fontSize={7} />
           </IconButton>
           {!content && (
             <div className={classes.loader}>

@@ -121,6 +121,7 @@ const Profile = ({ fighterIndex, profileIndex, profile, deleteEnabled = true }: 
         />
         <TextField
           className={classes.field}
+          type="number"
           label="Attacks"
           variant="filled"
           value={profile.attacks}
@@ -129,6 +130,7 @@ const Profile = ({ fighterIndex, profileIndex, profile, deleteEnabled = true }: 
         />
         <TextField
           className={classes.field}
+          type="number"
           label="Strength"
           variant="filled"
           value={profile.strength}
