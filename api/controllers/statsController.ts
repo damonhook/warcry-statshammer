@@ -67,7 +67,7 @@ export class StatsController {
   ): t.TProbabilityResult[] {
     const maxDamage = Math.max(...Object.keys(probabilities).map(n => Number(n)));
     const sums = fighterNames.reduce((acc, name) => ({ ...acc, [name]: 0 }), {});
-    const cumulative = [...Array(maxDamage + 1)].map((_, damage) => {
+    const cumulative = [...Array(maxDamage)].map((_, damage) => {
       const map = probabilities[damage] ?? {};
       return fighterNames.reduce(
         (acc, name) => {
@@ -82,7 +82,7 @@ export class StatsController {
     });
     return [
       ...cumulative,
-      fighterNames.reduce((acc, name) => ({ ...acc, [name]: 100 }), { damage: maxDamage + 1 }),
+      fighterNames.reduce((acc, name) => ({ ...acc, [name]: 100 }), { damage: maxDamage }),
     ];
   }
 }

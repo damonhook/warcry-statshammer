@@ -29,5 +29,6 @@ export interface IFighterProbability {
   }[];
   metrics: {
     max: number;
+    mean: number;
   };
 }
