@@ -19,15 +19,15 @@ class Fighter implements IFighter {
   }
 
   getProbabilities(target: ITarget): IFighterProbability {
-    const permutations = this.getReducedPermutations(target);
+    const permutations = this.getPermutationMatrix(target);
     const numPermutations = permutations.length;
-    const counts = permutations.reduce<{ [val: number]: number }>(
-      (acc, result) => ({
-        ...acc,
-        [result]: (acc[result] || 0) + 1,
-      }),
-      {},
-    );
+    const counts = {};
+    let sum = 0;
+    permutations.forEach(vector => {
+      const result = vector.reduce((acc, point) => acc + point, 0);
+      sum += result;
+      counts[result] = (counts[result] || 0) + 1;
+    });
     const buckets = Object.keys(counts)
       .map(Number)
       .sort((x, y) => x - y)
@@ -38,7 +38,7 @@ class Fighter implements IFighter {
       }));
     const metrics = {
       max: getMax(Object.keys(counts).map(Number)),
-      mean: getMean(permutations),
+      mean: Number((sum / numPermutations).toFixed(2)),
     };
     buckets.push({ damage: metrics.max + 1, count: 0, probability: 0 });
     return {
