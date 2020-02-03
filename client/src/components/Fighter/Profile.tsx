@@ -1,9 +1,10 @@
 import { IconButton, Switch, TextField } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { Delete, DragHandle } from '@material-ui/icons';
+import appConfig from 'appConfig';
 import clsx from 'clsx';
 import DamageField from 'components/DamageField';
-import React from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { DraggableProvidedDragHandleProps } from 'react-beautiful-dnd';
 import { useDispatch } from 'react-redux';
 import { fighters as fightersStore } from 'store/slices';
@@ -61,16 +62,25 @@ const Profile = ({
     dispatch(fightersStore.actions.deleteProfile({ index: fighterIndex, profileIndex }));
   };
 
-  const handleEditProfile = (name: string, value: any) => {
-    dispatch(
-      fightersStore.actions.editProfile({
-        index: fighterIndex,
-        profileIndex,
-        name,
-        value,
-      }),
-    );
-  };
+  const handleEditProfile = useCallback(
+    (name: string, value: any) => {
+      dispatch(
+        fightersStore.actions.editProfile({
+          index: fighterIndex,
+          profileIndex,
+          name,
+          value,
+        }),
+      );
+    },
+    [dispatch, fighterIndex, profileIndex],
+  );
+
+  useEffect(() => {
+    if (profile.attacks > appConfig.limits.maxAttacks) {
+      handleEditProfile('attacks', appConfig.limits.maxAttacks);
+    }
+  }, [handleEditProfile, profile]);
 
   const handleSetActive = () => {
     dispatch(fightersStore.actions.setActiveProfile({ index: fighterIndex, profileIndex }));
@@ -114,6 +124,10 @@ const Profile = ({
           variant="filled"
           value={profile.attacks}
           onChange={handleEditAttacks}
+          inputProps={{
+            min: 0,
+            max: appConfig.limits.maxAttacks,
+          }}
           size="small"
         />
         <TextField

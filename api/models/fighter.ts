@@ -1,13 +1,12 @@
-import { IFighter, IFighterProbability, IProfile, ITarget, TMatrix, TVector } from '../types';
+import Combinatorics, { IPredictableGenerator } from 'js-combinatorics';
+
+import { IFighter, IFighterProbability, IProfile, ITarget, TVector } from '../types';
 import { getMax, getMean } from '../utils/statsUtils';
 import { D6 } from './dice';
 
-const generatePermutations = <T>(vector: T[], n = 1): T[][] => {
-  if (n === 0) return [[]];
-  return generatePermutations(vector, n - 1).reduce<T[][]>(
-    (acc, x) => acc.concat(vector.map(c => [c, ...x])),
-    [],
-  );
+const generatePermutations = <T>(vector: T[], n = 1): IPredictableGenerator<T[]> => {
+  const cmb = Combinatorics.baseN(vector, n);
+  return cmb;
 };
 
 class Fighter implements IFighter {
@@ -52,7 +51,7 @@ class Fighter implements IFighter {
     return this.getPermutationMatrix(target).map(vector => vector.reduce((acc, point) => acc + point, 0));
   }
 
-  getPermutationMatrix(target: ITarget): TMatrix {
+  getPermutationMatrix(target: ITarget): IPredictableGenerator<TVector> {
     const { attacks, damage } = this.profile;
     const { hit, crit } = damage;
     const rollVector = D6.getRollVector();
@@ -65,7 +64,7 @@ class Fighter implements IFighter {
     return generatePermutations(resultVector, attacks);
   }
 
-  getDicePermutationMatrix(): TMatrix {
+  getDicePermutationMatrix(): IPredictableGenerator<TVector> {
     const { attacks } = this.profile;
     return generatePermutations(D6.getRollVector(), attacks);
   }

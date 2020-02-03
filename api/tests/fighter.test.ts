@@ -83,7 +83,12 @@ describe('Fighter', () => {
       [2, 1],
       [2, 2],
     ];
-    expect(testFighter.getPermutationMatrix({ toughness: 4 }).sort()).toEqual(permutations.sort());
+    expect(
+      testFighter
+        .getPermutationMatrix({ toughness: 4 })
+        .toArray()
+        .sort(),
+    ).toEqual(permutations.sort());
   });
 
   test('Get Reduced Permutations', () => {
