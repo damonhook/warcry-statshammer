@@ -1,7 +1,5 @@
 ![https://img.shields.io/github/v/release/damonhook/warcry-statshammer.svg](https://img.shields.io/github/v/release/damonhook/warcry-statshammer.svg)
 
-## **NOTE**: NOT YET RELEASED
-
 <div align="center">
     <a href="https://warcry-statshammer.herokuapp.com/" target="_blank">
         <img width="128" src="docs/logo256.png">
@@ -39,13 +37,14 @@ The production deploy of the tool is located at: https://warcry-statshammer.hero
 - Dark Theme
 - Persisitent data between refreshes
 - And more
-    - Keep an eye on the [Github Releases](https://www.github.com/damonhook/warcry-statshammer), or the [SubReddit]([https://](https://www.reddit.com/r/WarcryStatshammer) to get notified of new additions
+    - Keep an eye on the [Github Releases](https://www.github.com/damonhook/warcry-statshammer), or the [SubReddit](https://www.reddit.com/r/WarcryStatshammer) to get notified of new additions
 
 ## Roadmap Features
 
-- Export PDF
-- Save / Load Fighters
 - Choose from a preset list of fighters
+- Export PDF
+- Google Drive integration
+  - Save / Load Fighters
 
 ## Related Projects
 

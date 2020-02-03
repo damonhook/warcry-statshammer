@@ -75,7 +75,7 @@ const Fighter = ({ fighter, index, dragHandleProps }: IFighterProps) => {
       <Card>
         <CardContent>
           <div className={classes.header}>
-            <div {...dragHandleProps}>
+            <div {...dragHandleProps} tabIndex={-1}>
               <DragHandle className={classes.handle} fontSize="large" />
             </div>
             <TextField
