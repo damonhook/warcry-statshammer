@@ -1,5 +1,4 @@
 import { CircularProgress, Divider, IconButton, Paper, Theme, Typography } from '@material-ui/core';
-import { grey } from '@material-ui/core/colors';
 import { makeStyles } from '@material-ui/core/styles';
 import Logo from 'components/Logo';
 import { Github, Reddit, Releases } from 'components/SocialButtons';

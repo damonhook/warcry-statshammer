@@ -1,12 +1,4 @@
-import {
-  AppBar as Bar,
-  IconButton,
-  Slide,
-  Toolbar,
-  Typography,
-  useScrollTrigger,
-  useTheme,
-} from '@material-ui/core';
+import { AppBar as Bar, IconButton, Slide, Toolbar, Typography, useScrollTrigger } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { BrightnessMedium as BrightnessMediumIcon } from '@material-ui/icons';
 import Link from 'components/Link';
