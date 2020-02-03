@@ -1,6 +1,9 @@
-import { Tab, Tabs } from '@material-ui/core';
+import { Divider, Drawer, Tab, Tabs } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { BarChart as StatsIcon, Home as HomeIcon, Info as InfoIcon } from '@material-ui/icons';
+import Link from 'components/Link';
+import Logo from 'components/Logo';
+import Version from 'components/Version';
 import { useRouteFind } from 'hooks';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -10,13 +13,27 @@ import { IStore } from 'types/store';
 
 const useStyles = makeStyles((theme: Theme) => ({
   leftNavigation: {
+    width: theme.mixins.drawer.width,
     [theme.breakpoints.down('sm')]: {
       display: 'none',
     },
   },
+  drawer: {
+    width: theme.mixins.drawer.width,
+  },
+  drawerLogo: {
+    padding: theme.spacing(0.5),
+    width: theme.mixins.drawer.width,
+    textAlign: 'center',
+  },
+  caption: {
+    textAlign: 'end',
+    padding: theme.spacing(1),
+  },
   tabs: {
     borderRight: `1px solid ${theme.palette.divider}`,
     height: '100%',
+    width: theme.mixins.drawer.width,
   },
 }));
 
@@ -36,26 +53,34 @@ const LeftNavigation = () => {
 
   const handleChange = (event: any, newValue: number) => {
     setIndex(newValue);
-    // This is done so that the indicator can finish moving before loading the next page
-    // This ensures that the animation is smooth
-    setTimeout(() => {
-      history.push(routes[newValue]);
-    }, 120);
+    history.push(routes[newValue]);
   };
 
   return (
     <div className={classes.leftNavigation}>
-      <Tabs
-        orientation="vertical"
-        value={index}
-        onChange={handleChange}
-        className={classes.tabs}
-        indicatorColor="primary"
-      >
-        <Tab label="Home" icon={<HomeIcon />} />
-        <Tab label="Stats" icon={<StatsIcon />} disabled={numFighters <= 0} />
-        <Tab label="About" icon={<InfoIcon />} />
-      </Tabs>
+      <Drawer open variant="permanent" anchor="left" className={classes.drawer}>
+        <Link to={getRoute(EPages.HOME)} className={classes.drawerLogo}>
+          <Logo height={60} />
+        </Link>
+        <Divider variant="middle" />
+        <Tabs
+          orientation="vertical"
+          value={index}
+          onChange={handleChange}
+          className={classes.tabs}
+          indicatorColor="primary"
+          textColor="primary"
+          variant="fullWidth"
+          TabIndicatorProps={{
+            style: { display: 'none' },
+          }}
+        >
+          <Tab label="Home" icon={<HomeIcon />} />
+          <Tab label="Stats" icon={<StatsIcon />} disabled={numFighters <= 0} />
+          <Tab label="About" icon={<InfoIcon />} />
+        </Tabs>
+        <Version includePrefixText={false} />
+      </Drawer>
     </div>
   );
 };

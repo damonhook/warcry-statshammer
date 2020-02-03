@@ -3,6 +3,7 @@ import { grey } from '@material-ui/core/colors';
 import { makeStyles } from '@material-ui/core/styles';
 import Logo from 'components/Logo';
 import { Github, Reddit, Releases } from 'components/SocialButtons';
+import Version from 'components/Version';
 import { useReadFromFile } from 'hooks';
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
@@ -53,11 +54,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   spacer: {
     flex: 1,
   },
-  version: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-    color: grey[500],
-  },
   socialButton: {
     margin: theme.spacing(1),
   },
@@ -77,7 +73,7 @@ const About = () => {
       <div className={classes.wrapper}>
         <Paper className={classes.paper}>
           <IconButton onClick={handleLogoClick} className={classes.logoButton}>
-            <Logo fontSize={7} />
+            <Logo width="7rem" />
           </IconButton>
           {!content && (
             <div className={classes.loader}>
@@ -94,11 +90,7 @@ const About = () => {
           </div>
           <div className={classes.spacer} />
           <Divider className={classes.divider} />
-          {process.env.REACT_APP_VERSION && (
-            <Typography variant="caption" className={classes.version}>
-              {`Current Version: v${process.env.REACT_APP_VERSION}`}
-            </Typography>
-          )}
+          <Version />
         </Paper>
       </div>
     </div>
