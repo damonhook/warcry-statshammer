@@ -1,7 +1,7 @@
 {
     "name": "warcy-statshammer",
     "private": true,
-    "version": "1.0.1",
+    "version": "0.1.0",
     "engines": {
         "node": "12.13.1",
         "yarn": "1.19.2"
@@ -13,7 +13,7 @@
         "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
         "start": "babel-node server.ts --extensions \".ts,.tsx\"",
         "heroku-postbuild": "cd client && yarn install && yarn install --only=dev --no-shrinkwrap && yarn run build",
-        "test": "jest --passWithNoTests",
+        "test": "jest",
         "bumpversion": "lerna version --no-git-tag-version --no-push",
         "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
         "clean-setup": "rm -rf node_modules && rm -rf client/node_modules && yarn setup"
@@ -56,6 +56,7 @@
         "eslint-plugin-simple-import-sort": "^5.0.1",
         "express": "^4.17.1",
         "jest": "^25.1.0",
+        "lerna": "^3.20.2",
         "prettier": "^1.19.1",
         "typescript": "^3.7.5"
     }
