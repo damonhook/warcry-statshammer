@@ -32,3 +32,9 @@ export interface IFighterProbability {
     mean: number;
   };
 }
+
+export interface IFighterProbabilities {
+  lt: IFighterProbability;
+  eq: IFighterProbability;
+  gt: IFighterProbability;
+}
