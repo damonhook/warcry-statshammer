@@ -1,13 +1,9 @@
-import Combinatorics, { IPredictableGenerator } from 'js-combinatorics';
+import Combinatorics, { IGenerator } from 'js-combinatorics';
 
 import { IFighter, IFighterProbabilities, IProfile, TVector } from '../types';
 import { Counter, ICounter, TCount } from './counter';
 import { D6 } from './dice';
-
-const generatePermutations = <T>(vector: T[], n = 1): IPredictableGenerator<T[]> => {
-  const cmb = Combinatorics.baseN(vector, n);
-  return cmb;
-};
+import SimulationGenerator from './generator';
 
 class Fighter implements IFighter {
   name: string;
@@ -19,7 +15,12 @@ class Fighter implements IFighter {
   }
 
   getProbabilities(): IFighterProbabilities {
-    const permutationGenerator = this.getDicePermutationMatrix();
+    let permutationGenerator: IGenerator<TVector>;
+    if (this.profile.attacks >= 8) {
+      permutationGenerator = new SimulationGenerator(1500000, this.profile.attacks);
+    } else {
+      permutationGenerator = this.getDicePermutationMatrix();
+    }
     const numPermutations = permutationGenerator.length;
     const counts = this.getDamageCounts(permutationGenerator);
     const metrics = this.getMetrics();
@@ -35,7 +36,7 @@ class Fighter implements IFighter {
     };
   }
 
-  private getDamageCounts(permutationGenerator: IPredictableGenerator<TVector>): ICounter {
+  private getDamageCounts(permutationGenerator: IGenerator<TVector>): ICounter {
     const counts = new Counter();
     permutationGenerator.forEach((vector: TVector) => {
       counts.incrementLt(this.reduceVector(vector, 5));
@@ -85,9 +86,9 @@ class Fighter implements IFighter {
     return buckets;
   }
 
-  getDicePermutationMatrix(): IPredictableGenerator<TVector> {
+  private getDicePermutationMatrix(): IGenerator<TVector> {
     const { attacks } = this.profile;
-    return generatePermutations(D6.getRollVector(), attacks);
+    return Combinatorics.baseN(D6.getRollVector(), attacks);
   }
 
   private parseProfile(profile: IProfile): IProfile {
