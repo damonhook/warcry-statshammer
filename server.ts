@@ -1,7 +1,7 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 
-import Sentry from '@sentry/node';
+import * as Sentry from '@sentry/node';
 import bodyParser from 'body-parser';
 import cluster from 'cluster';
 import express, { Response } from 'express';
@@ -49,6 +49,7 @@ function appServer(production = false) {
       res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
     });
 
+    app.use(Sentry.Handlers.errorHandler());
     logMessage = `Worker ${cluster.worker.id}, ${logMessage}`;
   }
 
