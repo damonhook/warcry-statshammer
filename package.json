@@ -43,7 +43,7 @@
         "body-parser": "^1.18.3",
         "compression": "^1.7.4",
         "concurrently": "^4.0.1",
-        "core-js": "^3.5.0",
+        "core-js": "^3.6.4",
         "eslint": "^6.8.0",
         "eslint-config-airbnb": "^18.0.1",
         "eslint-config-prettier": "^6.9.0",
@@ -61,6 +61,7 @@
         "js-combinatorics": "^0.5.5",
         "lerna": "^3.20.2",
         "prettier": "^1.19.1",
+        "regenerator-runtime": "^0.13.3",
         "typescript": "^3.7.5"
     }
 }

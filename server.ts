@@ -1,3 +1,6 @@
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
+
 import Sentry from '@sentry/node';
 import bodyParser from 'body-parser';
 import cluster from 'cluster';
