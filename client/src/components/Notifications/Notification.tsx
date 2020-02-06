@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { CheckCircle, Close, Error as ErrorIcon, Info, Warning } from '@material-ui/icons';
 import { SwipeableListItem } from '@sandstreamdev/react-swipeable-list';
 import clsx from 'clsx';
+import { useIsMobile } from 'hooks';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { notifications as notificationsStore } from 'store/slices';
@@ -20,9 +21,9 @@ interface IStyleProps {
 }
 const useStyles = makeStyles((theme: Theme) => ({
   notification: {
-    position: 'relative',
-    marginTop: '.5em',
-    flex: '1 1 auto',
+    [theme.breakpoints.down('sm')]: {
+      bottom: 90,
+    },
   },
   content: ({ variant }: IStyleProps) => ({
     flexWrap: 'nowrap',
@@ -67,6 +68,7 @@ const Notification = ({
   const classes = useStyles({ variant });
   const [open, setOpen] = useState(true);
   const dispatch = useDispatch();
+  const mobile = useIsMobile();
   const Icon = variantIcon[variant];
 
   useEffect(() => {
@@ -94,19 +96,23 @@ const Notification = ({
     );
   }
 
+  const swipeAction = {
+    content: <span />,
+    action: () => handleClose(null, 'swipeaway'),
+  };
+
   return (
-    <SwipeableListItem
-      swipeRight={{
-        content: <span />,
-        action: () => handleClose(null, 'swipeaway'),
+    <Snackbar
+      className={classes.notification}
+      open={open}
+      onClose={handleClose}
+      anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: mobile ? 'center' : 'left',
       }}
-      swipeLeft={{
-        content: <span />,
-        action: () => handleClose(null, 'swipeaway'),
-      }}
-      threshold={0.3}
+      autoHideDuration={timeout}
     >
-      <Snackbar className={classes.notification} open={open} onClose={handleClose} autoHideDuration={timeout}>
+      <SwipeableListItem swipeRight={swipeAction} swipeLeft={swipeAction} threshold={0.3}>
         <SnackbarContent
           className={clsx(classes.content)}
           message={
@@ -122,8 +128,8 @@ const Notification = ({
             </IconButton>,
           ]}
         />
-      </Snackbar>
-    </SwipeableListItem>
+      </SwipeableListItem>
+    </Snackbar>
   );
 };
 
