@@ -1,8 +1,29 @@
 import { amber, green, grey, red, teal } from '@material-ui/core/colors';
-import { createMuiTheme } from '@material-ui/core/styles';
+import { createMuiTheme, Theme } from '@material-ui/core/styles';
 import { IConfigStore } from 'types/store';
 
-const lightTheme = createMuiTheme({
+const commonOptions = {
+  mixins: {
+    drawer: {
+      width: 160,
+    },
+  },
+  typography: {
+    htmlFontSize: 20,
+    h6: {
+      fontSize: '1rem',
+    },
+  },
+  overrides: {
+    MuiTooltip: {
+      tooltip: {
+        fontSize: '0.8rem',
+      },
+    },
+  },
+};
+
+export const lightTheme: Theme = createMuiTheme({
   name: 'Light Theme',
   palette: {
     type: 'light',
@@ -31,22 +52,10 @@ const lightTheme = createMuiTheme({
       error: red[500],
     },
   },
-  typography: {
-    htmlFontSize: 18,
-    h6: {
-      fontSize: '1rem',
-    },
-  },
-  overrides: {
-    MuiTooltip: {
-      tooltip: {
-        fontSize: '0.8rem',
-      },
-    },
-  },
+  ...commonOptions,
 });
 
-const darkTheme = createMuiTheme({
+export const darkTheme: Theme = createMuiTheme({
   name: 'Dark Theme',
   palette: {
     type: 'dark',
@@ -75,21 +84,9 @@ const darkTheme = createMuiTheme({
       error: red[800],
     },
   },
-  typography: {
-    htmlFontSize: 18,
-    h6: {
-      fontSize: '1rem',
-    },
-  },
-  overrides: {
-    MuiTooltip: {
-      tooltip: {
-        fontSize: '0.8rem',
-      },
-    },
-  },
+  ...commonOptions,
 });
 
-const getTheme = (config: IConfigStore) => (config.darkMode ? darkTheme : lightTheme);
+export const getTheme = (config: IConfigStore) => (config.darkMode ? darkTheme : lightTheme);
 
-export { lightTheme, darkTheme, getTheme as default };
+export default getTheme;

@@ -10,7 +10,7 @@ import Stats from 'containers/Stats';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
-import getTheme from 'themes';
+import { getTheme } from 'themes';
 import { EPages, getRoute } from 'types/routes';
 import { IStore } from 'types/store';
 
@@ -21,6 +21,17 @@ const useStyles = makeStyles((theme: Theme) => ({
     minHeight: '100vh',
     justifyContent: 'center',
   },
+  inner: {
+    display: 'flex',
+    flexDirection: 'row',
+    flex: 1,
+    width: '100%',
+  },
+  contentWrapper: {
+    display: 'flex',
+    flexDirection: 'column',
+    width: '100%',
+  },
   content: {
     display: 'flex',
     flexDirection: 'column',
@@ -29,12 +40,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     flex: 1,
     width: '100%',
     maxWidth: 1600,
-  },
-  inner: {
-    display: 'flex',
-    flexDirection: 'row',
-    flex: 1,
-    width: '100%',
   },
 }));
 
@@ -49,16 +54,18 @@ const App = () => {
           <AppBar />
           <div className={classes.inner}>
             <LeftNavigation />
-            <div className={classes.content}>
-              <Switch>
-                <Route exact path={getRoute(EPages.HOME)} component={Home} />
-                <Route exact path={getRoute(EPages.STATS)} component={Stats} />
-                <Route exact path={getRoute(EPages.ABOUT)} component={About} />
-                <Redirect to={getRoute(EPages.HOME)} />
-              </Switch>
+            <div className={classes.contentWrapper}>
+              <div className={classes.content}>
+                <Switch>
+                  <Route exact path={getRoute(EPages.HOME)} component={Home} />
+                  <Route exact path={getRoute(EPages.STATS)} component={Stats} />
+                  <Route exact path={getRoute(EPages.ABOUT)} component={About} />
+                  <Redirect to={getRoute(EPages.HOME)} />
+                </Switch>
+              </div>
+              <Footer />
             </div>
           </div>
-          <Footer />
           <BottomNavigation />
         </div>
       </ThemeProvider>

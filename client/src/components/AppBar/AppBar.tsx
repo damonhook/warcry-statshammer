@@ -14,6 +14,10 @@ interface IStyleProps {
 const useStyles = makeStyles((theme: Theme) => ({
   appBar: {
     background: theme.palette.primary.dark,
+    [theme.breakpoints.up('md')]: {
+      marginLeft: theme.mixins.drawer.width,
+      width: `calc(100% - ${theme.mixins.drawer.width}px)`,
+    },
   },
   offset: ({ height }: IStyleProps) => ({
     marginTop: height,
@@ -52,7 +56,7 @@ const AppBar = () => {
   return (
     <div>
       <Slide appear={false} direction="down" in={!trigger}>
-        <Bar className={classes.appBar}>
+        <Bar className={classes.appBar} position="fixed">
           <div ref={ref}>
             <Toolbar variant="dense" className={classes.toolbar}>
               <Link to={getRoute(EPages.HOME)}>

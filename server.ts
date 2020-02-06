@@ -1,3 +1,7 @@
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
+
+import * as Sentry from '@sentry/node';
 import bodyParser from 'body-parser';
 import cluster from 'cluster';
 import express, { Response } from 'express';
@@ -18,6 +22,10 @@ function appServer(production = false) {
 
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
+  if (production) {
+    Sentry.init({ dsn: 'https://b489c4cd314f4966a92689fab89f2e32@sentry.io/2217470' });
+    app.use(Sentry.Handlers.requestHandler());
+  }
 
   app.get('/status', (req, res) => {
     addHeaders(res, production);
@@ -41,6 +49,7 @@ function appServer(production = false) {
       res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
     });
 
+    app.use(Sentry.Handlers.errorHandler());
     logMessage = `Worker ${cluster.worker.id}, ${logMessage}`;
   }
 

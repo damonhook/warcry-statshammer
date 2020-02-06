@@ -1,13 +1,9 @@
-import Combinatorics, { IPredictableGenerator } from 'js-combinatorics';
+import Combinatorics, { IGenerator } from 'js-combinatorics';
 
-import { IFighter, IFighterProbability, IProfile, ITarget, TVector } from '../types';
-import { getMax, getMean } from '../utils/statsUtils';
+import { IFighter, IFighterProbabilities, IProfile, TVector } from '../types';
+import { Counter, ICounter, TCount } from './counter';
 import { D6 } from './dice';
-
-const generatePermutations = <T>(vector: T[], n = 1): IPredictableGenerator<T[]> => {
-  const cmb = Combinatorics.baseN(vector, n);
-  return cmb;
-};
+import SimulationGenerator from './generator';
 
 class Fighter implements IFighter {
   name: string;
@@ -18,16 +14,66 @@ class Fighter implements IFighter {
     this.profile = this.parseProfile(profile);
   }
 
-  getProbabilities(target: ITarget): IFighterProbability {
-    const permutations = this.getPermutationMatrix(target);
-    const numPermutations = permutations.length;
-    const counts = {};
-    let sum = 0;
-    permutations.forEach(vector => {
-      const result = vector.reduce((acc, point) => acc + point, 0);
-      sum += result;
-      counts[result] = (counts[result] || 0) + 1;
+  getProbabilities(): IFighterProbabilities {
+    let permutationGenerator: IGenerator<TVector>;
+    if (this.profile.attacks >= 8) {
+      permutationGenerator = new SimulationGenerator(1500000, this.profile.attacks);
+    } else {
+      permutationGenerator = this.getDicePermutationMatrix();
+    }
+    const numPermutations = permutationGenerator.length;
+    const counts = this.getDamageCounts(permutationGenerator);
+    const metrics = this.getMetrics();
+    const buckets = {
+      lt: this.getBuckets(counts.lt, numPermutations, metrics.lt.max),
+      eq: this.getBuckets(counts.eq, numPermutations, metrics.eq.max),
+      gt: this.getBuckets(counts.gt, numPermutations, metrics.gt.max),
+    };
+    return {
+      lt: { buckets: buckets.lt, metrics: metrics.lt },
+      eq: { buckets: buckets.eq, metrics: metrics.eq },
+      gt: { buckets: buckets.gt, metrics: metrics.gt },
+    };
+  }
+
+  private getDamageCounts(permutationGenerator: IGenerator<TVector>): ICounter {
+    const counts = new Counter();
+    permutationGenerator.forEach((vector: TVector) => {
+      counts.incrementLt(this.reduceVector(vector, 5));
+      counts.incrementEq(this.reduceVector(vector, 4));
+      counts.incrementGt(this.reduceVector(vector, 3));
     });
+    return counts.toDict();
+  }
+
+  private reduceVector(vector: TVector, rollTarget: 3 | 4 | 5): number {
+    return vector.reduce((acc, roll) => {
+      const { hit, crit } = this.profile.damage;
+      if (roll >= 6) return acc + crit;
+      if (roll >= rollTarget) return acc + hit;
+      return acc;
+    }, 0);
+  }
+
+  private getMetrics() {
+    const { attacks, damage } = this.profile;
+    const max = attacks * damage.crit;
+    return {
+      lt: { max, mean: this.getMean(5) },
+      eq: { max, mean: this.getMean(4) },
+      gt: { max, mean: this.getMean(3) },
+    };
+  }
+
+  private getMean(rollTarget: 3 | 4 | 5) {
+    const { attacks, damage } = this.profile;
+    const hitChance = (D6.sides - rollTarget) / D6.sides;
+    const critChance = 1 / D6.sides;
+    const mean = attacks * (hitChance * damage.hit + critChance * damage.crit);
+    return Number(mean.toFixed(2));
+  }
+
+  private getBuckets(counts: TCount, numPermutations: number, max: number) {
     const buckets = Object.keys(counts)
       .map(Number)
       .sort((x, y) => x - y)
@@ -36,45 +82,13 @@ class Fighter implements IFighter {
         count: counts[damage],
         probability: Number(((counts[damage] * 100) / numPermutations).toFixed(2)),
       }));
-    const metrics = {
-      max: getMax(Object.keys(counts).map(Number)),
-      mean: Number((sum / numPermutations).toFixed(2)),
-    };
-    buckets.push({ damage: metrics.max + 1, count: 0, probability: 0 });
-    return {
-      buckets,
-      metrics,
-    };
+    buckets.push({ damage: max + 1, count: 0, probability: 0 });
+    return buckets;
   }
 
-  getReducedPermutations(target: ITarget): TVector {
-    return this.getPermutationMatrix(target).map(vector => vector.reduce((acc, point) => acc + point, 0));
-  }
-
-  getPermutationMatrix(target: ITarget): IPredictableGenerator<TVector> {
-    const { attacks, damage } = this.profile;
-    const { hit, crit } = damage;
-    const rollVector = D6.getRollVector();
-    const rollTarget = this.getRollTarget(target);
-    const resultVector = rollVector.map(roll => {
-      if (roll === 6) return crit;
-      if (roll >= rollTarget) return hit;
-      return 0;
-    });
-    return generatePermutations(resultVector, attacks);
-  }
-
-  getDicePermutationMatrix(): IPredictableGenerator<TVector> {
+  private getDicePermutationMatrix(): IGenerator<TVector> {
     const { attacks } = this.profile;
-    return generatePermutations(D6.getRollVector(), attacks);
-  }
-
-  getRollTarget(target: ITarget): number {
-    const { strength } = this.profile;
-    const { toughness } = target;
-    if (strength > toughness) return 3;
-    if (strength === toughness) return 4;
-    return 5;
+    return Combinatorics.baseN(D6.getRollVector(), attacks);
   }
 
   private parseProfile(profile: IProfile): IProfile {

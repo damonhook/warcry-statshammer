@@ -6,7 +6,7 @@ export interface IDamage {
 export interface IProfile {
   active: boolean;
   uuid?: string;
-  range?: number;
+  range?: string | number;
   attacks: number;
   strength: number;
   damage: IDamage;

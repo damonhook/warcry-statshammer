@@ -1,3 +1,5 @@
+import { IFighterProbabilities } from 'api/types';
+
 import Fighter from '../models/fighter';
 import * as t from './statsController.types';
 
@@ -6,16 +8,22 @@ export class StatsController {
     const fighterList = fighters.map(f => new Fighter(f.name, f.profile));
     const minStr = Math.min(...fighterList.map(f => f.profile.strength));
     const maxStr = Math.max(...fighterList.map(f => f.profile.strength));
+    const fighterProbabilitiesData: IFighterProbabilities[] = fighterList.map(fighter =>
+      fighter.getProbabilities(),
+    );
     const toughnessList = this.range(Math.max(minStr - 1, 1), maxStr + 1);
-    const data = toughnessList.map(toughness => {
-      return fighterList.reduce<t.TMappedResult>(
-        (acc, fighter) => {
-          acc.results[fighter.name] = fighter.getProbabilities({ toughness });
+    const data = toughnessList.map(toughness =>
+      fighterList.reduce<t.TMappedResult>(
+        (acc, fighter, index) => {
+          const probabilityData = fighterProbabilitiesData[index];
+          if (fighter.profile.strength < toughness) acc.results[fighter.name] = probabilityData.lt;
+          else if (fighter.profile.strength === toughness) acc.results[fighter.name] = probabilityData.eq;
+          else if (fighter.profile.strength > toughness) acc.results[fighter.name] = probabilityData.gt;
           return acc;
         },
         { toughness, results: {} },
-      );
-    });
+      ),
+    );
     return { results: data.map(d => this.buildResult(d)) };
   }
 
