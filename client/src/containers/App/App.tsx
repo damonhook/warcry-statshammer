@@ -37,10 +37,13 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: 'flex',
     flexDirection: 'column',
     margin: '0 auto',
-    padding: theme.spacing(0, 2),
     flex: 1,
     width: '100%',
     maxWidth: 1600,
+    padding: theme.spacing(0, 4),
+    [theme.breakpoints.down('sm')]: {
+      padding: theme.spacing(0, 2),
+    },
   },
 }));
 

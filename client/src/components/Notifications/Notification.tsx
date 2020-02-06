@@ -88,7 +88,7 @@ const Notification = ({
   let actionElement: React.ReactNode | null = null;
   if (action?.label && action?.onClick) {
     actionElement = (
-      <Button onClick={handleAction} className={classes.action}>
+      <Button onClick={handleAction} className={classes.action} key={action.label}>
         {action.label}
       </Button>
     );

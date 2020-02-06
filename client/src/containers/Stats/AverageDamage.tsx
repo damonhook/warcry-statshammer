@@ -9,7 +9,7 @@ import { IStatsStore } from 'types/store';
 
 const useStyles = makeStyles((theme: Theme) => ({
   averageDamageContainer: {
-    margin: theme.spacing(0, 2, 2),
+    marginBottom: theme.spacing(2),
   },
 }));
 

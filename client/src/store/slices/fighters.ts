@@ -21,7 +21,7 @@ const ensureOneActiveProfile = (fighter: IFighter): IFighter => {
     [],
   );
   if (activeIndexes.length === 1) return fighter;
-  fighter.profiles.map(profile => ({ ...profile, active: false }));
+  fighter.profiles = fighter.profiles.map(profile => ({ ...profile, active: false }));
   const [firstActive] = activeIndexes;
   fighter.profiles[firstActive ?? 0].active = true;
   return fighter;
@@ -46,12 +46,12 @@ const insertFighter = (
     uuid: nanoid(),
     profiles: (profiles ?? [{ ...DEFAULT_PROFILE }]).map(p => ({ ...p, uuid: nanoid() })),
   };
-  ensureOneActiveProfile(fighter);
   if (typeof index === 'number' && index >= 0 && index < state.length) {
     state.splice(index, 0, fighter);
   } else {
     state.push(fighter);
   }
+  ensureOneActiveProfile(fighter);
 };
 
 const editFighterName = (state: TFightersStore, action: { payload: { index: number; name: string } }) => {
@@ -79,6 +79,25 @@ const addProfile = (state: TFightersStore, action: { payload: { index: number } 
     active: false,
   });
   ensureOneActiveProfile(fighter);
+};
+
+const insertProfile = (
+  state: TFightersStore,
+  action: { payload: { index: number; profile: IProfile; profileIndex?: number | null } },
+) => {
+  const { index, profileIndex, profile } = action.payload;
+
+  const fighter = state[index];
+  const newProfile = {
+    ...profile,
+    uuid: nanoid(),
+  };
+  if (typeof profileIndex === 'number' && profileIndex >= 0 && profileIndex < fighter.profiles.length) {
+    fighter.profiles.splice(profileIndex, 0, newProfile);
+  } else {
+    fighter.profiles.push(newProfile);
+  }
+  state[index] = ensureOneActiveProfile(fighter);
 };
 
 const setActiveProfile = (
@@ -135,6 +154,7 @@ export const fighters = createSlice({
     moveFighter,
     deleteFighter,
     addProfile,
+    insertProfile,
     setActiveProfile,
     editProfile,
     moveProfile,
