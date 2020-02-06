@@ -1,4 +1,5 @@
 import { IFighter } from './fighter';
+import { INotification } from './notification';
 import { TResults } from './stats';
 
 export type TFightersStore = IFighter[];
@@ -14,8 +15,11 @@ export interface IStatsStore {
   error: boolean;
 }
 
+export type INotificationsStore = INotification[];
+
 export interface IStore {
   fighters: TFightersStore;
   config: IConfigStore;
   stats: IStatsStore;
+  notifications: INotificationsStore;
 }

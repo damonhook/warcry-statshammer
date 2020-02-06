@@ -4,12 +4,13 @@ import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
 import thunk from 'redux-thunk';
 
-import { config, fighters, stats } from './slices';
+import { config, fighters, notifications, stats } from './slices';
 
 export const appReducer = combineReducers({
   config: config.reducer,
   fighters: fighters.reducer,
   stats: stats.reducer,
+  notifications: notifications.reducer,
 });
 
 const middleware: Middleware[] = [thunk];

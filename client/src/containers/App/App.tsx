@@ -4,6 +4,7 @@ import AppBar from 'components/AppBar';
 import BottomNavigation from 'components/BottomNavigation';
 import Footer from 'components/Footer';
 import LeftNavigation from 'components/LeftNavigation';
+import Notifications from 'components/Notifications';
 import About from 'containers/About';
 import Home from 'containers/Home';
 import Stats from 'containers/Stats';
@@ -66,6 +67,7 @@ const App = () => {
               <Footer />
             </div>
           </div>
+          <Notifications />
           <BottomNavigation />
         </div>
       </ThemeProvider>
