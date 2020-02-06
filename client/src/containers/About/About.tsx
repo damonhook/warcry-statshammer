@@ -1,7 +1,7 @@
 import { CircularProgress, Divider, IconButton, Paper, Theme, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Logo from 'components/Logo';
-import { Github, Reddit, Releases } from 'components/SocialButtons';
+import { AoSStatshammer, Github, Reddit, Releases } from 'components/SocialButtons';
 import Version from 'components/Version';
 import { useReadFromFile } from 'hooks';
 import React from 'react';
@@ -86,6 +86,7 @@ const About = () => {
             <Github className={classes.socialButton} />
             <Reddit className={classes.socialButton} />
             <Releases className={classes.socialButton} />
+            <AoSStatshammer className={classes.socialButton} />
           </div>
           <div className={classes.spacer} />
           <Divider className={classes.divider} />

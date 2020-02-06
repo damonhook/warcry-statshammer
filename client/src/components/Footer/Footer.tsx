@@ -1,7 +1,7 @@
 import { Paper, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
-import { Github, Reddit, Releases } from 'components/SocialButtons';
+import { AoSStatshammer, Github, Reddit, Releases } from 'components/SocialButtons';
 import { useIsMobile } from 'hooks';
 import React from 'react';
 
@@ -47,7 +47,8 @@ const Footer = () => {
     <footer className={classes.footer}>
       <Paper className={clsx(classes.paper)}>
         <Typography variant="body2" component="p">
-          Built by: Damon Hook
+          Built by: Damon Hook&nbsp;
+          <i>(NoMaDhOoK)</i>
         </Typography>
         <Typography variant="body2" component="p">
           Disclaimer: This tool is in no way endorsed or sanctioned by Games Workshop - it is unofficial and
@@ -57,6 +58,7 @@ const Footer = () => {
           <Github className={classes.footerButton} />
           <Reddit className={classes.footerButton} />
           <Releases className={classes.footerButton} />
+          <AoSStatshammer className={classes.footerButton} />
         </Typography>
       </Paper>
     </footer>
