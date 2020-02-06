@@ -23,7 +23,11 @@ const useStyles = makeStyles((theme: Theme) => ({
   notification: {
     [theme.breakpoints.down('sm')]: {
       bottom: 90,
+      minWidth: '85%',
     },
+  },
+  inner: {
+    flex: 1,
   },
   content: ({ variant }: IStyleProps) => ({
     flexWrap: 'nowrap',
@@ -112,23 +116,25 @@ const Notification = ({
       }}
       autoHideDuration={timeout}
     >
-      <SwipeableListItem swipeRight={swipeAction} swipeLeft={swipeAction} threshold={0.3}>
-        <SnackbarContent
-          className={clsx(classes.content)}
-          message={
-            <span className={classes.message}>
-              <Icon className={clsx(classes.icon, classes.iconVariant)} />
-              {message}
-            </span>
-          }
-          action={[
-            ...([actionElement] ?? []),
-            <IconButton key="close" onClick={handleClose} className={classes.action}>
-              <Close className={classes.icon} />
-            </IconButton>,
-          ]}
-        />
-      </SwipeableListItem>
+      <div className={classes.inner}>
+        <SwipeableListItem swipeRight={swipeAction} swipeLeft={swipeAction} threshold={0.3}>
+          <SnackbarContent
+            className={clsx(classes.content)}
+            message={
+              <span className={classes.message}>
+                <Icon className={clsx(classes.icon, classes.iconVariant)} />
+                {message}
+              </span>
+            }
+            action={[
+              ...([actionElement] ?? []),
+              <IconButton key="close" onClick={handleClose} className={classes.action}>
+                <Close className={classes.icon} />
+              </IconButton>,
+            ]}
+          />
+        </SwipeableListItem>
+      </div>
     </Snackbar>
   );
 };
