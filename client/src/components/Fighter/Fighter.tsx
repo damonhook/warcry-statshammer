@@ -12,7 +12,7 @@ import {
   DropResult,
 } from 'react-beautiful-dnd';
 import { useDispatch } from 'react-redux';
-import { fighters as fightersStore } from 'store/slices';
+import { fighters as fightersStore, notifications as notificationsStore } from 'store/slices';
 import { IFighter } from 'types/fighter';
 
 import DraggableProfile from './DraggableProfile';
@@ -48,7 +48,16 @@ const Fighter = ({ fighter, index, dragHandleProps }: IFighterProps) => {
     dispatch(fightersStore.actions.addProfile({ index }));
   };
 
-  const handleDeleteProfile = () => {
+  const handleDeleteFighter = () => {
+    dispatch(
+      notificationsStore.actions.addNotification({
+        message: 'Deleted Fighter',
+        action: {
+          label: 'Undo',
+          onClick: () => dispatch(fightersStore.actions.insertFighter({ fighter, index })),
+        },
+      }),
+    );
     dispatch(fightersStore.actions.deleteFighter({ index }));
   };
 
@@ -86,7 +95,7 @@ const Fighter = ({ fighter, index, dragHandleProps }: IFighterProps) => {
               value={fighter.name}
               onChange={handleEditName}
             />
-            <IconButton onClick={handleDeleteProfile} tabIndex={1}>
+            <IconButton onClick={handleDeleteFighter} tabIndex={1}>
               <Delete />
             </IconButton>
           </div>

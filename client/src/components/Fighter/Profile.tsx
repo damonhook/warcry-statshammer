@@ -7,7 +7,7 @@ import DamageField from 'components/DamageField';
 import React, { useCallback, useEffect } from 'react';
 import { DraggableProvidedDragHandleProps } from 'react-beautiful-dnd';
 import { useDispatch } from 'react-redux';
-import { fighters as fightersStore } from 'store/slices';
+import { fighters as fightersStore, notifications as notificationsStore } from 'store/slices';
 import { IDamage, IProfile } from 'types/fighter';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -59,6 +59,16 @@ const Profile = ({
   const dispatch = useDispatch();
 
   const handleDeleteProfile = () => {
+    dispatch(
+      notificationsStore.actions.addNotification({
+        message: 'Deleted Profile',
+        action: {
+          label: 'Undo',
+          onClick: () =>
+            dispatch(fightersStore.actions.insertProfile({ index: fighterIndex, profile, profileIndex })),
+        },
+      }),
+    );
     dispatch(fightersStore.actions.deleteProfile({ index: fighterIndex, profileIndex }));
   };
 

@@ -4,6 +4,7 @@ import AppBar from 'components/AppBar';
 import BottomNavigation from 'components/BottomNavigation';
 import Footer from 'components/Footer';
 import LeftNavigation from 'components/LeftNavigation';
+import Notifications from 'components/Notifications';
 import About from 'containers/About';
 import Home from 'containers/Home';
 import Stats from 'containers/Stats';
@@ -36,10 +37,13 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: 'flex',
     flexDirection: 'column',
     margin: '0 auto',
-    padding: theme.spacing(0, 2),
     flex: 1,
     width: '100%',
     maxWidth: 1600,
+    padding: theme.spacing(0, 4),
+    [theme.breakpoints.down('sm')]: {
+      padding: theme.spacing(0, 2),
+    },
   },
 }));
 
@@ -66,6 +70,7 @@ const App = () => {
               <Footer />
             </div>
           </div>
+          <Notifications />
           <BottomNavigation />
         </div>
       </ThemeProvider>

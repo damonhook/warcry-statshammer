@@ -2,7 +2,7 @@ import fetch from 'cross-fetch';
 import { Action } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
 import store from 'store';
-import { stats as statsStore } from 'store/slices';
+import { notifications as notificationsStore, stats as statsStore } from 'store/slices';
 import { IProfile } from 'types/fighter';
 import { IStore } from 'types/store';
 
@@ -36,5 +36,15 @@ export const fetchCompare = () => async (dispatch: TDispatch) => {
     dispatch(statsStore.actions.fetchStatsSuccess({ results: res.results }));
   } catch (err) {
     dispatch(statsStore.actions.fetchStatsError());
+    dispatch(
+      notificationsStore.actions.addNotification({
+        message: 'Failed to fetch stats',
+        variant: 'error',
+        action: {
+          label: 'Retry',
+          onClick: () => dispatch(fetchCompare()),
+        },
+      }),
+    );
   }
 };

@@ -12,7 +12,7 @@ import DraggableFighter from './DraggableFighter';
 
 const useStyles = makeStyles((theme: Theme) => ({
   fighters: {
-    padding: theme.spacing(0, 2, 2),
+    paddingBottom: theme.spacing(2),
   },
   fighter: {
     marginBottom: theme.spacing(2),

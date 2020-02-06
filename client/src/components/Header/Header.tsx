@@ -4,7 +4,7 @@ import React from 'react';
 
 const useStyles = makeStyles((theme: Theme) => ({
   header: {
-    padding: theme.spacing(2, 2),
+    padding: theme.spacing(2, 0),
     display: 'flex',
     justifyContent: 'space-between',
   },

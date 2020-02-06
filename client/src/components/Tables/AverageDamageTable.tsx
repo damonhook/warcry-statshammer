@@ -49,10 +49,12 @@ const AverageDamageTable = ({ data, fighterNames, className }: IAverageDamageTab
       <Paper className={classes.table}>
         <Table size={getSize()}>
           <TableHead>
-            <TableCell className={clsx(classes.sticky, classes.header)} />
-            {data.map(({ toughness }) => (
-              <TableCell className={classes.header}>{`T${toughness}`}</TableCell>
-            ))}
+            <TableRow>
+              <TableCell className={clsx(classes.sticky, classes.header)} />
+              {data.map(({ toughness }) => (
+                <TableCell className={classes.header} key={toughness}>{`T${toughness}`}</TableCell>
+              ))}
+            </TableRow>
           </TableHead>
           <TableBody>
             {fighterNames.map(name => (
