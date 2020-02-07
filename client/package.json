@@ -7,6 +7,7 @@
     "@babel/core": "^7.7.5",
     "@material-ui/core": "^4.9.0",
     "@material-ui/icons": "^4.5.1",
+    "@material-ui/lab": "^4.0.0-alpha.41",
     "@reduxjs/toolkit": "^1.2.1",
     "@sandstreamdev/react-swipeable-list": "^0.4.1",
     "@types/format-unicorn": "^1.1.2",

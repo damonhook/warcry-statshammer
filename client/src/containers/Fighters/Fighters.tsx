@@ -2,6 +2,7 @@ import { Button } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { Add } from '@material-ui/icons';
 import appConfig from 'appConfig';
+import Import from 'containers/Import';
 import React from 'react';
 import { DragDropContext, Droppable, DroppableProvided, DropResult } from 'react-beautiful-dnd';
 import { useDispatch, useSelector } from 'react-redux';
@@ -66,6 +67,7 @@ const Fighters = () => {
       >
         Add a Fighter
       </Button>
+      <Import />
     </div>
   );
 };
