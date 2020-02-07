@@ -1,11 +1,23 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@material-ui/core';
+import {
+  AppBar,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  TextField,
+  Toolbar,
+  Typography,
+} from '@material-ui/core';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 import { Close, ImportExport } from '@material-ui/icons';
 import { Autocomplete } from '@material-ui/lab';
 import { useHashMatch, useIsMobile } from 'hooks';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { fighters as fightersStore } from 'store/slices';
+import { fighters as fightersStore, notifications as notificationsStore } from 'store/slices';
 import { IFighter } from 'types/fighter';
 import warbands from 'warbands';
 import { IWarband } from 'warbands/warbands.types';
@@ -13,7 +25,20 @@ import { IWarband } from 'warbands/warbands.types';
 import FighterList from './FighterList';
 import SelectWarbandCard from './SelectWarbandCard';
 
+const useStyles = makeStyles((theme: Theme) => ({
+  title: {
+    display: 'flex',
+  },
+  closeIcon: {
+    marginRight: theme.spacing(1),
+  },
+  info: {
+    padding: theme.spacing(1, 0, 2),
+  },
+}));
+
 const Import = () => {
+  const classes = useStyles();
   const history = useHistory();
   const open = useHashMatch('#import');
   const mobile = useIsMobile();
@@ -42,6 +67,12 @@ const Import = () => {
     selectedFighters.forEach(fighter => {
       dispatch(fightersStore.actions.insertFighter({ fighter }));
     });
+    dispatch(
+      notificationsStore.actions.addNotification({
+        message: `Successfully imported ${selectedFighters.length} fighters`,
+        variant: 'success',
+      }),
+    );
     handleClose();
   };
 
@@ -51,8 +82,27 @@ const Import = () => {
 
   return (
     <Dialog open={open} fullScreen={mobile} maxWidth="lg" fullWidth onClose={handleClose} scroll="paper">
-      <DialogTitle>Import Fighters</DialogTitle>
+      {mobile ? (
+        <AppBar position="relative">
+          <Toolbar>
+            <IconButton onClick={handleClose} className={classes.closeIcon}>
+              <Close />
+            </IconButton>
+            <Typography variant="h6">Import Fighters</Typography>
+          </Toolbar>
+        </AppBar>
+      ) : (
+        <DialogTitle className={classes.title}>
+          <IconButton onClick={handleClose} size="small" className={classes.closeIcon}>
+            <Close />
+          </IconButton>
+          <span>Import Fighters</span>
+        </DialogTitle>
+      )}
       <DialogContent>
+        <Typography className={classes.info}>
+          Select a warband below to gain access to its available fighters
+        </Typography>
         <Autocomplete
           options={warbands}
           getOptionLabel={warband => warband.name}
