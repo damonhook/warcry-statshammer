@@ -1,9 +1,12 @@
+import Bonesplitterz from './Bonesplitterz';
 import CorvusCabal from './CorvusCabal';
 import CypherLords from './CypherLords';
 import DaughtersOfKhaine from './DaughtersOfKhaine';
 import FleshEaterCourts from './FleshEaterCourts';
+import GloomspiteGitz from './GloomspiteGitz';
 import IdonethDeepkin from './IdonethDeepkin';
 import IronGolems from './IronGolems';
+import Ironjawz from './Ironjawz';
 import LegionsOfNagash from './LegionsOfNagash';
 import Nighthaunt from './Nighthaunt';
 import SplinteredFang from './SplinteredFang';
@@ -12,19 +15,21 @@ import UntamedBeasts from './UntamedBeasts';
 import Vanguard from './Vanguard';
 import { IWarband } from './warbands.types';
 
-const warbands: IWarband[] = [
+const chaosWarbands: IWarband[] = [
   CorvusCabal,
   CypherLords,
-  DaughtersOfKhaine,
-  FleshEaterCourts,
-  IdonethDeepkin,
   IronGolems,
-  LegionsOfNagash,
-  Nighthaunt,
   SplinteredFang,
   TheUnmade,
   UntamedBeasts,
-  Vanguard,
 ];
+
+const deathWarbands: IWarband[] = [FleshEaterCourts, LegionsOfNagash, Nighthaunt];
+
+const destructionWarbands: IWarband[] = [Bonesplitterz, GloomspiteGitz, Ironjawz];
+
+const orderWarbands: IWarband[] = [DaughtersOfKhaine, IdonethDeepkin, Vanguard];
+
+const warbands: IWarband[] = [...chaosWarbands, ...deathWarbands, ...destructionWarbands, ...orderWarbands];
 
 export default warbands;

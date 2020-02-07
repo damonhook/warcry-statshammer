@@ -1,6 +1,6 @@
 import { IFighter } from 'types/fighter';
 
-export type TAlliance = 'Chaos' | 'Death' | 'Desctruction' | 'Order';
+export type TAlliance = 'Chaos' | 'Death' | 'Destruction' | 'Order';
 
 export interface IWarband {
   name: string;
