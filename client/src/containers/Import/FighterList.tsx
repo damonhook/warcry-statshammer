@@ -31,8 +31,14 @@ interface IFighterListProps {
   warband: IWarband;
   selectedFighters?: IFighter[];
   setSelectedFighters: (newFighters: IFighter[]) => void;
+  disabled?: boolean;
 }
-const FighterList = ({ warband, selectedFighters = [], setSelectedFighters }: IFighterListProps) => {
+const FighterList = ({
+  warband,
+  selectedFighters = [],
+  setSelectedFighters,
+  disabled = false,
+}: IFighterListProps) => {
   const classes = useStyles();
 
   const handleFighterToggle = (fighter: IFighter) => {
@@ -64,19 +70,22 @@ const FighterList = ({ warband, selectedFighters = [], setSelectedFighters }: IF
           <b>Fighters</b>
         </Typography>
         <List>
-          {warband.fighters.map(fighter => (
-            <ListItem key={fighter.name} button onClick={() => handleFighterToggle(fighter)}>
-              <ListItemIcon>
-                <Checkbox
-                  edge="start"
-                  checked={selectedFighters.some(f => f.name === fighter.name)}
-                  tabIndex={-1}
-                  disableRipple
-                />
-              </ListItemIcon>
-              <ListItemText>{fighter.name}</ListItemText>
-            </ListItem>
-          ))}
+          {warband.fighters.map(fighter => {
+            const isSelected = selectedFighters.some(f => f.name === fighter.name);
+            return (
+              <ListItem
+                key={fighter.name}
+                button
+                onClick={() => handleFighterToggle(fighter)}
+                disabled={!isSelected && disabled}
+              >
+                <ListItemIcon>
+                  <Checkbox edge="start" checked={isSelected} tabIndex={-1} disableRipple />
+                </ListItemIcon>
+                <ListItemText>{fighter.name}</ListItemText>
+              </ListItem>
+            );
+          })}
         </List>
       </CardContent>
     </Card>

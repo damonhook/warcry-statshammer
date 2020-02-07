@@ -13,12 +13,14 @@ import {
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { Close, ImportExport } from '@material-ui/icons';
 import { Autocomplete } from '@material-ui/lab';
+import appConfig from 'appConfig';
 import { useHashMatch, useIsMobile } from 'hooks';
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { fighters as fightersStore, notifications as notificationsStore } from 'store/slices';
 import { IFighter } from 'types/fighter';
+import { IStore } from 'types/store';
 import warbands from 'warbands';
 import { IWarband } from 'warbands/warbands.types';
 
@@ -45,6 +47,14 @@ const Import = () => {
   const dispatch = useDispatch();
   const [selectedWarband, setSelectedWarband] = useState<IWarband | null>(null);
   const [selectedFighters, setSelectedFighters] = useState<IFighter[]>([]);
+  const numFighters = useSelector((state: IStore) => state.fighters.length);
+
+  const numSelectable = Math.max(appConfig.limits.fighters - numFighters - selectedFighters.length, 0);
+
+  useEffect(() => {
+    setSelectedWarband(null);
+    setSelectedFighters([]);
+  }, [open]);
 
   const handleClose = () => {
     history.goBack();
@@ -101,7 +111,10 @@ const Import = () => {
       )}
       <DialogContent>
         <Typography className={classes.info}>
-          Select a warband below to gain access to its available fighters
+          <span>
+            Select a warband below to gain access to its available fighters. You may select up to&nbsp;
+          </span>
+          <b>{`${numSelectable} more`}</b>
         </Typography>
         <Autocomplete
           options={warbands}
@@ -117,6 +130,7 @@ const Import = () => {
             warband={selectedWarband}
             selectedFighters={selectedFighters}
             setSelectedFighters={handleSetSelectedFighters}
+            disabled={numSelectable <= 0}
           />
         ) : (
           <SelectWarbandCard />

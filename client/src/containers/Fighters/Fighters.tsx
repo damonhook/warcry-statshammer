@@ -87,6 +87,7 @@ const Fighters = () => {
             startIcon={<ImportExport />}
             fullWidth
             size={mobile ? 'large' : 'medium'}
+            disabled={isAddFighterDisabled}
           >
             Import
           </Button>
