@@ -15,7 +15,7 @@ import { Close, ImportExport } from '@material-ui/icons';
 import { Autocomplete } from '@material-ui/lab';
 import appConfig from 'appConfig';
 import { useHashMatch, useIsMobile } from 'hooks';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { fighters as fightersStore, notifications as notificationsStore } from 'store/slices';
@@ -28,6 +28,9 @@ import FighterList from './FighterList';
 import SelectWarbandCard from './SelectWarbandCard';
 
 const useStyles = makeStyles((theme: Theme) => ({
+  importDialog: {
+    height: '100%',
+  },
   title: {
     display: 'flex',
   },
@@ -90,8 +93,26 @@ const Import = () => {
     setSelectedFighters(f);
   };
 
+  const warbandOptions = useMemo(
+    () =>
+      warbands
+        .sort((a, b) => a.name.localeCompare(b.name))
+        .sort((a, b) => a.alliance.localeCompare(b.alliance)),
+    [],
+  );
+
   return (
-    <Dialog open={open} fullScreen={mobile} maxWidth="lg" fullWidth onClose={handleClose} scroll="paper">
+    <Dialog
+      open={open}
+      fullScreen={mobile}
+      maxWidth="lg"
+      fullWidth
+      onClose={handleClose}
+      scroll="paper"
+      classes={{
+        paper: classes.importDialog,
+      }}
+    >
       {mobile ? (
         <AppBar position="relative">
           <Toolbar>
@@ -117,7 +138,7 @@ const Import = () => {
           <b>{`${numSelectable} more`}</b>
         </Typography>
         <Autocomplete
-          options={warbands}
+          options={warbandOptions}
           getOptionLabel={warband => warband.name}
           groupBy={warband => warband.alliance}
           renderInput={params => <TextField {...params} label="Warbands" variant="outlined" fullWidth />}
