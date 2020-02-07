@@ -21,6 +21,7 @@ import { useHistory } from 'react-router-dom';
 import { fighters as fightersStore, notifications as notificationsStore } from 'store/slices';
 import { IFighter } from 'types/fighter';
 import { IStore } from 'types/store';
+import { HASHES } from 'utils/urls';
 import warbands from 'warbands';
 import { IWarband } from 'warbands/warbands.types';
 
@@ -45,7 +46,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 const Import = () => {
   const classes = useStyles();
   const history = useHistory();
-  const open = useHashMatch('#import');
+  const open = useHashMatch(HASHES.IMPORT);
   const mobile = useIsMobile();
   const dispatch = useDispatch();
   const [selectedWarband, setSelectedWarband] = useState<IWarband | null>(null);

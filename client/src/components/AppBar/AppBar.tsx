@@ -5,7 +5,7 @@ import Link from 'components/Link';
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { config as configStore } from 'store/slices';
-import { EPages, getRoute } from 'types/routes';
+import { ROUTES } from 'utils/urls';
 
 interface IStyleProps {
   height: number;
@@ -59,7 +59,7 @@ const AppBar = () => {
         <Bar className={classes.appBar} position="fixed">
           <div ref={ref}>
             <Toolbar variant="dense" className={classes.toolbar}>
-              <Link to={getRoute(EPages.HOME)}>
+              <Link to={ROUTES.HOME}>
                 <Typography variant="h5" component="h1" className={classes.title}>
                   Warcry Statshammer
                 </Typography>

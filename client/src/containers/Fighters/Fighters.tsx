@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { fighters as fightersStore } from 'store/slices';
 import { IStore } from 'types/store';
+import { HASHES } from 'utils/urls';
 
 import DraggableFighter from './DraggableFighter';
 
@@ -40,7 +41,7 @@ const Fighters = () => {
   };
 
   const handleImportOpen = () => {
-    history.push('#import');
+    history.push(HASHES.IMPORT);
   };
 
   const isAddFighterDisabled = fighters.length >= appConfig.limits.fighters;

@@ -8,8 +8,8 @@ import isEqual from 'lodash/isEqual';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { EPages, getRoute } from 'types/routes';
 import { IStore } from 'types/store';
+import { ROUTES } from 'utils/urls';
 
 import AverageDamage from './AverageDamage';
 import Loader from './Loader';
@@ -34,11 +34,11 @@ const Stats = () => {
   }, [dispatch]);
 
   if (numFighters <= 0) {
-    history.replace(getRoute(EPages.HOME));
+    history.replace(ROUTES.HOME);
   }
 
   const handleBack = () => {
-    history.push(getRoute(EPages.HOME));
+    history.push(ROUTES.HOME);
   };
 
   let placeholder: JSX.Element | null = null;

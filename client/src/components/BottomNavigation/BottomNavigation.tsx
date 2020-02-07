@@ -5,8 +5,8 @@ import { useBreakpointChanged, useRouteFind } from 'hooks';
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { EPages, getRoute } from 'types/routes';
 import { IStore } from 'types/store';
+import { ROUTES } from 'utils/urls';
 
 interface IStyleProps {
   height: number;
@@ -39,7 +39,7 @@ const BottomNavigation = () => {
   const ref = useRef<HTMLDivElement>(null);
   const classes = useStyles({ height });
 
-  const routes = [getRoute(EPages.HOME), getRoute(EPages.STATS), getRoute(EPages.ABOUT)];
+  const routes = [ROUTES.HOME, ROUTES.STATS, ROUTES.ABOUT];
   const [index] = useRouteFind(routes);
 
   const breakpoints = useBreakpointChanged();
