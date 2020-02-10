@@ -13,7 +13,7 @@ import {
   Typography,
 } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
-import { Check, Close, Warning } from '@material-ui/icons';
+import { Check, Close, Refresh, Warning } from '@material-ui/icons';
 import { useHashMatch } from 'hooks';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -22,7 +22,7 @@ import { config as configStore } from 'store/slices';
 import { TToughnessConfig } from 'types/config';
 import { HASHES } from 'utils/urls';
 
-import { getActiveToughnessRange, getWarning, isAuto } from './utils';
+import { getToughnessRange, getWarning, isAuto } from './utils';
 
 const useStyles = makeStyles((theme: Theme) => ({
   sliderContainer: {
@@ -51,54 +51,68 @@ const ToughnessConfigDialog = ({ toughnessConfig, minStr, maxStr }: IToughnessCo
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
-  const [value, setValue] = useState<[number, number]>([1, 1]);
+
+  const [min, setMin] = useState(1);
+  const [max, setMax] = useState(1);
   const [minAuto, setMinAuto] = useState(false);
   const [maxAuto, setMaxAuto] = useState(false);
 
-  const activeToughnessRange = useMemo(() => {
-    return getActiveToughnessRange(toughnessConfig, minStr, maxStr);
-  }, [toughnessConfig, minStr, maxStr]);
+  const autoRange = useMemo(() => {
+    return getToughnessRange({ min: 'auto', max: 'auto' }, minStr, maxStr);
+  }, [maxStr, minStr]);
 
   useEffect(() => {
-    const { min, max } = activeToughnessRange;
-    setValue([min, max]);
+    const configRange = getToughnessRange(toughnessConfig, minStr, maxStr);
+    setMin(configRange.min);
+    setMax(configRange.max);
     setMinAuto(isAuto(toughnessConfig?.min));
     setMaxAuto(isAuto(toughnessConfig?.max));
-  }, [maxStr, minStr, toughnessConfig, open, activeToughnessRange]);
+  }, [open, maxStr, minStr, toughnessConfig]);
 
-  const updateValue = (newValue: [number, number]) => {
-    const newVal = newValue;
-    if (minAuto) newVal[0] = activeToughnessRange.min;
-    if (maxAuto) newVal[1] = activeToughnessRange.max;
-    setValue(newVal);
-  };
+  useEffect(() => {
+    if (minAuto) setMin(autoRange.min);
+  }, [autoRange.min, minAuto]);
+
+  useEffect(() => {
+    if (maxAuto) setMax(autoRange.max);
+  }, [autoRange.max, maxAuto]);
 
   const handleChange = (e: any, newValue: number | number[]) => {
-    updateValue(newValue as [number, number]);
+    let [newMin, newMax] = newValue as [number, number];
+    if (minAuto) newMin = autoRange.min;
+    if (maxAuto) newMax = autoRange.max;
+    setMin(newMin);
+    setMax(newMax);
+  };
+
+  const handleMinAutoChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setMinAuto(e.target.checked);
+  };
+
+  const handleMaxAutoChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setMaxAuto(e.target.checked);
   };
 
   const handleClose = () => {
     history.goBack();
   };
 
-  const handleMinAutoChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setMinAuto(e.target.checked);
-    setValue([activeToughnessRange.min, value[1]]);
-  };
-
-  const handleMaxAutoChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setMaxAuto(e.target.checked);
-    setValue([value[0], activeToughnessRange.max]);
-  };
-
   const handleSubmit = () => {
-    const min = minAuto ? 'auto' : value[0];
-    const max = maxAuto ? 'auto' : value[1];
-    dispatch(configStore.actions.editToughnessRange({ toughness: { min, max } }));
+    const toughness: TToughnessConfig = {
+      min: minAuto ? 'auto' : min,
+      max: maxAuto ? 'auto' : max,
+    };
+    dispatch(configStore.actions.editToughnessRange({ toughness }));
     handleClose();
   };
 
-  const warning = getWarning({ min: value[0], max: value[1] }, minStr, maxStr);
+  const handleReset = () => {
+    setMinAuto(true);
+    setMaxAuto(true);
+  };
+
+  const warning = useMemo(() => getWarning({ min, max }, minStr, maxStr), [max, maxStr, min, minStr]);
+  const value: [number, number] = [min, max];
 
   return (
     <Dialog open={open} onClose={handleClose} fullWidth maxWidth="md">
@@ -139,6 +153,9 @@ const ToughnessConfigDialog = ({ toughnessConfig, minStr, maxStr }: IToughnessCo
         </Collapse>
       </DialogContent>
       <DialogActions>
+        <Button startIcon={<Refresh />} onClick={handleReset}>
+          Reset
+        </Button>
         <Button startIcon={<Close />} onClick={handleClose}>
           Cancel
         </Button>

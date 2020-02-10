@@ -9,7 +9,7 @@ import { IStore } from 'types/store';
 import { HASHES } from 'utils/urls';
 
 import ToughnessConfigDialog from './ToughnessConfigDialog';
-import { getActiveToughnessRange, getWarning, isAuto } from './utils';
+import { getToughnessRange, getWarning, isAuto } from './utils';
 
 const useStyles = makeStyles((theme: Theme) => ({
   warning: {
@@ -28,7 +28,7 @@ const ToughnessRangeConfig = () => {
   const maxStr = useMemo(() => Math.max(...fighterList.map(f => f.profile.strength)), [fighterList]);
 
   const activeToughnessRange = useMemo(() => {
-    return getActiveToughnessRange(toughness, minStr, maxStr);
+    return getToughnessRange(toughness, minStr, maxStr);
   }, [maxStr, minStr, toughness]);
 
   const getToughnessDisplay = useCallback(() => {

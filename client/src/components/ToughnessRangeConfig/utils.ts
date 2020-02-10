@@ -2,15 +2,11 @@ import { TToughnessConfig, TToughnessConfigValue } from 'types/config';
 
 export const isAuto = (val: TToughnessConfigValue) => typeof val !== 'number';
 
-export const getActiveToughnessRange = (
-  toughnessConfig: TToughnessConfig,
-  minStr: number,
-  maxStr: number,
-) => {
+export const getToughnessRange = (toughnessConfig: TToughnessConfig, minStr: number, maxStr: number) => {
   let min = isAuto(toughnessConfig?.min) ? minStr - 1 : Number(toughnessConfig.min);
   let max = isAuto(toughnessConfig?.max) ? maxStr + 1 : Number(toughnessConfig.max);
-  max = Math.max(max, 1);
-  min = Math.min(Math.max(min, 1), max);
+  min = Math.max(min, 1);
+  max = Math.max(max, min);
   return { min, max };
 };
 
