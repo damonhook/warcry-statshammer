@@ -1,8 +1,8 @@
 import { Divider, Drawer, Tab, Tabs } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { BarChart as StatsIcon, Home as HomeIcon, Info as InfoIcon } from '@material-ui/icons';
+import { LogoIcon } from 'components/Icons';
 import Link from 'components/Link';
-import Logo from 'components/Logo';
 import Version from 'components/Version';
 import { useRouteFind } from 'hooks';
 import React, { useEffect, useState } from 'react';
@@ -22,9 +22,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: theme.mixins.drawer.width,
   },
   drawerLogo: {
-    padding: theme.spacing(0.5),
-    width: theme.mixins.drawer.width,
+    margin: theme.spacing(0.5, 0, -1.5),
     textAlign: 'center',
+    fontSize: '3.8rem',
   },
   caption: {
     textAlign: 'end',
@@ -60,7 +60,7 @@ const LeftNavigation = () => {
     <div className={classes.leftNavigation}>
       <Drawer open variant="permanent" anchor="left" className={classes.drawer}>
         <Link to={ROUTES.HOME} className={classes.drawerLogo}>
-          <Logo height={60} />
+          <LogoIcon color="primary" fontSize="inherit" />
         </Link>
         <Divider variant="middle" />
         <Tabs
