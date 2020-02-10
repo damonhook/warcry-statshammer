@@ -1,6 +1,6 @@
 import { CircularProgress, Divider, IconButton, Paper, Theme, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import Logo from 'components/Logo';
+import { LogoIcon } from 'components/Icons';
 import { AoSStatshammer, Github, Reddit, Releases } from 'components/SocialButtons';
 import Version from 'components/Version';
 import { useReadFromFile } from 'hooks';
@@ -36,6 +36,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   logoButton: {
     margin: '0 auto',
+    fontSize: '7rem',
   },
   md: {
     marginTop: -theme.spacing(2),
@@ -72,7 +73,7 @@ const About = () => {
       <div className={classes.wrapper}>
         <Paper className={classes.paper}>
           <IconButton onClick={handleLogoClick} className={classes.logoButton}>
-            <Logo width="7rem" />
+            <LogoIcon color="primary" fontSize="inherit" />
           </IconButton>
           {!content && (
             <div className={classes.loader}>
