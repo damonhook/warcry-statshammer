@@ -4,14 +4,16 @@ import Fighter from '../models/fighter';
 import * as t from './statsController.types';
 
 export class StatsController {
-  compareFighters({ fighters }: t.ICompareFightersParams): t.ICompareFightersResponse {
+  compareFighters({
+    fighters,
+    toughness: { min = 'auto', max = 'auto' },
+  }: t.ICompareFightersParams): t.ICompareFightersResponse {
     const fighterList = fighters.map(f => new Fighter(f.name, f.profile));
-    const minStr = Math.min(...fighterList.map(f => f.profile.strength));
-    const maxStr = Math.max(...fighterList.map(f => f.profile.strength));
+    const toughnessRange = this.getToughnessRanges(fighterList, { min, max });
     const fighterProbabilitiesData: IFighterProbabilities[] = fighterList.map(fighter =>
       fighter.getProbabilities(),
     );
-    const toughnessList = this.range(Math.max(minStr - 1, 1), maxStr + 1);
+    const toughnessList = this.range(Math.max(toughnessRange.min, 1), toughnessRange.max);
     const data = toughnessList.map(toughness =>
       fighterList.reduce<t.TMappedResult>(
         (acc, fighter, index) => {
@@ -25,6 +27,22 @@ export class StatsController {
       ),
     );
     return { results: data.map(d => this.buildResult(d)) };
+  }
+
+  private getToughnessRanges(
+    fighters: Fighter[],
+    toughness: {
+      min: number | 'auto';
+      max: number | 'auto';
+    },
+  ) {
+    const minStr = Math.min(...fighters.map(f => f.profile.strength));
+    const maxStr = Math.max(...fighters.map(f => f.profile.strength));
+    let min = toughness.min == null || toughness.min === 'auto' ? minStr - 1 : toughness.min;
+    let max = toughness.max == null || toughness.max === 'auto' ? maxStr + 1 : toughness.max;
+    max = Math.max(max, 1);
+    min = Math.min(Math.max(min, 1), max);
+    return { min, max };
   }
 
   private range(start: number, end: number) {
