@@ -4,15 +4,11 @@ import Fighter from '../models/fighter';
 import * as t from './statsController.types';
 
 export class StatsController {
-  compareFighters({
-    fighters,
-    minToughness = 'auto',
-    maxToughness = 'auto',
-  }: t.ICompareFightersParams): t.ICompareFightersResponse {
+  compareFighters({ fighters, toughness }: t.ICompareFightersParams): t.ICompareFightersResponse {
     const fighterList = fighters.map(f => new Fighter(f.name, f.profile));
     const toughnessRange = this.getToughnessRanges(fighterList, {
-      min: minToughness ?? 'auto',
-      max: maxToughness ?? 'auto',
+      min: toughness?.min ?? 'auto',
+      max: toughness?.max ?? 'auto',
     });
     const fighterProbabilitiesData: IFighterProbabilities[] = fighterList.map(fighter =>
       fighter.getProbabilities(),

@@ -30,13 +30,14 @@ const Stats = () => {
   const stats = useSelector((state: IStore) => state.stats, isEqual);
   const fighterNames = useSelector((state: IStore) => [...new Set(state.fighters.map(f => f.name))], isEqual);
   const numFighters = useSelector((state: IStore) => state.fighters.length);
+  const toughnessConfig = useSelector((state: IStore) => state.config.toughnessRange);
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
   const mobile = useIsMobile();
 
   useEffect(() => {
     dispatch(fetchCompare());
-  }, [dispatch]);
+  }, [dispatch, toughnessConfig]);
 
   if (numFighters <= 0) {
     history.replace(ROUTES.HOME);

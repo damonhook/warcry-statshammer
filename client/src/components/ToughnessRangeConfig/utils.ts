@@ -8,7 +8,7 @@ export const getActiveToughnessRange = (
   maxStr: number,
 ) => {
   let min = isAuto(toughnessConfig?.min) ? minStr - 1 : Number(toughnessConfig.min);
-  let max = isAuto(toughnessConfig?.min) ? maxStr + 1 : Number(toughnessConfig.max);
+  let max = isAuto(toughnessConfig?.max) ? maxStr + 1 : Number(toughnessConfig.max);
   max = Math.max(max, 1);
   min = Math.min(Math.max(min, 1), max);
   return { min, max };

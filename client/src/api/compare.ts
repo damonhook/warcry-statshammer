@@ -14,14 +14,16 @@ type TDispatch = ThunkDispatch<IStore, void, Action>;
 export const fetchCompare = () => async (dispatch: TDispatch) => {
   dispatch(statsStore.actions.fetchStatsPending());
   try {
-    const fighters = getSanitizedFighters(store.getState());
+    const state = store.getState();
+    const fighters = getSanitizedFighters(state);
+    const toughness = state.config.toughnessRange;
     if (!fighters || !fighters.length) dispatch(statsStore.actions.fetchStatsSuccess({ results: [] }));
     const req = await fetch('/api/compare', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ fighters }),
+      body: JSON.stringify({ fighters, toughness }),
     });
     const res = await req.json();
     dispatch(statsStore.actions.fetchStatsSuccess({ results: res.results }));

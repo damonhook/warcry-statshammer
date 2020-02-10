@@ -2,8 +2,10 @@ import { IFighter, IFighterProbability } from 'api/types';
 
 export interface ICompareFightersParams {
   fighters: IFighter[];
-  minToughness?: number | 'auto';
-  maxToughness?: number | 'auto';
+  toughness: {
+    min?: number | 'auto';
+    max?: number | 'auto';
+  };
 }
 
 export type TMappedResult = {

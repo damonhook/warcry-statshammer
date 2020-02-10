@@ -92,8 +92,10 @@ const ToughnessConfigDialog = ({ toughnessConfig, minStr, maxStr }: IToughnessCo
   };
 
   const handleSubmit = () => {
-    const [min, max] = value;
+    const min = minAuto ? 'auto' : value[0];
+    const max = maxAuto ? 'auto' : value[1];
     dispatch(configStore.actions.editToughnessRange({ toughness: { min, max } }));
+    handleClose();
   };
 
   const warning = getWarning({ min: value[0], max: value[1] }, minStr, maxStr);
