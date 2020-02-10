@@ -1,3 +1,4 @@
+import { TToughnessConfig } from './config';
 import { IFighter } from './fighter';
 import { INotification } from './notification';
 import { TResults } from './stats';
@@ -7,6 +8,7 @@ export type TFightersStore = IFighter[];
 export interface IConfigStore {
   /** Whether the app is in dark mode or not */
   darkMode: boolean;
+  toughnessRange: TToughnessConfig;
 }
 
 export interface IStatsStore {

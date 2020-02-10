@@ -6,10 +6,14 @@ import * as t from './statsController.types';
 export class StatsController {
   compareFighters({
     fighters,
-    toughness: { min = 'auto', max = 'auto' },
+    minToughness = 'auto',
+    maxToughness = 'auto',
   }: t.ICompareFightersParams): t.ICompareFightersResponse {
     const fighterList = fighters.map(f => new Fighter(f.name, f.profile));
-    const toughnessRange = this.getToughnessRanges(fighterList, { min, max });
+    const toughnessRange = this.getToughnessRanges(fighterList, {
+      min: minToughness ?? 'auto',
+      max: maxToughness ?? 'auto',
+    });
     const fighterProbabilitiesData: IFighterProbabilities[] = fighterList.map(fighter =>
       fighter.getProbabilities(),
     );
