@@ -2,6 +2,14 @@ import { IFighter, IProfile } from 'types/fighter';
 import warbands from 'warbands';
 
 expect.extend({
+  toHaveUniqueNames(received: IFighter[]) {
+    const names = received.map(({ name }) => name.trim());
+    const pass = names.length === new Set(names).size;
+    return {
+      message: () => `expected ${names} to be unique`,
+      pass,
+    };
+  },
   toHaveOneActiveProfile(received: IFighter) {
     const pass = received.profiles.filter(i => i.active).length === 1;
     return {
@@ -36,6 +44,7 @@ describe('Warbands', () => {
 
       describe('Fighters', () => {
         expect(warband.fighters.length).toBeGreaterThan(0);
+        expect(warband.fighters).toHaveUniqueNames();
         warband.fighters.forEach((fighter, fighterIndex) => {
           test(`${fighter?.name ?? fighterIndex}`, () => {
             expect(typeof fighter.name).toBe('string');

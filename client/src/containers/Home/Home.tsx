@@ -4,7 +4,7 @@ import Header from 'components/Header';
 import Fighters from 'containers/Fighters';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { EPages, getRoute } from 'types/routes';
+import { ROUTES } from 'utils/urls';
 
 const useStyles = makeStyles(() => ({
   home: {
@@ -17,7 +17,7 @@ const Home = () => {
   const history = useHistory();
 
   const handleForward = () => {
-    history.push(getRoute(EPages.STATS));
+    history.push(ROUTES.STATS);
   };
 
   return (

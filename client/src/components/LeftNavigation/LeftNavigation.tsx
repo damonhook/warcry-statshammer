@@ -8,8 +8,8 @@ import { useRouteFind } from 'hooks';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { EPages, getRoute } from 'types/routes';
 import { IStore } from 'types/store';
+import { ROUTES } from 'utils/urls';
 
 const useStyles = makeStyles((theme: Theme) => ({
   leftNavigation: {
@@ -42,7 +42,7 @@ const LeftNavigation = () => {
   const history = useHistory();
   const [index, setIndex] = useState(0);
 
-  const routes = [getRoute(EPages.HOME), getRoute(EPages.STATS), getRoute(EPages.ABOUT)];
+  const routes = [ROUTES.HOME, ROUTES.STATS, ROUTES.ABOUT];
   const [routeIndex] = useRouteFind(routes);
 
   const numFighters = useSelector((state: IStore) => state.fighters.length);
@@ -59,7 +59,7 @@ const LeftNavigation = () => {
   return (
     <div className={classes.leftNavigation}>
       <Drawer open variant="permanent" anchor="left" className={classes.drawer}>
-        <Link to={getRoute(EPages.HOME)} className={classes.drawerLogo}>
+        <Link to={ROUTES.HOME} className={classes.drawerLogo}>
           <Logo height={60} />
         </Link>
         <Divider variant="middle" />

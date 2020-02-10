@@ -12,8 +12,8 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 import { getTheme } from 'themes';
-import { EPages, getRoute } from 'types/routes';
 import { IStore } from 'types/store';
+import { ROUTES } from 'utils/urls';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -61,10 +61,10 @@ const App = () => {
             <div className={classes.contentWrapper}>
               <div className={classes.content}>
                 <Switch>
-                  <Route exact path={getRoute(EPages.HOME)} component={Home} />
-                  <Route exact path={getRoute(EPages.STATS)} component={Stats} />
-                  <Route exact path={getRoute(EPages.ABOUT)} component={About} />
-                  <Redirect to={getRoute(EPages.HOME)} />
+                  <Route exact path={ROUTES.HOME} component={Home} />
+                  <Route exact path={ROUTES.STATS} component={Stats} />
+                  <Route exact path={ROUTES.ABOUT} component={About} />
+                  <Redirect to={ROUTES.HOME} />
                 </Switch>
               </div>
               <Footer />

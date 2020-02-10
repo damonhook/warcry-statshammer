@@ -7,7 +7,7 @@ import { useReadFromFile } from 'hooks';
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import { useHistory } from 'react-router-dom';
-import { EPages, getRoute } from 'types/routes';
+import { ROUTES } from 'utils/urls';
 
 const useStyles = makeStyles((theme: Theme) => ({
   about: {
@@ -64,7 +64,7 @@ const About = () => {
   const history = useHistory();
 
   const handleLogoClick = () => {
-    history.push(getRoute(EPages.HOME));
+    history.push(ROUTES.HOME);
   };
 
   return (
