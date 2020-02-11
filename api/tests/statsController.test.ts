@@ -1,5 +1,6 @@
 import { StatsController } from '../controllers/statsController';
 import * as t from '../controllers/statsController.types';
+import Fighter from '../models/fighter';
 
 const mockMappedResult: t.TMappedResult = {
   toughness: 4,
@@ -54,5 +55,64 @@ describe('Stats Controller', () => {
     // @ts-ignore
     const output = controller.buildResult(mockMappedResult);
     expect(output).toEqual(expected);
+  });
+
+  describe('Get Toughness Ranges', () => {
+    const controller = new StatsController();
+    const fighterList = [
+      new Fighter('Test 1', {
+        attacks: 2,
+        strength: 3,
+        damage: { hit: 1, crit: 2 },
+      }),
+      new Fighter('Test 2', {
+        attacks: 2,
+        strength: 4,
+        damage: { hit: 2, crit: 4 },
+      }),
+    ];
+
+    test('Auto <-> Auto', () => {
+      // @ts-ignore
+      expect(controller.getToughnessRanges(fighterList, { min: 'auto', max: 'auto' })).toEqual({
+        min: 2,
+        max: 5,
+      });
+    });
+    test('3 <-> Auto', () => {
+      // @ts-ignore
+      expect(controller.getToughnessRanges(fighterList, { min: 3, max: 'auto' })).toEqual({
+        min: 3,
+        max: 5,
+      });
+    });
+    test('Auto <-> 7', () => {
+      // @ts-ignore
+      expect(controller.getToughnessRanges(fighterList, { min: 'auto', max: 7 })).toEqual({
+        min: 2,
+        max: 7,
+      });
+    });
+    test('7 <-> Auto (min > max)', () => {
+      // @ts-ignore
+      expect(controller.getToughnessRanges(fighterList, { min: 7, max: 'auto' })).toEqual({
+        min: 7,
+        max: 7,
+      });
+    });
+    test('Auto <-> 1 (max < min)', () => {
+      // @ts-ignore
+      expect(controller.getToughnessRanges(fighterList, { min: 'auto', max: 1 })).toEqual({
+        min: 2,
+        max: 2,
+      });
+    });
+    test('-1 <-> -10 (negative numbers)', () => {
+      // @ts-ignore
+      expect(controller.getToughnessRanges(fighterList, { min: -1, max: -10 })).toEqual({
+        min: 1,
+        max: 1,
+      });
+    });
   });
 });

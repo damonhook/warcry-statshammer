@@ -4,14 +4,16 @@ import Fighter from '../models/fighter';
 import * as t from './statsController.types';
 
 export class StatsController {
-  compareFighters({ fighters }: t.ICompareFightersParams): t.ICompareFightersResponse {
+  compareFighters({ fighters, toughness }: t.ICompareFightersParams): t.ICompareFightersResponse {
     const fighterList = fighters.map(f => new Fighter(f.name, f.profile));
-    const minStr = Math.min(...fighterList.map(f => f.profile.strength));
-    const maxStr = Math.max(...fighterList.map(f => f.profile.strength));
+    const toughnessRange = this.getToughnessRanges(fighterList, {
+      min: toughness?.min ?? 'auto',
+      max: toughness?.max ?? 'auto',
+    });
     const fighterProbabilitiesData: IFighterProbabilities[] = fighterList.map(fighter =>
       fighter.getProbabilities(),
     );
-    const toughnessList = this.range(Math.max(minStr - 1, 1), maxStr + 1);
+    const toughnessList = this.range(toughnessRange.min, toughnessRange.max);
     const data = toughnessList.map(toughness =>
       fighterList.reduce<t.TMappedResult>(
         (acc, fighter, index) => {
@@ -27,6 +29,32 @@ export class StatsController {
     return { results: data.map(d => this.buildResult(d)) };
   }
 
+  /**
+   * Get the toughness range to use for generating the comparison data
+   * @param fighters The list of fighters used to compare
+   * @param toughness The toughness parameters provided by the API call
+   */
+  private getToughnessRanges(
+    fighters: Fighter[],
+    toughness: {
+      min: number | 'auto';
+      max: number | 'auto';
+    },
+  ) {
+    const minStr = Math.min(...fighters.map(f => f.profile.strength));
+    const maxStr = Math.max(...fighters.map(f => f.profile.strength));
+    let min = toughness.min == null || toughness.min === 'auto' ? minStr - 1 : toughness.min;
+    let max = toughness.max == null || toughness.max === 'auto' ? maxStr + 1 : toughness.max;
+    min = Math.max(min, 1);
+    max = Math.max(max, min);
+    return { min, max };
+  }
+
+  /**
+   * Create an array from one number to another (e.g: `range(2, 4)` => `[2, 3, 4]`)
+   * @param start The number to start at
+   * @param end The number to end at
+   */
   private range(start: number, end: number) {
     return [...Array(end - start + 1)].map((_, i) => start + i);
   }
