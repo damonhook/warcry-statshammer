@@ -138,7 +138,7 @@ const ToughnessConfigDialog = ({ toughnessConfig, minStr, maxStr }: IToughnessCo
         </Typography>
         <br />
         <Typography>
-          <b>How the Auto range is deternined:</b>
+          <b>How the Auto range is determined:</b>
         </Typography>
         <Typography>
           <span>
