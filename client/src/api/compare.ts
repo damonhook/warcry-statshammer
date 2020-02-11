@@ -17,7 +17,10 @@ export const fetchCompare = () => async (dispatch: TDispatch) => {
     const state = store.getState();
     const fighters = getSanitizedFighters(state);
     const toughness = state.config.toughnessRange;
-    if (!fighters || !fighters.length) dispatch(statsStore.actions.fetchStatsSuccess({ results: [] }));
+    if (!fighters || !fighters.length) {
+      dispatch(statsStore.actions.fetchStatsSuccess({ results: [] }));
+      return;
+    }
     const req = await fetch('/api/compare', {
       method: 'POST',
       headers: {
