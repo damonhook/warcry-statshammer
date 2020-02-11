@@ -40,8 +40,8 @@ export class StatsController {
     const maxStr = Math.max(...fighters.map(f => f.profile.strength));
     let min = toughness.min == null || toughness.min === 'auto' ? minStr - 1 : toughness.min;
     let max = toughness.max == null || toughness.max === 'auto' ? maxStr + 1 : toughness.max;
-    max = Math.max(max, 1);
-    min = Math.min(Math.max(min, 1), max);
+    min = Math.max(min, 1);
+    max = Math.max(max, min);
     return { min, max };
   }
 

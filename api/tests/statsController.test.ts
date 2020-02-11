@@ -96,20 +96,20 @@ describe('Stats Controller', () => {
     test('7 <-> Auto (min > max)', () => {
       // @ts-ignore
       expect(controller.getToughnessRanges(fighterList, { min: 7, max: 'auto' })).toEqual({
-        min: 5,
-        max: 5,
+        min: 7,
+        max: 7,
       });
     });
     test('Auto <-> 1 (max < min)', () => {
       // @ts-ignore
       expect(controller.getToughnessRanges(fighterList, { min: 'auto', max: 1 })).toEqual({
-        min: 1,
-        max: 1,
+        min: 2,
+        max: 2,
       });
     });
     test('-1 <-> -10 (negative numbers)', () => {
       // @ts-ignore
-      expect(controller.getToughnessRanges(fighterList, { min: -1, max: -1 })).toEqual({
+      expect(controller.getToughnessRanges(fighterList, { min: -1, max: -10 })).toEqual({
         min: 1,
         max: 1,
       });
