@@ -32,9 +32,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   sliderContainer: {
     paddingTop: theme.spacing(3),
     marginBottom: theme.spacing(2),
-    [theme.breakpoints.down('sm')]: {
-      paddingTop: theme.spacing(3),
-    },
   },
   autoLabel: {
     [theme.breakpoints.down('sm')]: {
@@ -44,9 +41,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   slider: {
     flex: 1,
     marginTop: theme.spacing(3),
-    [theme.breakpoints.down('sm')]: {
-      marginTop: theme.spacing(3),
-    },
   },
   minAuto: {
     '& $thumb[data-index="0"]': {
