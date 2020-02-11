@@ -13,7 +13,7 @@ export class StatsController {
     const fighterProbabilitiesData: IFighterProbabilities[] = fighterList.map(fighter =>
       fighter.getProbabilities(),
     );
-    const toughnessList = this.range(Math.max(toughnessRange.min, 1), toughnessRange.max);
+    const toughnessList = this.range(toughnessRange.min, toughnessRange.max);
     const data = toughnessList.map(toughness =>
       fighterList.reduce<t.TMappedResult>(
         (acc, fighter, index) => {
@@ -29,6 +29,11 @@ export class StatsController {
     return { results: data.map(d => this.buildResult(d)) };
   }
 
+  /**
+   * Get the toughness range to use for generating the comparison data
+   * @param fighters The list of fighters used to compare
+   * @param toughness The toughness parameters provided by the API call
+   */
   private getToughnessRanges(
     fighters: Fighter[],
     toughness: {
@@ -45,6 +50,11 @@ export class StatsController {
     return { min, max };
   }
 
+  /**
+   * Create an array from one number to another (e.g: `range(2, 4)` => `[2, 3, 4]`)
+   * @param start The number to start at
+   * @param end The number to end at
+   */
   private range(start: number, end: number) {
     return [...Array(end - start + 1)].map((_, i) => start + i);
   }

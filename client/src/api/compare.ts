@@ -9,7 +9,7 @@ import { IStore } from 'types/store';
 type TDispatch = ThunkDispatch<IStore, void, Action>;
 
 /**
- *
+ * Fetch the comparison data from the API using /api/compare
  */
 export const fetchCompare = () => async (dispatch: TDispatch) => {
   dispatch(statsStore.actions.fetchStatsPending());
