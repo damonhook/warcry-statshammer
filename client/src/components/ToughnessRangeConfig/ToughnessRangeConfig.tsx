@@ -53,7 +53,7 @@ const ToughnessRangeConfig = () => {
       </Tooltip>
       {warning && (
         <span className={classes.warning}>
-          <Tooltip title={warning} className={classes.warning}>
+          <Tooltip title={warning} className={classes.warning} disableFocusListener disableTouchListener>
             <WarningIcon fontSize="default" />
           </Tooltip>
         </span>

@@ -1,24 +1,19 @@
 import {
-  AppBar,
   Button,
   Checkbox,
-  Collapse,
   Dialog,
   DialogActions,
   DialogContent,
-  DialogTitle,
+  Divider,
   FormControlLabel,
   Grid,
-  IconButton,
-  Paper,
   Slider,
-  Toolbar,
   Typography,
 } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
-import { Check, Close, Refresh, Warning } from '@material-ui/icons';
+import { Check, Close, Refresh } from '@material-ui/icons';
 import clsx from 'clsx';
-import { useHashMatch } from 'hooks';
+import { useHashMatch, useIsMobile } from 'hooks';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -26,21 +21,19 @@ import { config as configStore } from 'store/slices';
 import { TToughnessConfig } from 'types/config';
 import { HASHES } from 'utils/urls';
 
-import { useIsMobile } from '../../hooks/useIsMobile';
+import DialogHeader from './DialogHeader';
 import { getToughnessRange, getWarning, isAuto } from './utils';
+import WarningCard from './WarningCard';
 
 const useStyles = makeStyles((theme: Theme) => ({
-  title: {
-    display: 'flex',
-  },
-  closeIcon: {
-    marginRight: theme.spacing(1),
+  divider: {
+    margin: theme.spacing(2, 0, 1),
   },
   sliderContainer: {
-    paddingTop: theme.spacing(5),
+    paddingTop: theme.spacing(3),
     marginBottom: theme.spacing(2),
     [theme.breakpoints.down('sm')]: {
-      paddingTop: theme.spacing(2),
+      paddingTop: theme.spacing(3),
     },
   },
   autoLabel: {
@@ -50,16 +43,10 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   slider: {
     flex: 1,
+    marginTop: theme.spacing(3),
     [theme.breakpoints.down('sm')]: {
       marginTop: theme.spacing(3),
     },
-  },
-  warning: {
-    background: theme.palette.background.nested,
-    padding: theme.spacing(2),
-  },
-  warningTitle: {
-    marginBottom: theme.spacing(0.5),
   },
   minAuto: {
     '& $thumb[data-index="0"]': {
@@ -150,42 +137,28 @@ const ToughnessConfigDialog = ({ toughnessConfig, minStr, maxStr }: IToughnessCo
 
   return (
     <Dialog open={open} onClose={handleClose} fullWidth maxWidth="md" fullScreen={mobile}>
-      {mobile ? (
-        <AppBar position="relative">
-          <Toolbar>
-            <IconButton onClick={handleClose} className={classes.closeIcon}>
-              <Close />
-            </IconButton>
-            <Typography variant="h6">Customize Toughness Ranges</Typography>
-          </Toolbar>
-        </AppBar>
-      ) : (
-        <DialogTitle className={classes.title}>
-          <IconButton onClick={handleClose} size="small" className={classes.closeIcon}>
-            <Close />
-          </IconButton>
-          <span>Customize Toughness Ranges</span>
-        </DialogTitle>
-      )}
+      <DialogHeader onClose={handleClose} />
       <DialogContent>
         <Typography>
-          {`How the Auto range is deternined: Since Warcry only cares about Strength <, =, or > Toughness.
-          The Auto mode determines the range as follows:`}
+          Configure the min/max toughness to generate data for. Leave as Auto to let the API decide
         </Typography>
-        <br />
-        <Typography variant="button">Range = (Lowest STR - 1) - (Highest STR + 1)</Typography>
-        <br />
         <br />
         <Typography>
-          <span>I recommend that you leave both the min and max as </span>
-          <i>Auto</i>
+          <b>How the Auto range is deternined:</b>
         </Typography>
-        <br />
+        <Typography>
+          <span>
+            {`Since Warcry only cares about Strength <, =, or > Toughness.
+            The Auto mode determines the range as follows:`}
+          </span>
+        </Typography>
+        <Typography variant="button">{`(MIN STR - 1) <---> (MAX STR + 1)`}</Typography>
+        <Divider className={classes.divider} />
         <Grid container alignItems="center" className={classes.sliderContainer} spacing={1}>
           <Grid item>
             <FormControlLabel
               label="Auto"
-              labelPlacement={mobile ? 'top' : 'start'}
+              labelPlacement="top"
               control={<Checkbox color="primary" checked={minAuto} onChange={handleMinAutoChanged} />}
               className={classes.autoLabel}
             />
@@ -193,7 +166,7 @@ const ToughnessConfigDialog = ({ toughnessConfig, minStr, maxStr }: IToughnessCo
           <Grid item className={classes.slider}>
             <Slider
               min={1}
-              max={10}
+              max={12}
               value={value}
               valueLabelDisplay="on"
               onChange={handleChange}
@@ -210,25 +183,17 @@ const ToughnessConfigDialog = ({ toughnessConfig, minStr, maxStr }: IToughnessCo
           <Grid item>
             <FormControlLabel
               label="Auto"
-              labelPlacement={mobile ? 'top' : 'end'}
+              labelPlacement="top"
               control={<Checkbox color="primary" checked={maxAuto} onChange={handleMaxAutoChanged} />}
               className={classes.autoLabel}
             />
           </Grid>
         </Grid>
-        <Collapse in={Boolean(warning)}>
-          <Paper className={classes.warning}>
-            <Grid container spacing={2} alignItems="center" className={classes.warningTitle}>
-              <Grid item>
-                <Warning fontSize="large" />
-              </Grid>
-              <Grid item>
-                <Typography variant="h6">Warning</Typography>
-              </Grid>
-            </Grid>
-            <Typography>{warning}</Typography>
-          </Paper>
-        </Collapse>
+        <Divider className={classes.divider} />
+        <WarningCard warning={warning} />
+        <Typography variant="body2" align="right">
+          *I recommend that you leave both the min and max as Auto
+        </Typography>
       </DialogContent>
       <DialogActions>
         <Button startIcon={<Refresh />} onClick={handleReset}>
