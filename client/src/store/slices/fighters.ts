@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import nanoid from 'nanoid';
+import { nanoid } from 'nanoid';
 import { IFighter, IProfile } from 'types/fighter';
 import { TFightersStore } from 'types/store';
 
@@ -21,7 +21,7 @@ const ensureOneActiveProfile = (fighter: IFighter): IFighter => {
     [],
   );
   if (activeIndexes.length === 1) return fighter;
-  fighter.profiles = fighter.profiles.map(profile => ({ ...profile, active: false }));
+  fighter.profiles = fighter.profiles.map((profile) => ({ ...profile, active: false }));
   const [firstActive] = activeIndexes;
   fighter.profiles[firstActive ?? 0].active = true;
   return fighter;
@@ -44,7 +44,7 @@ const insertFighter = (
   const fighter: IFighter = {
     name,
     uuid: nanoid(),
-    profiles: (profiles ?? [{ ...DEFAULT_PROFILE }]).map(p => ({ ...p, uuid: nanoid() })),
+    profiles: (profiles ?? [{ ...DEFAULT_PROFILE }]).map((p) => ({ ...p, uuid: nanoid() })),
   };
   if (typeof index === 'number' && index >= 0 && index < state.length) {
     state.splice(index, 0, fighter);

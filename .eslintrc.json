@@ -1,0 +1,37 @@
+{
+  "root": true,
+  "extends": ["airbnb-typescript", "prettier"],
+  "plugins": ["prettier"],
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "rules": {
+    "react/require-default-props": ["off"],
+    "import/prefer-default-export": ["off"],
+    "class-methods-use-this": ["off"],
+    "react/jsx-fragments": ["off"],
+    "jsx-a11y/no-static-element-interactions": ["off"],
+    "react/jsx-props-no-spreading": ["off"],
+    "jsx-a11y/click-events-have-key-events": ["off"],
+    "jsx-a11y/tabindex-no-positive": ["off"]
+  },
+  "overrides": [
+    {
+      "files": ["server.ts"],
+      "rules": {
+        "no-console": ["off"]
+      }
+    },
+    {
+      "files": ["**/store/**"],
+      "rules": {
+        "no-param-reassign": ["off"]
+      }
+    }
+  ],
+  "settings": {
+    "react": {
+      "version": "latest"
+    }
+  }
+}

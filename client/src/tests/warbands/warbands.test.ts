@@ -11,7 +11,7 @@ expect.extend({
     };
   },
   toHaveOneActiveProfile(received: IFighter) {
-    const pass = received.profiles.filter(i => i.active).length === 1;
+    const pass = received.profiles.filter((i) => i.active).length === 1;
     return {
       message: () => `expected ${received?.name ?? 'Fighter'} to have only 1 active profile`,
       pass,
@@ -50,7 +50,7 @@ describe('Warbands', () => {
             expect(typeof fighter.name).toBe('string');
             expect(fighter.profiles.length).toBeGreaterThan(0);
             expect(fighter).toHaveOneActiveProfile();
-            fighter.profiles.forEach(profile => {
+            fighter.profiles.forEach((profile) => {
               expect(profile).toBeValidProfile();
             });
           });

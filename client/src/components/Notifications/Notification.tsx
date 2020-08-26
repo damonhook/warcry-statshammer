@@ -120,12 +120,12 @@ const Notification = ({
         <SwipeableListItem swipeRight={swipeAction} swipeLeft={swipeAction} threshold={0.3}>
           <SnackbarContent
             className={clsx(classes.content)}
-            message={
+            message={(
               <span className={classes.message}>
                 <Icon className={clsx(classes.icon, classes.iconVariant)} />
                 {message}
               </span>
-            }
+            )}
             action={[
               ...([actionElement] ?? []),
               <IconButton key="close" onClick={handleClose} className={classes.action}>

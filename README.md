@@ -63,6 +63,10 @@ yarn setup
 
 ## Usage
 
+## `yarn setup`
+
+This will install both the backend and frontend dependencies.
+
 ### `yarn dev`
 
 Runs the app in development mode (launches both the express server, and the react frontend).

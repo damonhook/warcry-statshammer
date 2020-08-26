@@ -24,25 +24,25 @@ const ToughnessRangeConfig = () => {
   const history = useHistory();
   const fighterList = useSelector(getSanitizedFighters);
   const toughness = useSelector((state: IStore) => state.config.toughnessRange);
-  const minStr = useMemo(() => Math.min(...fighterList.map(f => f.profile.strength)), [fighterList]);
-  const maxStr = useMemo(() => Math.max(...fighterList.map(f => f.profile.strength)), [fighterList]);
+  const minStrength = useMemo(() => Math.min(...fighterList.map((f) => f.profile.strength)), [fighterList]);
+  const maxStrength = useMemo(() => Math.max(...fighterList.map((f) => f.profile.strength)), [fighterList]);
 
   const activeToughnessRange = useMemo(() => {
-    return getToughnessRange(toughness, minStr, maxStr);
-  }, [maxStr, minStr, toughness]);
+    return getToughnessRange(toughness, minStrength, maxStrength);
+  }, [maxStrength, minStrength, toughness]);
 
   const getToughnessDisplay = useCallback(() => {
     const { min, max } = activeToughnessRange;
-    const minStr = isAuto(toughness?.min) ? `Auto (T${min})` : `T${min}`;
-    const maxStr = isAuto(toughness?.max) ? `Auto (T${max})` : `T${max}`;
-    return `${minStr} - ${maxStr}`;
+    const minString = isAuto(toughness?.min) ? `Auto (T${min})` : `T${min}`;
+    const maxString = isAuto(toughness?.max) ? `Auto (T${max})` : `T${max}`;
+    return `${minString} - ${maxString}`;
   }, [activeToughnessRange, toughness]);
 
   const handleClick = () => {
     history.push(HASHES.TOUGHNESS_CONFIG);
   };
 
-  const warning = getWarning(activeToughnessRange, minStr, maxStr);
+  const warning = getWarning(activeToughnessRange, minStrength, maxStrength);
 
   return (
     <>
@@ -58,7 +58,7 @@ const ToughnessRangeConfig = () => {
           </Tooltip>
         </span>
       )}
-      <ToughnessConfigDialog toughnessConfig={toughness} minStr={minStr} maxStr={maxStr} />
+      <ToughnessConfigDialog toughnessConfig={toughness} minStr={minStrength} maxStr={maxStrength} />
     </>
   );
 };

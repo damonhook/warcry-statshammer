@@ -57,7 +57,7 @@ const AverageDamageTable = ({ data, fighterNames, className }: IAverageDamageTab
             </TableRow>
           </TableHead>
           <TableBody>
-            {fighterNames.map(name => (
+            {fighterNames.map((name) => (
               <TableRow key={name}>
                 <TableCell className={classes.sticky}>{name}</TableCell>
                 {data.map(({ toughness, [name]: result }) => (

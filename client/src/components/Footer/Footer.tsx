@@ -5,7 +5,7 @@ import { AoSStatshammer, Github, Reddit, Releases } from 'components/SocialButto
 import { useIsMobile } from 'hooks';
 import React from 'react';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   footer: {
     textAlign: 'center',
     width: '100%',

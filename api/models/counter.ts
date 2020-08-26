@@ -8,7 +8,9 @@ export interface ICounter {
 
 export class Counter implements ICounter {
   lt: TCount;
+
   eq: TCount;
+
   gt: TCount;
 
   constructor() {

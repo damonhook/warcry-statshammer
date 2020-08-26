@@ -24,11 +24,11 @@ const Home = () => {
     <div className={classes.home}>
       <Header
         text="Fighters"
-        endActions={
+        endActions={(
           <Button onClick={handleForward} startIcon={<ArrowForward />}>
             Stats
           </Button>
-        }
+        )}
       />
       <Fighters />
     </div>

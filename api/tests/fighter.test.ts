@@ -37,12 +37,7 @@ describe('Fighter', () => {
       [5, 1], [5, 2], [5, 3], [5, 4], [5, 5], [5, 6],
       [6, 1], [6, 2], [6, 3], [6, 4], [6, 5], [6, 6],
     ];
-    expect(
-      testFighter
-        .getDicePermutationMatrix()
-        .toArray()
-        .sort(),
-    ).toEqual(permutations.sort());
+    expect(testFighter.getDicePermutationMatrix().toArray().sort()).toEqual(permutations.sort());
   });
 
   describe('Get Probabilities', () => {

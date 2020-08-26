@@ -8,8 +8,11 @@ import { D6 } from './dice';
 
 class SimulationGenerator implements IGenerator<TVector> {
   private generator: Generator<TVector, void, unknown>;
+
   private numSimulations: number;
+
   private numAttacks: number;
+
   length: number;
 
   constructor(numSimulations: number, numAttacks: number) {
