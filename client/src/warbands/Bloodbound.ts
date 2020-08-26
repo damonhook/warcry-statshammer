@@ -53,7 +53,7 @@ const Bloodbound: IWarband = {
     {
       name: 'Khorgorath',
       profiles: [buildProfile(true, 1, 3, 5, 4, 8)],
-    }
+    },
   ],
 };
 
