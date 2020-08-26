@@ -78,7 +78,7 @@ const Import = () => {
   };
 
   const handleImport = () => {
-    selectedFighters.forEach(fighter => {
+    selectedFighters.forEach((fighter) => {
       dispatch(fightersStore.actions.insertFighter({ fighter }));
     });
     dispatch(
@@ -140,9 +140,9 @@ const Import = () => {
         </Typography>
         <Autocomplete
           options={warbandOptions}
-          getOptionLabel={warband => warband.name}
-          groupBy={warband => warband.alliance}
-          renderInput={params => <TextField {...params} label="Warbands" variant="outlined" fullWidth />}
+          getOptionLabel={(warband) => warband.name}
+          groupBy={(warband) => warband.alliance}
+          renderInput={(params) => <TextField {...params} label="Warbands" variant="outlined" fullWidth />}
           value={selectedWarband}
           onChange={handleSelect}
           onInputChange={handleInputChange}

@@ -16,7 +16,7 @@ export interface ISanitizedFighter {
  */
 export const getSanitizedFighters = (state: IStore): ISanitizedFighter[] =>
   state.fighters.reduce<ISanitizedFighter[]>((acc, fighter) => {
-    const profile = fighter.profiles.find(p => p.active);
+    const profile = fighter.profiles.find((p) => p.active);
     if (profile) acc.push({ name: fighter.name, profile });
     return acc;
   }, []);

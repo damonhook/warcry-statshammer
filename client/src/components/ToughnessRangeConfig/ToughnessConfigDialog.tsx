@@ -93,7 +93,7 @@ const ToughnessConfigDialog = ({ toughnessConfig, minStr, maxStr }: IToughnessCo
   }, [autoRange.max, maxAuto]);
 
   const handleChange = (e: any, newValue: number | number[]) => {
-    let [newMin, newMax] = newValue as [number, number];
+    let [newMin, newMax] = newValue as number[];
     if (minAuto) newMin = autoRange.min;
     if (maxAuto) newMax = autoRange.max;
     setMin(newMin);
@@ -127,7 +127,7 @@ const ToughnessConfigDialog = ({ toughnessConfig, minStr, maxStr }: IToughnessCo
   };
 
   const warning = useMemo(() => getWarning({ min, max }, minStr, maxStr), [max, maxStr, min, minStr]);
-  const value: [number, number] = [min, max];
+  const value: number[] = [min, max];
 
   return (
     <Dialog open={open} onClose={handleClose} fullWidth maxWidth="md" fullScreen={mobile}>
@@ -146,7 +146,7 @@ const ToughnessConfigDialog = ({ toughnessConfig, minStr, maxStr }: IToughnessCo
             The Auto mode determines the range as follows:`}
           </span>
         </Typography>
-        <Typography variant="button">{`(MIN STR - 1) <---> (MAX STR + 1)`}</Typography>
+        <Typography variant="button">{'(MIN STR - 1) <---> (MAX STR + 1)'}</Typography>
         <Divider className={classes.divider} />
         <Grid container alignItems="center" className={classes.sliderContainer} spacing={1}>
           <Grid item>

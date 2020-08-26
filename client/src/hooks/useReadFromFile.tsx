@@ -16,11 +16,11 @@ const formatText = (raw: string, params?: TTextParams): string => {
   return raw.trim();
 };
 
-export const useReadFromFile = (filename: string, params?: TTextParams): string => {
+const useReadFromFile = (filename: string, params?: TTextParams): string => {
   const [raw, setRaw] = useState('');
 
   useEffect(() => {
-    readFromFile(`/static/${filename}`).then(text => {
+    readFromFile(`/static/${filename}`).then((text) => {
       setRaw(text);
     });
   }, [filename]);
@@ -28,3 +28,5 @@ export const useReadFromFile = (filename: string, params?: TTextParams): string 
   const data = useMemo(() => formatText(raw, params), [params, raw]);
   return data;
 };
+
+export default useReadFromFile;

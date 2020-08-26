@@ -1,7 +1,7 @@
 import { useMediaQuery } from '@material-ui/core';
 import { useTheme } from '@material-ui/core/styles';
 
-export const useBreakpointChanged = () => {
+const useBreakpointChanged = () => {
   const theme = useTheme();
   const breakpoints: boolean[] = [
     useMediaQuery(theme.breakpoints.down('xs')),
@@ -13,3 +13,5 @@ export const useBreakpointChanged = () => {
 
   return breakpoints;
 };
+
+export default useBreakpointChanged;

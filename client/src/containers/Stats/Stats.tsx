@@ -28,7 +28,10 @@ const Stats = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const stats = useSelector((state: IStore) => state.stats, isEqual);
-  const fighterNames = useSelector((state: IStore) => [...new Set(state.fighters.map(f => f.name))], isEqual);
+  const fighterNames = useSelector(
+    (state: IStore) => [...new Set(state.fighters.map((f) => f.name))],
+    isEqual,
+  );
   const numFighters = useSelector((state: IStore) => state.fighters.length);
   const toughnessConfig = useSelector((state: IStore) => state.config.toughnessRange);
   const theme = useTheme();
@@ -58,7 +61,7 @@ const Stats = () => {
     <div className={classes.stats}>
       <Header
         text="Stats"
-        endActions={
+        endActions={(
           <Grid container spacing={mobile ? 2 : 3} alignItems="center">
             <Grid item>
               <ToughnessRangeConfig />
@@ -71,7 +74,7 @@ const Stats = () => {
               </Grid>
             )}
           </Grid>
-        }
+        )}
       />
       {placeholder || (
         <>

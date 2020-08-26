@@ -48,7 +48,7 @@ const LeftNavigation = () => {
   const numFighters = useSelector((state: IStore) => state.fighters.length);
 
   useEffect(() => {
-    setIndex(routeIndex);
+    setIndex(routeIndex as number);
   }, [routeIndex]);
 
   const handleChange = (event: any, newValue: number) => {

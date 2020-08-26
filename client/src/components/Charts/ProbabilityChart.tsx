@@ -30,10 +30,15 @@ const ProbabilityChart = ({ data, series, type = 'cumulative' }: IProbabilityCha
   const mobile = useIsMobile();
 
   const getTitle = () => {
-    const typeTitle = type.replace(/^\w/, c => c.toUpperCase());
+    const typeTitle = type.replace(/^\w/, (c) => c.toUpperCase());
     const toughnessPrefix = mobile ? 'T' : 'Toughness ';
     return `${typeTitle} Probability ${toughnessPrefix}${data.toughness}`;
   };
+
+  const tooltip = (
+    // @ts-ignore
+    <Tooltip content={<ProbabilityTooltip type={type} />} cursor={{ fill: theme.palette.graphs.grid }} />
+  );
 
   return (
     <div>
@@ -44,12 +49,9 @@ const ProbabilityChart = ({ data, series, type = 'cumulative' }: IProbabilityCha
         <ResponsiveContainer>
           <LineChart data={data[type]}>
             <CartesianGrid strokeDasharray="3 3" stroke={theme.palette.graphs.grid} />
-            <XAxis stroke={theme.palette.graphs.axis} dataKey="damage" type="number" />
-            <YAxis stroke={theme.palette.graphs.axis} />
-            <Tooltip
-              content={<ProbabilityTooltip type={type} />}
-              cursor={{ fill: theme.palette.graphs.grid }}
-            />
+            <XAxis tick={{ stroke: theme.palette.graphs.axis }} dataKey="damage" type="number" />
+            <YAxis tick={{ stroke: theme.palette.graphs.axis }} />
+            {tooltip}
             <Legend />
             {series.map((key, index) => (
               <Line

@@ -26,7 +26,7 @@ const AverageDamageChart = ({ data, series }: IAverageDamageChartProps) => {
   const classes = useStyles();
   const theme = useTheme();
 
-  const xAxisFormatter = useCallback(toughness => `T${toughness}`, []);
+  const xAxisFormatter = useCallback((toughness) => `T${toughness}`, []);
 
   return (
     <div>
@@ -37,8 +37,14 @@ const AverageDamageChart = ({ data, series }: IAverageDamageChartProps) => {
         <ResponsiveContainer>
           <BarChart data={data}>
             <CartesianGrid strokeDasharray="3 3" stroke={theme.palette.graphs.grid} />
-            <XAxis stroke={theme.palette.graphs.axis} dataKey="toughness" tickFormatter={xAxisFormatter} />
-            <YAxis stroke={theme.palette.graphs.axis} />
+            <XAxis
+              tick={{ stroke: theme.palette.graphs.axis }}
+              dataKey="toughness"
+              tickFormatter={xAxisFormatter}
+            />
+            <YAxis tick={{ stroke: theme.palette.graphs.axis }} />
+            {/* 
+            // @ts-ignore */}
             <Tooltip content={<AverageDamageTooltip />} cursor={{ fill: theme.palette.graphs.grid }} />
             <Legend />
             {series.map((key, index) => (

@@ -70,8 +70,8 @@ const FighterList = ({
           <b>Fighters</b>
         </Typography>
         <List>
-          {warband.fighters.map(fighter => {
-            const isSelected = selectedFighters.some(f => f.name === fighter.name);
+          {warband.fighters.map((fighter) => {
+            const isSelected = selectedFighters.some((f) => f.name === fighter.name);
             return (
               <ListItem
                 key={fighter.name}

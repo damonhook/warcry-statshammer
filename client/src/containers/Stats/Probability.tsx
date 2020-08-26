@@ -28,7 +28,7 @@ const Probability = ({ stats, fighterNames }: IProbabilityProps) => {
     <>
       <CollapsibleCard title="Cumulative Probability" className={classes.probabilityContainer}>
         <Grid container spacing={2}>
-          {probabilityData.map(data => (
+          {probabilityData.map((data) => (
             <Grid item xs={12} md={6} key={data.toughness}>
               <ProbabilityChart data={data} series={fighterNames} type="cumulative" />
             </Grid>
@@ -37,7 +37,7 @@ const Probability = ({ stats, fighterNames }: IProbabilityProps) => {
       </CollapsibleCard>
       <CollapsibleCard title="Discrete Probability" className={classes.probabilityContainer}>
         <Grid container spacing={2}>
-          {probabilityData.map(data => (
+          {probabilityData.map((data) => (
             <Grid item xs={12} md={6} key={data.toughness}>
               <ProbabilityChart data={data} series={fighterNames} type="discrete" />
             </Grid>

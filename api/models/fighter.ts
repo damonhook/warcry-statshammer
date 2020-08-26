@@ -7,6 +7,7 @@ import SimulationGenerator from './generator';
 
 class Fighter implements IFighter {
   name: string;
+
   profile: IProfile;
 
   constructor(name: string, profile: IProfile) {
@@ -77,7 +78,7 @@ class Fighter implements IFighter {
     const buckets = Object.keys(counts)
       .map(Number)
       .sort((x, y) => x - y)
-      .map(damage => ({
+      .map((damage) => ({
         damage,
         count: counts[damage],
         probability: Number(((counts[damage] * 100) / numPermutations).toFixed(2)),
