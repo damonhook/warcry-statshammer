@@ -13,6 +13,7 @@ import SplinteredFang from './SplinteredFang';
 import TheUnmade from './TheUnmade';
 import UntamedBeasts from './UntamedBeasts';
 import Vanguard from './Vanguard';
+import Bloodbound from './Bloodbound';
 import { IWarband } from './warbands.types';
 
 const chaosWarbands: IWarband[] = [
@@ -22,6 +23,7 @@ const chaosWarbands: IWarband[] = [
   SplinteredFang,
   TheUnmade,
   UntamedBeasts,
+  Bloodbound,
 ];
 
 const deathWarbands: IWarband[] = [FleshEaterCourts, LegionsOfNagash, Nighthaunt];
