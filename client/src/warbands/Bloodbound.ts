@@ -23,7 +23,7 @@ const Bloodbound: IWarband = {
       profiles: [buildProfile(true, 1, 3, 4, 2, 5)],
     },
     {
-      name: 'Bloodreaver Cheiftain',
+      name: 'Bloodreaver Chieftain',
       profiles: [buildProfile(true, 1, 5, 3, 2, 4)],
     },
     {
