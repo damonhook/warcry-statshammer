@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 interface IProbabilityTooltipProps extends ITooltipProps {
-  type: 'discrete' | 'cumulative';
+  type: 'discrete' | 'cumulative' | 'inverse';
 }
 
 /**
@@ -22,10 +22,19 @@ interface IProbabilityTooltipProps extends ITooltipProps {
 const ProbabilityTooltip = ({ active = false, payload = [], label = '', type }: IProbabilityTooltipProps) => {
   const classes = useStyles();
 
+  let prefixSymbol = ''; 
+  if (type === 'cumulative') {
+    prefixSymbol = '<= ';
+  } else if (type === 'inverse') {
+    prefixSymbol = '>= ';
+  } else {
+    prefixSymbol = '';
+  }
+
   if (active) {
     return (
       <Paper className={classes.tooltip}>
-        <Typography variant="h6">{`Damage: ${type === 'cumulative' ? '<= ' : ''}${label}`}</Typography>
+        <Typography variant="h6">{`Damage: ${prefixSymbol}${label}`}</Typography>
         {(payload ?? []).map(({ color, name, value }) => (
           <Typography style={{ color }} key={name}>{`${name}: ${value}%`}</Typography>
         ))}

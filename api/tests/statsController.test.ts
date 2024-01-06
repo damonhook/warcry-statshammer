@@ -43,6 +43,14 @@ describe('Stats Controller', () => {
         { damage: 4, 'Test Fighter': 100 },
         { damage: 5, 'Test Fighter': 100 },
       ],
+      inverse: [
+        { damage: 0, 'Test Fighter': 100 },
+        { damage: 1, 'Test Fighter': 75 },
+        { damage: 2, 'Test Fighter': 41.67 },
+        { damage: 3, 'Test Fighter': 13.89 },
+        { damage: 4, 'Test Fighter': 2.78 },
+        { damage: 5, 'Test Fighter': 0 },
+      ],
       metrics: {
         max: {
           'Test Fighter': 4,

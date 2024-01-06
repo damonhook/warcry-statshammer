@@ -3,8 +3,8 @@
     "private": true,
     "version": "0.4.1",
     "engines": {
-        "node": "12.18.3",
-        "yarn": "1.22.4"
+        "node": "16.20.2",
+        "yarn": "1.22.21"
     },
     "scripts": {
         "setup": "yarn install && cd client && yarn install",

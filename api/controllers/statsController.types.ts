@@ -33,6 +33,7 @@ export type ICompareFightersResult = {
   toughness: string | number;
   discrete: TProbabilityResult[];
   cumulative: TProbabilityResult[];
+  inverse: TProbabilityResult[];
   metrics: TMetrics;
 };
 export interface ICompareFightersResponse {

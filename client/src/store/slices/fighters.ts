@@ -64,6 +64,11 @@ const deleteFighter = (state: TFightersStore, action: { payload: { index: number
   return state.filter((_, i) => i !== index);
 };
 
+const copyFighter = (state: TFightersStore, action: { payload: { index: number } }) => {
+  const { index } = action.payload;
+  return insertFighter(state, { payload: { fighter: state[index] } });
+};
+
 const moveFighter = (state: TFightersStore, action: { payload: { index: number; newIndex: number } }) => {
   const { index, newIndex } = action.payload;
   const sanitizedNewIndex = Math.min(Math.max(newIndex, 0), state.length - 1);
@@ -153,6 +158,7 @@ export const fighters = createSlice({
     editFighterName,
     moveFighter,
     deleteFighter,
+    copyFighter,
     addProfile,
     insertProfile,
     setActiveProfile,
