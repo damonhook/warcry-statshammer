@@ -1,6 +1,6 @@
 import { Card, CardContent, IconButton, TextField } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
-import { Add, Delete, DragHandle } from '@material-ui/icons';
+import { Add, Delete, FileCopy, DragHandle } from '@material-ui/icons';
 import appConfig from 'appConfig';
 import DividerButton from 'components/DividerButton';
 import React from 'react';
@@ -61,6 +61,19 @@ const Fighter = ({ fighter, index, dragHandleProps }: IFighterProps) => {
     dispatch(fightersStore.actions.deleteFighter({ index }));
   };
 
+  const handleCopyFighter = () => {
+    dispatch(
+      notificationsStore.actions.addNotification({
+        message: 'Copied Fighter',
+        action: {
+          label: 'Undo',
+          onClick: () => dispatch(fightersStore.actions.deleteFighter({ index })),
+        },
+      }),
+    );
+    dispatch(fightersStore.actions.copyFighter({ index }));
+  };
+
   const handleEditName = (event: any) => {
     dispatch(fightersStore.actions.editFighterName({ index, name: event.target.value }));
   };
@@ -95,7 +108,10 @@ const Fighter = ({ fighter, index, dragHandleProps }: IFighterProps) => {
               value={fighter.name}
               onChange={handleEditName}
             />
-            <IconButton onClick={handleDeleteFighter} tabIndex={1}>
+            <IconButton onClick={handleCopyFighter} tabIndex={1}>
+              <FileCopy />
+            </IconButton>
+            <IconButton onClick={handleDeleteFighter} tabIndex={2}>
               <Delete />
             </IconButton>
           </div>

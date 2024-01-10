@@ -73,7 +73,8 @@ export class StatsController {
     const metrics = this.getMappedMetrics(data);
     const discrete = this.buildDiscreteProbabilities(mappedProbabilities);
     const cumulative = this.buildCumulativeProbabilities(mappedProbabilities, fighterNames, metrics);
-    return { toughness: data.toughness, discrete, cumulative, metrics };
+    const inverse = this.buildInverseProbabilities(mappedProbabilities, fighterNames);
+    return { toughness: data.toughness, discrete, cumulative, inverse, metrics };
   }
 
   private getMappedProbabilities(data: TMappedResult): TMappedProbabilities {
@@ -103,6 +104,38 @@ export class StatsController {
       .sort((x, y) => x - y)
       .map((damage) => ({ damage, ...probabilities[damage] }));
   }
+
+  private buildInverseProbabilities(
+    probabilities: TMappedProbabilities,
+    fighterNames: string[]
+  ): TProbabilityResult[] {
+    const maxDamage = Math.max(...Object.keys(probabilities).map((n) => Number(n)));
+    const sums = fighterNames.reduce((acc, name) => ({ ...acc, [name]: 0 }), {});
+  
+    let results: TProbabilityResult[] = [];
+  
+    for (let damage = maxDamage; damage >=  0 ; damage -= 1) {
+      if (probabilities[damage]) {
+        fighterNames.forEach(name => {
+          sums[name] += probabilities[damage][name] ?? 0;
+        });
+      }
+  
+      const result = { damage };
+      fighterNames.forEach(name => {
+        if (sums[name] > 100) sums[name] = 100;
+        result[name] = Number(sums[name].toFixed(2));
+      });
+  
+      results.push(result);
+    }
+    
+    results = results.sort((a, b) => a.damage - b.damage);
+    return results;
+  }
+  
+  
+  
 
   private buildCumulativeProbabilities(
     probabilities: TMappedProbabilities,

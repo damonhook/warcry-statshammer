@@ -21,7 +21,7 @@ const Probability = ({ stats, fighterNames }: IProbabilityProps) => {
 
   const probabilityData = useMemo((): IProbabilitiesData => {
     if (stats.pending || !stats.results) return [];
-    return stats.results.map(({ toughness, discrete, cumulative }) => ({ toughness, discrete, cumulative }));
+    return stats.results.map(({ toughness, discrete, cumulative, inverse }) => ({ toughness, discrete, cumulative, inverse }));
   }, [stats.pending, stats.results]);
 
   return (
@@ -40,6 +40,15 @@ const Probability = ({ stats, fighterNames }: IProbabilityProps) => {
           {probabilityData.map((data) => (
             <Grid item xs={12} md={6} key={data.toughness}>
               <ProbabilityChart data={data} series={fighterNames} type="discrete" />
+            </Grid>
+          ))}
+        </Grid>
+      </CollapsibleCard>
+      <CollapsibleCard title="Cumulative Inverse Probability" className={classes.probabilityContainer}>
+        <Grid container spacing={2}>
+          {probabilityData.map((data) => (
+            <Grid item xs={12} md={6} key={data.toughness}>
+              <ProbabilityChart data={data} series={fighterNames} type="inverse" />
             </Grid>
           ))}
         </Grid>

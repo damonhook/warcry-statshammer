@@ -6,5 +6,6 @@ export type IProbabilityData = {
   toughness: number;
   discrete: TProbabilityResult[];
   cumulative: TProbabilityResult[];
+  inverse: TProbabilityResult[];
 };
 export type IProbabilitiesData = IProbabilityData[];

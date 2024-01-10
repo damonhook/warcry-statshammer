@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 interface IProbabilityChartProps {
   data: IProbabilityData;
   series: string[];
-  type?: 'discrete' | 'cumulative';
+  type?: 'discrete' | 'cumulative' | 'inverse';
 }
 const ProbabilityChart = ({ data, series, type = 'cumulative' }: IProbabilityChartProps) => {
   const classes = useStyles();
