@@ -14,6 +14,7 @@ import TheUnmade from './TheUnmade';
 import UntamedBeasts from './UntamedBeasts';
 import Vanguard from './Vanguard';
 import Bloodbound from './Bloodbound';
+import Skaven from './Skaven'
 import { IWarband } from './warbands.types';
 
 const chaosWarbands: IWarband[] = [
@@ -24,6 +25,7 @@ const chaosWarbands: IWarband[] = [
   TheUnmade,
   UntamedBeasts,
   Bloodbound,
+  Skaven,
 ];
 
 const deathWarbands: IWarband[] = [FleshEaterCourts, LegionsOfNagash, Nighthaunt];
